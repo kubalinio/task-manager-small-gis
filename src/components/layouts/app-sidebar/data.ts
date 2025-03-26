@@ -37,7 +37,7 @@ const data = {
       url: "/",
       icon: LayoutDashboard,
       isActive: true
-    },
+    }
   ],
   navSecondary: [
     {

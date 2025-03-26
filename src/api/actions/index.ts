@@ -1,8 +1,9 @@
-import { authMutations } from './auth/auth.mutations';
+import { taskQueries } from './tasks/task.queries';
+import { taskMutations } from './tasks/task.mutations';
 
 export const mutations = {
-  ...authMutations,
-  // API_COLLECTION_MUTATIONS
+  ...taskMutations,
 } as const;
 
-export type AxiosMutationsType = typeof mutations;
+export type IndexDBQueriesType = typeof taskQueries;
+export type IndexDBMutationsType = typeof taskMutations;

@@ -1,6 +1,6 @@
-import { StandardizedApiError } from 'context/apiClient/apiClientContextController/apiError/apiError.types';
-import { UseInfiniteQueryOptions } from 'hooks/useInfiniteQuery/useInfiniteQuery.types';
-import { UseQueryOptions } from 'hooks/useQuery/useQuery.types';
+import { StandardizedApiError } from 'api/utils/error-handler';
+import type {UseQueryOptions, UseInfiniteQueryOptions } from 'libs/hooks';
+
 
 export const queryFactoryOptions = <TQueryFnData = unknown, TError = StandardizedApiError>(
   options: UseQueryOptions<TQueryFnData, TError>,
