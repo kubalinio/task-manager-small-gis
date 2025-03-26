@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "nrwl.angular-console",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "ms-playwright.playwright",
+    "firsttris.vscode-jest-runner",
+    "stylelint.vscode-stylelint"
+  ]
+}
