@@ -1,62 +1,61 @@
-import { z } from 'zod';
-import { List, Task } from 'api/types';
+import type { List, Task } from "api/types"
+import type { z } from "zod"
+import type {
+  createListSchema,
+  createTaskSchema,
+  TaskStatus,
+  updateListSchema,
+  updateTaskSchema
+} from "./task.validators"
 
-import {
-TaskStatus,
-createListSchema,
-createTaskSchema,
-updateListSchema,
-updateTaskSchema
-} from './task.validators'
-
-type TaskStatusType = typeof TaskStatus[keyof typeof TaskStatus];
+type TaskStatusType = (typeof TaskStatus)[keyof typeof TaskStatus]
 
 interface TaskManagerDB extends IDBDatabase {
-  lists: IDBObjectStore;
-  tasks: IDBObjectStore;
+  lists: IDBObjectStore
+  tasks: IDBObjectStore
 }
 
-interface ListDTO extends List {}
-interface TaskDTO extends Task {}
+type ListDTO = List
+type TaskDTO = Task
 
-interface TaskListsResponse {
-  data: List[];
+type TaskListsResponse = {
+  data: List[]
   meta: {
-    total: number;
-  };
+    total: number
+  }
 }
 
 interface TaskListResponse {
-  data: List;
+  data: List
 }
 
 interface TasksResponse {
-  data: Task[];
+  data: Task[]
   meta: {
-    total: number;
-  };
+    total: number
+  }
 }
 
 interface TaskResponse {
-  data: Task;
+  data: Task
 }
 
 interface TasksFilterOptions {
-  listId?: string;
-  status?: TaskStatusType;
-  search?: string;
-  sortBy?: 'createdAt' | 'updatedAt';
-  sortDirection?: 'asc' | 'desc';
+  listId?: string
+  status?: TaskStatusType
+  search?: string
+  sortBy?: "createdAt" | "updatedAt"
+  sortDirection?: "asc" | "desc"
 }
 
 interface UpdateListParams {
-  id: string;
-  data: UpdateListInput;
+  id: string
+  data: UpdateListInput
 }
 
 interface UpdateTaskParams {
-  id: string;
-  data: UpdateTaskInput;
+  id: string
+  data: UpdateTaskInput
 }
 
 type CreateListInput = z.infer<typeof createListSchema>
@@ -79,5 +78,5 @@ export type {
   CreateListInput,
   UpdateListInput,
   CreateTaskInput,
-  UpdateTaskInput,
+  UpdateTaskInput
 }

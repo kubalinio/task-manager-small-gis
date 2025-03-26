@@ -1,16 +1,18 @@
-import { createContext } from 'react';
-import { IndexDBClient } from 'api/indexdb';
+import { createContext } from "react"
+
+import type { IndexDBClient } from "api/indexdb"
 
 export interface IndexDBContextType {
-  client: IndexDBClient | null;
-  isLoading: boolean;
-  error: Error | null;
+  client: IndexDBClient | null
+  isLoading: boolean
+  error: Error | null
 }
 
 const initialContextValue: IndexDBContextType = {
   client: null,
   isLoading: true,
-  error: null,
-};
+  error: null
+}
 
-export const IndexDBContext = createContext<IndexDBContextType>(initialContextValue);
+export const IndexDBContext =
+  createContext<IndexDBContextType>(initialContextValue)

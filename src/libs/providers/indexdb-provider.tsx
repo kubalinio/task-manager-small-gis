@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 
-import { getDB, IndexDBClient } from "api/indexdb"
+import type { IndexDBClient } from "api/indexdb"
+import type { IndexDBContextType } from "libs/context/indexdb-client/indexdb-context"
+
+import { getDB } from "api/indexdb"
 import { seedDatabaseIfEmpty } from "api/utils/seed-data"
-import {
-  IndexDBContext,
-  IndexDBContextType
-} from "libs/context/indexdb-client/indexdb-context"
+import { IndexDBContext } from "libs/context/indexdb-client/indexdb-context"
 
 interface IndexDBProviderProps {
   children: React.ReactNode

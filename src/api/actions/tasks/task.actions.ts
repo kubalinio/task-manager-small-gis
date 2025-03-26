@@ -1,181 +1,211 @@
-import { v4 as uuidv4 } from 'uuid';
-import { IndexDBClient, getDB, Task, List } from '../../indexdb';
-import {
+import type { IndexDBClient } from "api/indexdb"
+import type { List, Task } from "api/types"
+import type {
   CreateListInput,
   CreateTaskInput,
   TaskListResponse,
   TaskResponse,
   UpdateListInput,
-  UpdateTaskInput,
+  UpdateTaskInput
+} from "./task.types"
+
+import { v4 as uuidv4 } from "uuid"
+
+import { getDB } from "api/indexdb"
+
+import {
+  createNotFoundError,
+  createValidationError
+} from "../../utils/error-handler"
+import {
   createListSchema,
   createTaskSchema,
   updateListSchema,
-  updateTaskSchema,
-} from './task.validators';
-import { createNotFoundError, createValidationError } from '../../utils/error-handler';
+  updateTaskSchema
+} from "./task.validators"
 
-const createTaskList = (client: IndexDBClient) => async (data: CreateListInput): Promise<TaskListResponse> => {
-  const db = client || await getDB();
+const createTaskList =
+  (client: IndexDBClient) =>
+  async (data: CreateListInput): Promise<TaskListResponse> => {
+    const db = client || (await getDB())
 
-  // Validate input data
-  const validationResult = createListSchema.safeParse(data);
+    // Validate input data
+    const validationResult = createListSchema.safeParse(data)
 
-  if (!validationResult.success) {
-    throw createValidationError('Invalid list data', { errors: validationResult.error.format() });
+    if (!validationResult.success) {
+      throw createValidationError("Invalid list data", {
+        errors: validationResult.error.format()
+      })
+    }
+
+    const timestamp = Date.now()
+    const newList: List = {
+      id: uuidv4(),
+      title: data.title,
+      createdAt: timestamp,
+      updatedAt: timestamp
+    }
+
+    await db.add("task_lists", newList)
+
+    return {
+      data: newList
+    }
   }
 
-  const timestamp = Date.now();
-  const newList: List = {
-    id: uuidv4(),
-    title: data.title,
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
+const updateTaskList =
+  (client: IndexDBClient) =>
+  async (id: string, data: UpdateListInput): Promise<TaskListResponse> => {
+    const db = client || (await getDB())
 
-  await db.add('lists', newList);
+    // Check if list exists
+    const existingList = await db.get("task_lists", id)
 
-  return {
-    data: newList,
-  };
-};
+    if (!existingList) {
+      throw createNotFoundError("List", id)
+    }
 
- const updateTaskList = (client: IndexDBClient) => async (id: string, data: UpdateListInput): Promise<TaskListResponse> => {
-  const db = client || await getDB();
+    // Validate input data
+    const validationResult = updateListSchema.safeParse(data)
 
-  // Check if list exists
-  const existingList = await db.get('lists', id);
+    if (!validationResult.success) {
+      throw createValidationError("Invalid list data", {
+        errors: validationResult.error.format()
+      })
+    }
 
-  if (!existingList) {
-    throw createNotFoundError('List', id);
+    const updatedList: List = {
+      ...existingList,
+      title: data.title,
+      updatedAt: Date.now()
+    }
+
+    await db.put("task_lists", updatedList)
+
+    return {
+      data: updatedList
+    }
   }
 
-  // Validate input data
-  const validationResult = updateListSchema.safeParse(data);
+const deleteTaskList =
+  (client: IndexDBClient) =>
+  async (id: string): Promise<void> => {
+    const db = client || (await getDB())
 
-  if (!validationResult.success) {
-    throw createValidationError('Invalid list data', { errors: validationResult.error.format() });
+    // Check if list exists
+    const existingList = await db.get("task_lists", id)
+
+    if (!existingList) {
+      throw createNotFoundError("List", id)
+    }
+
+    // Begin transaction to delete list and all its tasks
+    const tx = db.transaction(["task_lists", "tasks"], "readwrite")
+
+    // Delete all tasks with the listId
+    const taskStore = tx.objectStore("tasks")
+    const taskIndex = taskStore.index("by-list")
+    let cursor = await taskIndex.openCursor(id)
+
+    while (cursor) {
+      await cursor.delete()
+      cursor = await cursor.continue()
+    }
+
+    // Delete the list
+    await tx.objectStore("task_lists").delete(id)
+
+    // Commit the transaction
+    await tx.done
   }
 
-  const updatedList: List = {
-    ...existingList,
-    title: data.title,
-    updatedAt: Date.now(),
-  };
+const createTask =
+  (client: IndexDBClient) =>
+  async (data: CreateTaskInput): Promise<TaskResponse> => {
+    const db = client || (await getDB())
 
-  await db.put('lists', updatedList);
+    // Validate input data
+    const validationResult = createTaskSchema.safeParse(data)
 
-  return {
-    data: updatedList,
-  };
-};
+    if (!validationResult.success) {
+      throw createValidationError("Invalid task data", {
+        errors: validationResult.error.format()
+      })
+    }
 
- const deleteTaskList = (client: IndexDBClient) => async (id: string): Promise<void> => {
-  const db = client || await getDB();
+    // Verify that list exists
+    const list = await db.get("task_lists", data.listId)
 
-  // Check if list exists
-  const existingList = await db.get('lists', id);
+    if (!list) {
+      throw createNotFoundError("List", data.listId)
+    }
 
-  if (!existingList) {
-    throw createNotFoundError('List', id);
+    const timestamp = Date.now()
+    const newTask: Task = {
+      id: uuidv4(),
+      listId: data.listId,
+      title: data.title,
+      description: data.description,
+      status: data.status || "todo",
+      createdAt: timestamp,
+      updatedAt: timestamp
+    }
+
+    await db.add("tasks", newTask)
+
+    return {
+      data: newTask
+    }
   }
 
-  // Begin transaction to delete list and all its tasks
-  const tx = db.transaction(['lists', 'tasks'], 'readwrite');
+const updateTask =
+  (client: IndexDBClient) =>
+  async (id: string, data: UpdateTaskInput): Promise<TaskResponse> => {
+    const db = client || (await getDB())
 
-  // Delete all tasks with the listId
-  const taskStore = tx.objectStore('tasks');
-  const taskIndex = taskStore.index('by-list');
-  let cursor = await taskIndex.openCursor(id);
+    // Check if task exists
+    const existingTask = await db.get("tasks", id)
 
-  while (cursor) {
-    await cursor.delete();
-    cursor = await cursor.continue();
+    if (!existingTask) {
+      throw createNotFoundError("Task", id)
+    }
+
+    // Validate input data
+    const validationResult = updateTaskSchema.safeParse(data)
+
+    if (!validationResult.success) {
+      throw createValidationError("Invalid task data", {
+        errors: validationResult.error.format()
+      })
+    }
+
+    const updatedTask: Task = {
+      ...existingTask,
+      ...data,
+      updatedAt: Date.now()
+    }
+
+    await db.put("tasks", updatedTask)
+
+    return {
+      data: updatedTask
+    }
   }
 
-  // Delete the list
-  await tx.objectStore('lists').delete(id);
+const deleteTask =
+  (client: IndexDBClient) =>
+  async (id: string): Promise<void> => {
+    const db = client || (await getDB())
 
-  // Commit the transaction
-  await tx.done;
-};
+    // Check if task exists
+    const existingTask = await db.get("tasks", id)
 
- const createTask = (client: IndexDBClient) => async (data: CreateTaskInput): Promise<TaskResponse> => {
-  const db = client || await getDB();
+    if (!existingTask) {
+      throw createNotFoundError("Task", id)
+    }
 
-  // Validate input data
-  const validationResult = createTaskSchema.safeParse(data);
-
-  if (!validationResult.success) {
-    throw createValidationError('Invalid task data', { errors: validationResult.error.format() });
+    await db.delete("tasks", id)
   }
-
-  // Verify that list exists
-  const list = await db.get('lists', data.listId);
-
-  if (!list) {
-    throw createNotFoundError('List', data.listId);
-  }
-
-  const timestamp = Date.now();
-  const newTask: Task = {
-    id: uuidv4(),
-    listId: data.listId,
-    title: data.title,
-    description: data.description,
-    status: data.status || 'todo',
-    createdAt: timestamp,
-    updatedAt: timestamp,
-  };
-
-  await db.add('tasks', newTask);
-
-  return {
-    data: newTask,
-  };
-};
-
- const updateTask = (client: IndexDBClient) => async (id: string, data: UpdateTaskInput): Promise<TaskResponse> => {
-  const db = client || await getDB();
-
-  // Check if task exists
-  const existingTask = await db.get('tasks', id);
-
-  if (!existingTask) {
-    throw createNotFoundError('Task', id);
-  }
-
-  // Validate input data
-  const validationResult = updateTaskSchema.safeParse(data);
-
-  if (!validationResult.success) {
-    throw createValidationError('Invalid task data', { errors: validationResult.error.format() });
-  }
-
-  const updatedTask: Task = {
-    ...existingTask,
-    ...data,
-    updatedAt: Date.now(),
-  };
-
-  await db.put('tasks', updatedTask);
-
-  return {
-    data: updatedTask,
-  };
-};
-
- const deleteTask = (client: IndexDBClient) => async (id: string): Promise<void> => {
-  const db = client || await getDB();
-
-  // Check if task exists
-  const existingTask = await db.get('tasks', id);
-
-  if (!existingTask) {
-    throw createNotFoundError('Task', id);
-  }
-
-  await db.delete('tasks', id);
-};
 
 export const taskActions = {
   createTaskList,
@@ -183,5 +213,5 @@ export const taskActions = {
   deleteTaskList,
   createTask,
   updateTask,
-  deleteTask,
-};
+  deleteTask
+}

@@ -82,7 +82,7 @@
     "@swc/helpers": "~0.5.15",
     "@tailwindcss/vite": "^4.0.16",
     "@tanstack/react-query-devtools": "^5.69.0",
-    "@tanstack/router-devtools": "1.114.27",
+    "@tanstack/react-router-devtools": "^1.114.27",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
     "@testing-library/user-event": "14.6.1",

@@ -8,7 +8,7 @@ import {
   RouterProvider
 } from "@tanstack/react-router"
 
-import { IndexDBProvider } from "./libs/context/indexdb-client"
+import { IndexDBProvider } from "./libs/providers/indexdb-provider"
 import { QueryClientProvider } from "./libs/providers/query-client-provider"
 import { routeTree } from "./routeTree.gen"
 

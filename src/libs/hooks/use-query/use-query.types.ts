@@ -1,17 +1,21 @@
-import { UseQueryOptions as UseRQQueryOptions, QueryFunction, QueryKey } from '@tanstack/react-query';
-import { IndexDBClient } from 'api/indexdb';
-import { ExtendedQueryMeta } from 'api/types/types';
-import { StandardizedApiError } from 'api/utils/error-handler';
+import type {
+  QueryFunction,
+  QueryKey,
+  UseQueryOptions as UseRQQueryOptions
+} from "@tanstack/react-query"
+import type { IndexDBClient } from "api/indexdb"
+import type { ExtendedQueryMeta } from "api/types/types"
+import type { StandardizedApiError } from "api/utils/error-handler"
 
 export type UseQueryOptions<TQueryFnData, TError = StandardizedApiError> = Omit<
   UseRQQueryOptions<TQueryFnData, TError>,
-  'queryFn'
+  "queryFn"
 > & {
-  meta?: Partial<ExtendedQueryMeta>;
-  queryFn: (client: IndexDBClient) => QueryFunction<TQueryFnData, QueryKey>;
-};
+  meta?: Partial<ExtendedQueryMeta>
+  queryFn: (client: IndexDBClient) => QueryFunction<TQueryFnData>
+}
 
-export type GenericQueryOptions<TQueryFnData, TError = StandardizedApiError> = Omit<
-  UseQueryOptions<TQueryFnData, TError>,
-  'queryKey' | 'queryFn'
-  >;
+export type GenericQueryOptions<
+  TQueryFnData,
+  TError = StandardizedApiError
+> = Omit<UseQueryOptions<TQueryFnData, TError>, "queryKey" | "queryFn">

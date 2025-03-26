@@ -1,25 +1,27 @@
-import { useQuery as useRQQuery } from '@tanstack/react-query';
-import { useIndexDB } from 'libs/hooks';
-import { StandardizedApiError } from 'api/utils/error-handler';
-import { UseQueryOptions } from './use-query.types';
+import { useQuery as useRQQuery } from "@tanstack/react-query"
+
+import type { StandardizedApiError } from "api/utils/error-handler"
+import type { UseQueryOptions } from "./use-query.types"
+
+import { useIndexDB } from "libs/hooks"
 
 export const useQuery = <TQueryFnData = unknown, TError = StandardizedApiError>(
-  params: UseQueryOptions<TQueryFnData, TError>,
-)=> {
-  const { client } = useIndexDB();
+  params: UseQueryOptions<TQueryFnData, TError>
+) => {
+  const { client } = useIndexDB()
 
-  const { queryFn, ...options } = params;
+  const { queryFn, ...options } = params
 
   const result = useRQQuery({
     queryFn: (args) => queryFn(client!)(args),
-    ...options,
-  });
+    ...options
+  })
 
   return {
     ...result,
-    isLoadingAndEnabled: result.isLoading && result.fetchStatus !== 'idle',
-  };
-};
+    isLoadingAndEnabled: result.isLoading && result.fetchStatus !== "idle"
+  }
+}
 
 // ----- Example usage when using BE API -----
 

@@ -10,9 +10,12 @@
           "variants",
           "responsive",
           "screen",
-          "layer"
+          "layer",
+          "variant",
+          "theme"
         ]
       }
-    ]
+    ],
+    "at-rule-no-deprecated": null
   }
 }

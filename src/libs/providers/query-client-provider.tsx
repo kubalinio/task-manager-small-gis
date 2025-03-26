@@ -6,7 +6,7 @@ import {
   QueryClientProvider as TanstackQueryClientProvider
 } from "@tanstack/react-query"
 
-import { StandardizedApiError } from "api/utils/error-handler"
+import type { StandardizedApiError } from "api/utils/error-handler"
 
 const metaErrorConfig = { error: { showGlobalError: true, excludedCodes: [] } }
 
