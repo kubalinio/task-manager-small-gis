@@ -3,8 +3,8 @@ import { Link as RouterLink } from "@tanstack/react-router"
 import type { LinkProps as RouterLinkProps } from "@tanstack/react-router"
 import type { ButtonProps } from "components/ui"
 
-import { buttonVariants } from "components/ui"
 import { cn } from "libs/utils"
+import { buttonVariants } from "components/ui"
 
 type LinkProps = {
   className?: string

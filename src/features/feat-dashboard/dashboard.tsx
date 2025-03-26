@@ -28,15 +28,9 @@ const Dashboard = () => {
 
       <Container>
         <div className='flex flex-1 flex-col gap-4 p-4'>
-          <Typography as='h1' variant='h2'>
+          <Typography as='h1' variant='h3'>
             Dashboard
           </Typography>
-          {Array.from({ length: 24 }).map((_, index) => (
-            <div
-              key={index}
-              className='bg-muted/50 aspect-video h-12 w-full rounded-lg'
-            />
-          ))}
         </div>
       </Container>
     </>

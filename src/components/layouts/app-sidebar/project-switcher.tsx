@@ -2,6 +2,8 @@
 
 import * as React from "react"
 
+import { ChevronDown, Plus } from "lucide-react"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "components/ui"
-import { ChevronDown, Plus } from "lucide-react"
 
 const ProjectSwitcher = ({
   projects
@@ -29,6 +30,14 @@ const ProjectSwitcher = ({
 
   if (!activeProject) {
     return null
+  }
+
+  const handleActiveProjectChange = (project: {
+    name: string
+    logo: React.ElementType
+    plan: string
+  }) => {
+    setActiveProject(project)
   }
 
   return (
@@ -58,7 +67,9 @@ const ProjectSwitcher = ({
             {projects.map((project, index) => (
               <DropdownMenuItem
                 key={project.name}
-                onClick={() => setActiveProject(project)}
+                onClick={() => {
+                  handleActiveProjectChange(project)
+                }}
                 className='gap-2 p-2'
               >
                 <div className='flex size-6 items-center justify-center rounded-sm border'>

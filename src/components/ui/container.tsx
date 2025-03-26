@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-
 import * as React from "react"
 
 import type { VariantProps } from "class-variance-authority"
 
 import { cva } from "class-variance-authority"
+
 import { cn } from "libs/utils"
 
 const containerVariants = cva("mx-auto", {

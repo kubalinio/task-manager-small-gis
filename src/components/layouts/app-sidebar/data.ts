@@ -37,7 +37,7 @@ const data = {
       url: "/",
       icon: LayoutDashboard,
       isActive: true
-    },
+    }
   ],
   navSecondary: [
     {
@@ -187,4 +187,4 @@ const data = {
     }
   ]
 }
-export {data};
+export { data }

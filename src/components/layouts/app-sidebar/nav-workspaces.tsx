@@ -1,3 +1,5 @@
+import { Plus } from "lucide-react"
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -7,7 +9,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "components/ui/sidebar"
-import { Plus } from "lucide-react"
 
 export function NavWorkspaces({
   tasks

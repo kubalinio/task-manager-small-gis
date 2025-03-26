@@ -1,12 +1,12 @@
 import * as path from "node:path"
 import { fileURLToPath } from "node:url"
 
+// @ts-expect-error Library is not correct typed
+import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
-import { configDefaults } from 'vitest/config';
 import { defineConfig } from "vite"
-import viteTsconfigPaths from 'vite-tsconfig-paths';
-// @ts-ignore
-import tailwindcss from '@tailwindcss/vite'
+import viteTsconfigPaths from "vite-tsconfig-paths"
+import { configDefaults } from "vitest/config"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -18,7 +18,7 @@ export default defineConfig({
       jsxImportSource: "@welldone-software/why-did-you-render"
     }),
     viteTsconfigPaths(),
-    tailwindcss(),
+    tailwindcss()
   ],
   cacheDir: "./node_modules/.vite",
   server: {
@@ -29,10 +29,6 @@ export default defineConfig({
     port: 4300,
     host: "localhost"
   },
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
   build: {
     outDir: "./dist",
     emptyOutDir: true,
@@ -43,12 +39,12 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: 'src/setupTests.ts',
+    environment: "jsdom",
+    setupFiles: "src/setupTests.ts",
     clearMocks: true,
-    exclude: [...configDefaults.exclude, 'e2e/**/*', 'e2e-playwright/**/*'],
+    exclude: [...configDefaults.exclude, "e2e/**/*", "e2e-playwright/**/*"],
     coverage: {
-      reporter: ['text', 'json', 'html'],
-    },
-  },
+      reporter: ["text", "json", "html"]
+    }
+  }
 })
