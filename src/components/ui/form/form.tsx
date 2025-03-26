@@ -5,7 +5,7 @@ import * as React from "react"
 import type * as LabelPrimitive from "@radix-ui/react-label"
 
 import { Slot } from "@radix-ui/react-slot"
-import { cn } from "libs/utils/cn"
+import { cn } from "libs/utils"
 import { FormProvider } from "react-hook-form"
 
 import { Typography } from "../typography"

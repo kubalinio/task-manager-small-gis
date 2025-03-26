@@ -1,10 +1,10 @@
 import { Link as RouterLink } from "@tanstack/react-router"
 
 import type { LinkProps as RouterLinkProps } from "@tanstack/react-router"
-import type { ButtonProps } from "components"
+import type { ButtonProps } from "components/ui"
 
-import { buttonVariants } from "components"
-import { cn } from "libs/utils/cn"
+import { buttonVariants } from "components/ui"
+import { cn } from "libs/utils"
 
 type LinkProps = {
   className?: string

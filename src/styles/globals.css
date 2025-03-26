@@ -32,15 +32,46 @@
   --color-input: hsl(0 0% 91);
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(248 65% 17%);
-  --rounded: 5px;
   --color-ring: hsl(215 20.2% 65.1%);
+  --rounded: 5px;
+
+  --color-sidebar-background: hsl(0 0% 98%);
+  --color-sidebar-foreground: hsl(240 5.3% 26.1%);
+  --color-sidebar-primary: hsl(240 5.9% 10%);
+  --color-sidebar-primary-foreground: hsl(0 0% 98%);
+  --color-sidebar-accent: hsl(240 4.8% 95.9%);
+  --color-sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --color-sidebar-border: hsl(220 13% 91%);
+  --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 .dark {
   color-scheme: dark;
 
-  --color-background: hsl(0, 0%, 11%);
+  --color-background: hsl(240, 6%, 10%);
   --color-foreground: hsl(0 0% 100%);
+
+  --color-muted: hsl(240, 3.7%, 15.9%);
+  --color-muted-foreground: hsl(240, 4.8%, 95.9%);
+  --color-accent: hsl(240, 3.7%, 15.9%);
+  --color-accent-foreground: hsl(240, 4.8%, 95.9%);
+
+  --color-card: hsl(240, 6%, 10%);
+  --color-card-foreground: hsl(0 0% 100%);
+  --color-border: hsl(240, 3.7%, 15.9%);
+  --color-input: hsl(240, 3.7%, 15.9%);
+  --color-popover: hsl(240, 3.7%, 15.9%);
+  --color-popover-foreground: hsl(0 0% 100%);
+  --color-ring: hsl(217.2 91.2% 59.8%);
+
+  --color-sidebar-background: hsl(240, 4%, 13%);
+  --color-sidebar-foreground: hsl(240 4.8% 95.9%);
+  --color-sidebar-primary: hsl(224.3 76.3% 48%);
+  --color-sidebar-primary-foreground: hsl(0 0% 100%);
+  --color-sidebar-accent: hsl(240 3.7% 15.9%);
+  --color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --color-sidebar-border: hsl(240 3.7% 15.9%);
+  --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
 }
 
 .light {
@@ -59,7 +90,7 @@
 }
 
 /* @theme inline { */
-@theme {
+@theme inline {
   --font-mono: "JetBrains Mono", monospace;
 
   --color-background: var(--color-background);
@@ -73,6 +104,31 @@
 
   --color-muted: var(--color-muted);
   --color-muted-foreground: var(--color-muted-foreground);
+
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: var(--color-accent-foreground);
+
+  --color-success: var(--color-success);
+  --color-success-hover: var(--color-success-hover);
+
+  --color-error: var(--color-error);
+  --color-error-hover: var(--color-error-hover);
+
+  --color-warning: var(--color-warning);
+  --color-warning-hover: var(--color-warning-hover);
+
+  --color-info: var(--color-info);
+  --color-info-hover: var(--color-info-hover);
+
+  --color-destructive: var(--color-destructive);
+
+  --color-card: var(--color-card);
+  --color-card-foreground: var(--color-card-foreground);
+
+  --color-border: var(--color-border);
+  --color-input: var(--color-input);
+  --color-popover: var(--color-popover);
+  --color-popover-foreground: var(--color-popover-foreground);
 
   --spacing: 0.25rem;
 
@@ -114,6 +170,15 @@
     #5655d7e6 0%,
     #7f7effe6 100%
   );
+
+  --color-sidebar: var(--color-sidebar-background);
+  --color-sidebar-foreground: var(--color-sidebar-foreground);
+  --color-sidebar-primary: var(--color-sidebar-primary);
+  --color-sidebar-primary-foreground: var(--color-sidebar-primary-foreground);
+  --color-sidebar-accent: var(--color-sidebar-accent);
+  --color-sidebar-accent-foreground: var(--color-sidebar-accent-foreground);
+  --color-sidebar-border: var(--color-sidebar-border);
+  --color-sidebar-ring: var(--color-sidebar-ring);
 
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
