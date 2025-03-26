@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { taskQueries } from "api/actions/tasks/task.queries";
-import { TaskListResponse, TaskListsResponse, TasksFilterOptions } from "api/actions/tasks/types";
+import { TaskListResponse, TaskListsResponse, TasksFilterOptions } from "api/actions/tasks/task.validators";
 import { useQuery } from "libs/hooks/use-query/use-query";
 import { GenericQueryOptions } from "libs/hooks/use-query/use-query.types";
 

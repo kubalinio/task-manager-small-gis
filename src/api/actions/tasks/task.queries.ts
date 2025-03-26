@@ -1,6 +1,6 @@
 import { getDB, IndexDBClient, List, Task } from 'api/indexdb';
 
-import { TasksFilterOptions } from './types';
+import { TasksFilterOptions } from './task.validators';
 import { queryFactoryOptions } from 'api/utils/query-factory-options';
 import { createNotFoundError } from 'api/utils/error-handler';
 

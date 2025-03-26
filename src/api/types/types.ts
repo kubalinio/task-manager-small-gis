@@ -2,42 +2,44 @@
 import { QueryMeta } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
 
-export type MutationHTTPMethod = 'DELETE' | 'POST' | 'PUT' | 'PATCH';
+type MutationHTTPMethod = 'DELETE' | 'POST' | 'PUT' | 'PATCH';
 
-export type Unwrap<T> = T extends Promise<infer U> ? U : T;
+type Unwrap<T> = T extends Promise<infer U> ? U : T;
 
-export type ExtendedQueryMeta = QueryMeta & {
+type ExtendedQueryMeta = QueryMeta & {
   error: { excludedCodes: number[]; showGlobalError: boolean };
 };
 
-export type ExtendedAxiosRequestConfig = AxiosRequestConfig & {
+type ExtendedAxiosRequestConfig = AxiosRequestConfig & {
   _retry?: boolean;
 };
 
-export interface PaginationMeta {
+interface PaginationMeta {
   total: number;
   page: number;
   limit: number;
   totalPages: number;
 }
 
-export interface ApiResponseMeta {
+interface ApiResponseMeta {
   total?: number;
   page?: number;
   limit?: number;
   totalPages?: number;
 }
 
-export interface ApiListResponse<T> {
+interface ApiListResponse<T> {
   data: T[];
   meta: ApiResponseMeta;
 }
 
-export interface ApiItemResponse<T> {
+interface ApiItemResponse<T> {
   data: T;
 }
 
-export interface SortOptions {
+interface SortOptions {
   field: string;
   direction: 'asc' | 'desc';
 }
+
+export type { MutationHTTPMethod, Unwrap, ExtendedQueryMeta, ExtendedAxiosRequestConfig, PaginationMeta, ApiResponseMeta, ApiListResponse, ApiItemResponse, SortOptions };

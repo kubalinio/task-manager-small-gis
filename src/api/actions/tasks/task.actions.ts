@@ -11,7 +11,7 @@ import {
   createTaskSchema,
   updateListSchema,
   updateTaskSchema,
-} from './types';
+} from './task.validators';
 import { createNotFoundError, createValidationError } from '../../utils/error-handler';
 
 const createTaskList = (client: IndexDBClient) => async (data: CreateListInput): Promise<TaskListResponse> => {
