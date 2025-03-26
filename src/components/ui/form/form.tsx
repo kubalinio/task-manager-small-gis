@@ -5,8 +5,9 @@ import * as React from "react"
 import type * as LabelPrimitive from "@radix-ui/react-label"
 
 import { Slot } from "@radix-ui/react-slot"
-import { cn } from "libs/utils"
 import { FormProvider } from "react-hook-form"
+
+import { cn } from "libs/utils"
 
 import { Typography } from "../typography"
 import { FormLabel as FormLabelUI } from "./form-label"
@@ -15,7 +16,7 @@ import { useFormField } from "./use-form-field"
 const Form = FormProvider
 
 const FormLabel = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
+  React.ComponentRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
   const { formItemId, error } = useFormField()
@@ -34,7 +35,7 @@ const FormLabel = React.forwardRef<
 FormLabel.displayName = "FormLabel"
 
 const FormControl = React.forwardRef<
-  React.ElementRef<typeof Slot>,
+  React.ComponentRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()

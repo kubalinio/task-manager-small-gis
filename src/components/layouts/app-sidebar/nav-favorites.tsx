@@ -1,6 +1,14 @@
 "use client"
 
 import {
+  ArrowUpRight,
+  Link,
+  MoreHorizontal,
+  StarOff,
+  Trash2
+} from "lucide-react"
+
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -14,13 +22,6 @@ import {
   SidebarMenuItem,
   useSidebar
 } from "components/ui"
-import {
-  ArrowUpRight,
-  Link,
-  MoreHorizontal,
-  StarOff,
-  Trash2
-} from "lucide-react"
 
 const NavFavorites = ({
   favorites
