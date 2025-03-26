@@ -9,7 +9,7 @@ export const Route = createRootRoute({
       <Outlet />
 
       {enableTanstackRouterDevtools && (
-        <TanStackRouterDevtools position='top-left' />
+        <TanStackRouterDevtools position='bottom-left' />
       )}
     </>
   )

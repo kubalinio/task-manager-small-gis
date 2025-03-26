@@ -5,7 +5,7 @@ import * as React from "react"
 import type { VariantProps } from "class-variance-authority"
 
 import { cva } from "class-variance-authority"
-import { cn } from "libs/utils/cn"
+import { cn } from "libs/utils"
 
 const containerVariants = cva("mx-auto", {
   variants: {
