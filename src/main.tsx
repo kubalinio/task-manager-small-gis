@@ -8,6 +8,8 @@ import {
   RouterProvider
 } from "@tanstack/react-router"
 
+import { IndexDBProvider } from "./libs/context/indexdb-client"
+import { QueryClientProvider } from "./libs/providers/query-client-provider"
 import { routeTree } from "./routeTree.gen"
 
 if (import.meta.env.DEV) {
@@ -34,7 +36,11 @@ function InnerApp() {
 function App() {
   return (
     <>
-      <InnerApp />
+      <QueryClientProvider>
+        <IndexDBProvider>
+          <InnerApp />
+        </IndexDBProvider>
+      </QueryClientProvider>
     </>
   )
 }
