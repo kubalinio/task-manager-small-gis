@@ -1,9 +1,7 @@
 import type { List } from "api/types"
 
-import { Plus } from "lucide-react"
-
+import { TaskListCreate } from "features/feat-task-list-create"
 import { Link } from "components/common/link"
-import { Button } from "components/ui"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -20,18 +18,17 @@ export function NavWorkspaces({ tasks }: { tasks: List[] }) {
       <SidebarGroupLabel className='flex items-center justify-between'>
         <span>Task Lists</span>
 
-        <Button variant='ghost' size='sm' className='p-1'>
-          <Plus className='size-4' />
-        </Button>
+        <TaskListCreate />
       </SidebarGroupLabel>
+
       <SidebarGroupContent>
         <SidebarMenu>
-          {tasks.map((task) => (
-            <SidebarMenuItem key={task.title}>
+          {tasks.map((list) => (
+            <SidebarMenuItem key={list.id}>
               <SidebarMenuButton asChild>
                 <Link
                   to='/task-lists/$taskListId'
-                  params={{ taskListId: task.id }}
+                  params={{ taskListId: list.id }}
                   variant='ghost'
                   className='justify-start pl-2'
                   activeProps={{
@@ -40,7 +37,7 @@ export function NavWorkspaces({ tasks }: { tasks: List[] }) {
                 >
                   <span className='bg-primary size-2 shrink-0 rounded-full' />
 
-                  <span>{task.title}</span>
+                  <span>{list.title}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

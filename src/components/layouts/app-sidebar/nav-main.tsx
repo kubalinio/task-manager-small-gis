@@ -2,6 +2,7 @@
 
 import { type LucideIcon } from "lucide-react"
 
+import { Link } from "components/common/link"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "components/ui"
 
 export function NavMain({
@@ -18,11 +19,17 @@ export function NavMain({
     <SidebarMenu>
       {items.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton asChild isActive={item.isActive}>
-            <a href={item.url}>
+          <SidebarMenuButton asChild>
+            <Link
+              to='/'
+              activeProps={{ className: "bg-accent" }}
+              variant='ghost'
+              className='justify-start pl-2'
+            >
               <item.icon />
+
               <span>{item.title}</span>
-            </a>
+            </Link>
           </SidebarMenuButton>
         </SidebarMenuItem>
       ))}

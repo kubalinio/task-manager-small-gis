@@ -25,6 +25,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
         <NavMain items={data.navMain} />
       </SidebarHeader>
+
       <SidebarContent>
         <NavWorkspaces tasks={taskLists?.data ?? []} />
       </SidebarContent>

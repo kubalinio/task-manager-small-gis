@@ -1,4 +1,4 @@
-import TaskList from "features/feat-task-list"
+import TaskList from "features/feat-task-list-details"
 import { SidebarTrigger } from "components/layouts/app-sidebar"
 import {
   Breadcrumb,

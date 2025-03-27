@@ -13,7 +13,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground focus-visible:bg-primary-50 disabled:bg-black-25 p-0 hover:bg-[#550788] focus-visible:ring",
+          "bg-primary text-primary-foreground focus-visible:bg-primary-50 disabled:bg-black-25 hover:bg-primary/90 p-0 focus-visible:ring",
         secondary:
           "bg-accent text-accent-foreground hover:bg-accent-50 focus-visible:ring-accent-50 focus-visible:ring-offset-accent-50",
         destructive:
@@ -42,17 +42,47 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  loading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      loading = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {loading && (
+          <span
+            className={cn("opacity-100", {
+              "opacity-0": loading
+            })}
+          >
+            {children}
+          </span>
+        )}
+
+        {loading && (
+          <span className='absolute inset-0 flex items-center justify-center'>
+            <span className='size-4 animate-spin rounded-full border-2 border-t-transparent border-r-transparent border-b-transparent border-l-transparent' />
+          </span>
+        )}
+
+        {!loading && children}
+      </Comp>
     )
   }
 )
