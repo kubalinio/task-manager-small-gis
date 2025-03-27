@@ -1,0 +1,48 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Description
+Create a simple task management application with the ability to add, edit, delete, and filter tasks. The application should be responsive, ergonomic, and aesthetically pleasing.
+
+# Project Main Features
+
+## 1. Task Registry
+- Display task list with information:
+  - Title
+  - Description
+  - Status (e.g., "To Do", "In Progress", "Done")
+- Ability to mark tasks as completed
+
+## 2. Task Management
+- Form for adding new tasks (title, description, status)
+- Edit existing tasks (e.g., via "Edit" button)
+
+## 3. Filtering and Sorting
+- Search tasks by description and title text
+- Filter tasks by status
+- Sort by creation date (ascending/descending)
+
+## 4. Task Deletion
+- Ability to remove tasks from the list
+
+## 5. Responsiveness
+- UI adapted for mobile devices and desktops
+
+## 6. Additional Features
+- Task statistics and analytics
+- Export/Import functionality
+- Task reminders and notifications
+- Collaborative features (future scope)
+- Task templates
+- Custom task fields
+- Task history and audit log
+
+## 7. Secondary Features
+- Form validation (e.g., empty field checks)
+- Debounce mechanism for task text search
+- Animations for adding/removing tasks
+- Unit tests for key functions (e.g., adding/editing tasks)
+- Ability to switch task list view between list and card layouts
+- Dark mode with toggle switch

@@ -21,10 +21,7 @@ const Link = ({
     <RouterLink
       className={buttonVariants({
         variant,
-        className: cn(
-          "h-fit py-0 pr-0 underline-offset-4 hover:underline",
-          className
-        )
+        className: cn("h-fit py-0 pr-0", className)
       })}
       {...props}
     >

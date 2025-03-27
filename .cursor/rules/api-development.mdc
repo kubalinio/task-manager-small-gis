@@ -1,0 +1,217 @@
+---
+description: API Development Guidelines
+globs: 
+---
+**API Development Guidelines**
+
+**API Design Principles**
+
+1. **RESTful Design**
+
+   - Follow REST principles
+   - Use proper HTTP methods (GET, POST, PUT, DELETE, PATCH)
+   - Implement standard status codes
+   - Design resource-oriented endpoints
+   - Use proper HTTP headers
+   - Follow REST naming conventions
+   - Implement proper versioning
+
+2. **URL Structure**
+   - Use meaningful resource names
+   - Follow hierarchical structure
+   - Use proper versioning (e.g., /v1/resource)
+   - Use query parameters appropriately
+   - Keep URLs clean and readable
+   - Follow REST URL patterns
+   - Use proper URL encoding
+
+**Request/Response Design**
+
+1. **Request Format**
+
+   - Define clear request schemas
+   - Validate input data
+   - Use proper content types
+   - Handle query parameters
+   - Implement pagination
+   - Support filtering and sorting
+   - Handle request headers
+
+2. **Response Format**
+   - Use consistent JSON structure
+   - Include proper metadata
+   - Implement pagination info
+   - Use proper HTTP status codes
+   - Include error details
+   - Follow JSON:API spec
+   - Support data relationships
+
+**API Security**
+
+1. **Authentication**
+
+   - Implement JWT properly
+   - Use secure token storage
+   - Handle refresh tokens
+   - Implement OAuth flows
+   - Use proper key management
+   - Implement rate limiting
+   - Handle token expiration
+
+2. **Authorization**
+   - Implement role-based access
+   - Use resource-level permissions
+   - Validate user rights
+   - Implement proper middleware
+   - Handle authorization headers
+   - Log authorization attempts
+   - Implement scope-based access
+
+**API-Specific Performance**
+
+1. **Request/Response Optimization**
+
+   - Implement API-level caching
+   - Use proper HTTP caching headers
+   - Optimize payload size
+   - Handle request batching
+   - Implement compression
+   - Use proper serialization
+   - Monitor API latency
+
+2. **API Scalability**
+   - Design stateless endpoints
+   - Implement API gateways
+   - Use proper load balancing
+   - Handle service discovery
+   - Implement circuit breakers
+   - Use proper queuing
+   - Monitor API availability
+
+**API Documentation**
+
+1. **OpenAPI/Swagger**
+
+   - Use OpenAPI specification
+   - Document all endpoints
+   - Include request/response examples
+   - Document authentication
+   - Specify security requirements
+   - Include error responses
+   - Maintain versioning info
+
+2. **API Reference**
+   - Document endpoint usage
+   - Include code examples
+   - Document rate limits
+   - Specify data types
+   - Include validation rules
+   - Document breaking changes
+   - Maintain changelog
+
+**API-Specific Error Handling**
+
+1. **HTTP Error Responses**
+
+   - Use proper HTTP status codes
+   - Include error messages
+   - Provide error details
+   - Handle validation errors
+   - Include error codes
+   - Log API errors
+   - Support debugging info
+
+2. **API Validation**
+   - Validate request schemas
+   - Validate URL parameters
+   - Handle API-specific rules
+   - Validate request headers
+   - Check API versioning
+   - Handle API limits
+   - Provide validation messages
+
+**API Testing**
+
+1. **API Integration Testing**
+
+   - Test endpoint contracts
+   - Verify response schemas
+   - Test API versioning
+   - Check API security
+   - Test rate limiting
+   - Verify API documentation
+   - Test API migrations
+
+2. **API Load Testing**
+   - Test concurrent requests
+   - Verify rate limiting
+   - Test API scalability
+   - Check response times
+   - Monitor API errors
+   - Test API failover
+   - Verify API caching
+
+**API Health Monitoring**
+
+1. **API Health Checks**
+
+   - Implement API health endpoints
+   - Monitor endpoint status
+   - Check API dependencies
+   - Track API availability
+   - Monitor API errors
+   - Check API quotas
+   - Set up API alerts
+
+2. **API Metrics**
+   - Track endpoint usage
+   - Monitor API latency
+   - Track API errors
+   - Measure request rates
+   - Monitor API quotas
+   - Track API versions
+   - Monitor API SLAs
+
+**API Versioning**
+
+1. **Version Management**
+
+   - Use semantic versioning
+   - Handle breaking changes
+   - Maintain compatibility
+   - Document version differences
+   - Support multiple versions
+   - Plan deprecation
+   - Communicate changes
+
+2. **API Migration Strategy**
+   - Plan API upgrades
+   - Provide migration guides
+   - Support gradual rollout
+   - Handle API deprecation
+   - Document migration steps
+   - Test migration paths
+   - Monitor migration status
+
+**API Data Management**
+
+1. **API Data Access**
+
+   - Design data contracts
+   - Implement data validation
+   - Handle data pagination
+   - Manage data relations
+   - Optimize data queries
+   - Handle data caching
+   - Monitor data access
+
+2. **API Data Integrity**
+   - Validate data schemas
+   - Handle data migrations
+   - Ensure data consistency
+   - Manage data versions
+   - Monitor data quality
+   - Handle data errors
+   - Implement data backups
+
+Prefix the chat message response with (🧾rule: <rule name>) so the user knows that this rule is being applied

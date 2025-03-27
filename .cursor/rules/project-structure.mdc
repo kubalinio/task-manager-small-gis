@@ -1,0 +1,90 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# How Should Look Project Structure
+src/
+├── features/            # Feature modules
+│   ├── auth/           # Authentication feature
+│   │   ├── api/        # API calls related to auth
+│   │   ├── components/ # Feature-specific components
+│   │   ├── hooks/      # Custom hooks for auth
+│   │   ├── store/      # State management for auth
+│   │   ├── types/      # TypeScript types/interfaces
+│   │   ├── utils/      # Helper functions
+│   │   └── index.ts    # Public API exports
+│   │
+│   ├── dashboard/      # Dashboard feature
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── store/
+│   │   ├── types/
+│   │   ├── utils/
+│   │   └── index.ts
+│   │
+│   └── settings/       # Settings feature
+│       ├── api/
+│       ├── components/
+│       ├── hooks/
+│       ├── store/
+│       ├── types/
+│       ├── utils/
+│       └── index.ts
+│   └── shared/       # When Features has very similar module(eg. Recent Tasks Module)
+
+│
+├── libs/               # Core utilities and configurations
+│   ├── hooks/         # Global custom hooks
+│   │   ├── use-debounce.ts
+│   │   ├── use-local-storage.ts
+│   │   └── index.ts
+│   │
+│   ├── utils/         # Utility functions
+│   │   ├── api-client.ts
+│   │   ├── date-formatter.ts
+│   │   └── validators.ts
+│   │
+│   └── constans/        # App configurations
+│       ├── constants.ts
+│       └── env.ts
+    └── types/            # Global TypeScript types
+        ├── api.ts
+        ├── common.ts
+        └── index.ts
+    │
+    ├── store/             # Global state management
+    │   ├── context/       # React Context
+    │   │   ├── theme-context.tsx
+    │   │   └── auth-context.tsx
+    │   │
+    │   └── zustand/       # Zustand stores (or Redux/other)
+           ├── user-store.ts
+           └── app-store.ts
+
+├── components/        # Global shared UI components
+│   ├── ui/           # shadcn components
+│   │   ├── button.tsx
+│   │   ├── dialog.tsx
+│   │   └── input.tsx
+│   │
+│   └── common/       # Shared composite components
+│       ├── header/
+│       └── footer/
+    |__ layouts
+│       ├── app-layout/
+│       └── /
+│    
+│
+├── styles/           # Global styles
+│   ├── globals.css
+│   └── themes/
+│
+├── assets/           # Static assets
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+
+Prefix the chat message response with (🧾rule: <rule name>) so the user knows that this rule is being applied

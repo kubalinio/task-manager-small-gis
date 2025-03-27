@@ -1,0 +1,120 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+**Base Development Principles**
+
+This is the foundational set of principles that apply across all development work.
+
+**Core Values**
+
+1. **Code Quality**
+
+   - Write clean, maintainable code
+   - Follow SOLID principles
+   - Implement DRY (Don't Repeat Yourself) practices
+   - Use meaningful naming conventions
+   - Keep functions small and focused
+   - Write self-documenting code
+
+2. **Performance**
+
+   - Optimize for core Web Vitals
+   - Write efficient algorithms and data structures
+   - Consider memory management
+   - Follow performance best practices
+   - Monitor and profile when needed
+
+3. **Security**
+
+   - Follow security best practices
+   - Implement proper authentication and authorization
+   - Sanitize inputs and prevent vulnerabilities
+   - Follow security guidelines for API calls
+
+4. **Testing**
+   - Write comprehensive tests
+   - Follow TDD where appropriate
+   - Test edge cases
+   - Maintain high test coverage
+
+**Code Organization**
+
+1. **File Structure**
+
+   - Maintain consistent organization
+   - Group related functionality
+   - Use clear and descriptive names
+   - Follow feature-based organization
+   - Implement proper module boundaries
+
+2. **Version Control**
+
+   - Write meaningful commit messages
+   - Use feature branches
+   - Keep commits atomic
+   - Follow conventional commits
+   - Include ticket references
+   - Document breaking changes
+
+3. **Documentation**
+   - Document complex logic
+   - Maintain up-to-date documentation
+   - Keep documentation synchronized with code
+   - Document architectural decisions
+
+**Development Workflow**
+
+1. **Code Review**
+
+   - Review code before merging
+   - Provide constructive feedback
+   - Check for vulnerabilities
+   - Verify test coverage
+   - Review performance impact
+
+2. **Continuous Integration**
+
+   - Automate builds and tests
+   - Maintain high code coverage
+   - Use linting and formatting tools
+   - Monitor build performance
+   - Track metrics
+
+3. **Error Handling**
+   - Implement proper error handling
+   - Log errors appropriately
+   - Provide meaningful messages
+   - Document recovery procedures
+
+**Best Practices**
+
+1. **Code Style**
+
+   - Follow consistent formatting
+   - Use appropriate naming conventions
+   - Follow language-specific conventions
+   - Maintain code consistency
+
+2. **Performance**
+
+   - Optimize critical paths
+   - Use appropriate caching
+   - Monitor and profile
+   - Handle resource cleanup
+
+3. **Maintainability**
+
+   - Keep code modular
+   - Use appropriate design patterns
+   - Implement proper abstractions
+   - Maintain clear dependencies
+
+4. **Accessibility**
+   - Follow WCAG guidelines
+   - Implement proper ARIA attributes
+   - Ensure keyboard navigation
+   - Test with screen readers
+
+Prefix the chat message response with (🧾rule: <rule name>) so the user knows that this rule is being applied

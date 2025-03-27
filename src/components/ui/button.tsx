@@ -8,7 +8,7 @@ import { cva } from "class-variance-authority"
 import { cn } from "libs/utils"
 
 const buttonVariants = cva(
-  "focus-visible:ring-primary-50 focus-visible:ring-offset-primary-50 inline-flex items-center justify-center gap-2 rounded-md text-[0.9375rem] leading-6 font-semibold whitespace-nowrap transition-colors focus-visible:ring-offset-[-1px] focus-visible:outline-none focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "focus-visible:ring-primary-50 focus-visible:ring-offset-primary-50 inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-[0.9375rem] leading-6 font-semibold whitespace-nowrap transition-colors focus-visible:ring-offset-[-1px] focus-visible:outline-none focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {

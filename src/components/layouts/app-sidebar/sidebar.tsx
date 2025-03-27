@@ -1,5 +1,6 @@
 import * as React from "react"
 
+import { useGetTaskLists } from "libs/hooks"
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +14,10 @@ import { NavWorkspaces } from "./nav-workspaces"
 import { ProjectSwitcher } from "./project-switcher"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: taskLists } = useGetTaskLists()
+
+  // console.log(taskLists)
+
   return (
     <Sidebar className='border-r-0' {...props}>
       <SidebarHeader>
@@ -21,8 +26,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        {/* <NavFavorites favorites={data.favorites} /> */}
-        <NavWorkspaces tasks={data.tasks} />
+        <NavWorkspaces tasks={taskLists?.data ?? []} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
