@@ -1,3 +1,5 @@
+import type { TasksResponse } from "api/actions/tasks/task.types"
+
 interface Task {
   id: string
   listId: string

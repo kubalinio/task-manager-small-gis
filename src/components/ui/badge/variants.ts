@@ -21,8 +21,8 @@ export const badgeVariants = cva(
         outlined: "bg-transparent hover:bg-transparent"
       },
       size: {
-        sm: "h-5 px-2 text-xs",
-        md: "h-6 px-3 text-sm"
+        sm: "px-2 text-xs",
+        md: "px-3 text-sm"
       }
     },
     defaultVariants: {
