@@ -3,10 +3,15 @@ import type { z } from "zod"
 import type {
   createListSchema,
   createTaskSchema,
-  TaskStatus,
   updateListSchema,
   updateTaskSchema
 } from "./task.validators"
+
+const TaskStatus = {
+  TODO: "todo",
+  IN_PROGRESS: "in-progress",
+  DONE: "done"
+} as const
 
 type TaskStatusType = (typeof TaskStatus)[keyof typeof TaskStatus]
 
@@ -25,8 +30,8 @@ type TaskListsResponse = {
   }
 }
 
-interface TaskListResponse {
-  data: List
+interface TaskListResponse extends List {
+  tasks: TasksResponse
 }
 
 interface TasksResponse {
@@ -63,6 +68,7 @@ type UpdateListInput = z.infer<typeof updateListSchema>
 type CreateTaskInput = z.infer<typeof createTaskSchema>
 type UpdateTaskInput = z.infer<typeof updateTaskSchema>
 
+export { TaskStatus }
 export type {
   TaskStatusType,
   TaskManagerDB,

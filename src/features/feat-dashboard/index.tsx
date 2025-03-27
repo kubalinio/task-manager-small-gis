@@ -9,6 +9,8 @@ import {
   Typography
 } from "components/ui"
 
+import TasksTable from "./components/tasks-table/tasks-table"
+
 const Dashboard = () => {
   return (
     <>
@@ -32,6 +34,8 @@ const Dashboard = () => {
             Dashboard
           </Typography>
         </div>
+
+        <TasksTable />
       </Container>
     </>
   )

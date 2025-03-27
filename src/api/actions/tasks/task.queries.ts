@@ -29,8 +29,11 @@ const getTaskList = (client: IndexDBClient) => async (id: string) => {
     throw createNotFoundError("Task List", id)
   }
 
+  const tasks = await getAllTasks(client)({ listId: id })
+
   return {
-    data: list
+    ...list,
+    tasks
   }
 }
 
