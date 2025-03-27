@@ -1,22 +1,22 @@
 import type { IndexDBClient } from "api/indexdb"
 import type { List, Task } from "api/types"
 import type {
-  CreateListInput,
   CreateTaskInput,
-  TaskListResponse,
+  CreateTaskListInput,
+  MutationTaskListResponse,
   TaskResponse,
-  UpdateListInput,
-  UpdateTaskInput
+  UpdateTaskInput,
+  UpdateTaskListInput
 } from "./task.types"
 
 import { v4 as uuidv4 } from "uuid"
 
 import { getDB } from "api/indexdb"
-
 import {
   createNotFoundError,
   createValidationError
-} from "../../utils/error-handler"
+} from "api/utils/error-handler"
+
 import {
   createListSchema,
   createTaskSchema,
@@ -26,7 +26,7 @@ import {
 
 const createTaskList =
   (client: IndexDBClient) =>
-  async (data: CreateListInput): Promise<TaskListResponse> => {
+  async (data: CreateTaskListInput): Promise<MutationTaskListResponse> => {
     const db = client || (await getDB())
 
     // Validate input data
@@ -48,14 +48,15 @@ const createTaskList =
 
     await db.add("task_lists", newList)
 
-    return {
-      data: newList
-    }
+    return newList
   }
 
 const updateTaskList =
   (client: IndexDBClient) =>
-  async (id: string, data: UpdateListInput): Promise<TaskListResponse> => {
+  async (
+    id: string,
+    data: UpdateTaskListInput
+  ): Promise<MutationTaskListResponse> => {
     const db = client || (await getDB())
 
     // Check if list exists
@@ -82,9 +83,7 @@ const updateTaskList =
 
     await db.put("task_lists", updatedList)
 
-    return {
-      data: updatedList
-    }
+    return updatedList
   }
 
 const deleteTaskList =

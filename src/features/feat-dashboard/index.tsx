@@ -1,12 +1,11 @@
+import TaskList from "features/feat-task-list"
 import { SidebarTrigger } from "components/layouts/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  Container,
-  Separator,
-  Typography
+  Separator
 } from "components/ui"
 
 const Dashboard = () => {
@@ -26,15 +25,9 @@ const Dashboard = () => {
         </Breadcrumb>
       </header>
 
-      <Container>
-        <div className='flex flex-1 flex-col gap-4 p-4'>
-          <Typography as='h1' variant='h3'>
-            Dashboard
-          </Typography>
-        </div>
-      </Container>
+      <TaskList />
     </>
   )
 }
 
-export { Dashboard }
+export default Dashboard

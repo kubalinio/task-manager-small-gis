@@ -1,10 +1,6 @@
 import { z } from "zod"
 
-const TaskStatus = {
-  TODO: "todo",
-  IN_PROGRESS: "in-progress",
-  DONE: "done"
-} as const
+import { TaskStatus } from "./task.types"
 
 const taskStatusSchema = z.enum([
   TaskStatus.TODO,
