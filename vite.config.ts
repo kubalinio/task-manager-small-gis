@@ -1,4 +1,5 @@
 // @ts-expect-error Library is not correct typed
+
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 
 import * as path from "node:path"

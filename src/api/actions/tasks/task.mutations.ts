@@ -1,21 +1,21 @@
 import type { IndexDBClient } from "api/indexdb"
 import type {
-  CreateListInput,
   CreateTaskInput,
-  UpdateListInput,
-  UpdateTaskInput
+  CreateTaskListInput,
+  UpdateTaskInput,
+  UpdateTaskListInput
 } from "./task.types"
 
 import { taskActions } from "./task.actions"
 
 export const taskMutations = {
-  createTaskList: (client: IndexDBClient) => (data: CreateListInput) => {
+  createTaskList: (client: IndexDBClient) => (data: CreateTaskListInput) => {
     return taskActions.createTaskList(client)(data)
   },
 
   updateTaskList:
     (client: IndexDBClient) =>
-    (params: { id: string; data: UpdateListInput }) => {
+    (params: { id: string; data: UpdateTaskListInput }) => {
       return taskActions.updateTaskList(client)(params.id, params.data)
     },
 

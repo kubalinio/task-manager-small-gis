@@ -30,8 +30,19 @@ type TaskListsResponse = {
   }
 }
 
-interface TaskListResponse extends List {
+interface TaskListResponse {
+  id: string
+  title: string
+  createdAt: number
+  updatedAt: number
   tasks: TasksResponse
+}
+
+interface MutationTaskListResponse {
+  id: string
+  title: string
+  createdAt: number
+  updatedAt: number
 }
 
 interface TasksResponse {
@@ -55,7 +66,7 @@ interface TasksFilterOptions {
 
 interface UpdateListParams {
   id: string
-  data: UpdateListInput
+  data: UpdateTaskListInput
 }
 
 interface UpdateTaskParams {
@@ -63,8 +74,8 @@ interface UpdateTaskParams {
   data: UpdateTaskInput
 }
 
-type CreateListInput = z.infer<typeof createListSchema>
-type UpdateListInput = z.infer<typeof updateListSchema>
+type CreateTaskListInput = z.infer<typeof createListSchema>
+type UpdateTaskListInput = z.infer<typeof updateListSchema>
 type CreateTaskInput = z.infer<typeof createTaskSchema>
 type UpdateTaskInput = z.infer<typeof updateTaskSchema>
 
@@ -78,11 +89,12 @@ export type {
   TaskListResponse,
   TasksResponse,
   TaskResponse,
+  MutationTaskListResponse,
   TasksFilterOptions,
   UpdateListParams,
   UpdateTaskParams,
-  CreateListInput,
-  UpdateListInput,
+  CreateTaskListInput,
+  UpdateTaskListInput,
   CreateTaskInput,
   UpdateTaskInput
 }
