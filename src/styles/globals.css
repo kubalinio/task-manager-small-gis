@@ -43,24 +43,28 @@
   --color-sidebar-accent-foreground: hsl(240 5.9% 10%);
   --color-sidebar-border: hsl(220 13% 91%);
   --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  --color-task-status-todo: hsl(169 16% 74%);
+  --color-task-status-in-progress: hsl(34 100% 63%);
+  --color-task-status-done: hsl(169 100% 30%);
 }
 
 .dark {
   color-scheme: dark;
 
-  --color-background: hsl(240, 6%, 10%);
+  --color-background: hsl(240 6% 10%);
   --color-foreground: hsl(0 0% 100%);
 
   --color-muted: hsl(240, 3.7%, 15.9%);
-  --color-muted-foreground: hsl(240, 4.8%, 95.9%);
-  --color-accent: hsl(240, 3.7%, 15.9%);
-  --color-accent-foreground: hsl(240, 4.8%, 95.9%);
+  --color-muted-foreground: hsl(240 4.8% 95.9%);
+  --color-accent: hsl(240 3.7% 15.9%);
+  --color-accent-foreground: hsl(240 4.8% 95.9%);
 
-  --color-card: hsl(240, 6%, 10%);
+  --color-card: hsl(240 6% 10%);
   --color-card-foreground: hsl(0 0% 100%);
-  --color-border: hsl(240, 3.7%, 15.9%);
-  --color-input: hsl(240, 3.7%, 15.9%);
-  --color-popover: hsl(240, 3.7%, 15.9%);
+  --color-border: hsl(240 3.7% 15.9%);
+  --color-input: hsl(240 3.7% 15.9%);
+  --color-popover: hsl(240 3.7% 15.9%);
   --color-popover-foreground: hsl(0 0% 100%);
   --color-ring: hsl(217.2 91.2% 59.8%);
 
@@ -72,6 +76,10 @@
   --color-sidebar-accent-foreground: hsl(240 4.8% 95.9%);
   --color-sidebar-border: hsl(240 3.7% 15.9%);
   --color-sidebar-ring: hsl(217.2 91.2% 59.8%);
+
+  --color-task-status-todo: hsl(169 16% 74%);
+  --color-task-status-in-progress: hsl(34 100% 63%);
+  --color-task-status-done: hsl(169 100% 30%);
 }
 
 .light {
@@ -129,6 +137,10 @@
   --color-input: var(--color-input);
   --color-popover: var(--color-popover);
   --color-popover-foreground: var(--color-popover-foreground);
+
+  --color-task-status-todo: var(--color-task-status-todo);
+  --color-task-status-in-progress: var(--color-task-status-in-progress);
+  --color-task-status-done: var(--color-task-status-done);
 
   --spacing: 0.25rem;
 
@@ -228,7 +240,7 @@
 
 @layer base {
   * {
-    @apply scroll-smooth;
+    @apply border-border scroll-smooth;
   }
 
   body {
