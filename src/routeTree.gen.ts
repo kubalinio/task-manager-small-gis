@@ -13,6 +13,7 @@
 import { Route as rootRoute } from "./routes/__root"
 import { Route as AppImport } from "./routes/_app"
 import { Route as AppIndexImport } from "./routes/_app.index"
+import { Route as AppTaskListsTaskListIdImport } from "./routes/_app.task-lists/$taskListId"
 
 // Create/Update Routes
 
@@ -24,6 +25,12 @@ const AppRoute = AppImport.update({
 const AppIndexRoute = AppIndexImport.update({
   id: "/",
   path: "/",
+  getParentRoute: () => AppRoute
+} as any)
+
+const AppTaskListsTaskListIdRoute = AppTaskListsTaskListIdImport.update({
+  id: "/task-lists/$taskListId",
+  path: "/task-lists/$taskListId",
   getParentRoute: () => AppRoute
 } as any)
 
@@ -45,6 +52,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppIndexImport
       parentRoute: typeof AppImport
     }
+    "/_app/task-lists/$taskListId": {
+      id: "/_app/task-lists/$taskListId"
+      path: "/task-lists/$taskListId"
+      fullPath: "/task-lists/$taskListId"
+      preLoaderRoute: typeof AppTaskListsTaskListIdImport
+      parentRoute: typeof AppImport
+    }
   }
 }
 
@@ -52,10 +66,12 @@ declare module "@tanstack/react-router" {
 
 interface AppRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
+  AppTaskListsTaskListIdRoute: typeof AppTaskListsTaskListIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-  AppIndexRoute: AppIndexRoute
+  AppIndexRoute: AppIndexRoute,
+  AppTaskListsTaskListIdRoute: AppTaskListsTaskListIdRoute
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -63,24 +79,27 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 export interface FileRoutesByFullPath {
   "": typeof AppRouteWithChildren
   "/": typeof AppIndexRoute
+  "/task-lists/$taskListId": typeof AppTaskListsTaskListIdRoute
 }
 
 export interface FileRoutesByTo {
   "/": typeof AppIndexRoute
+  "/task-lists/$taskListId": typeof AppTaskListsTaskListIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   "/_app": typeof AppRouteWithChildren
   "/_app/": typeof AppIndexRoute
+  "/_app/task-lists/$taskListId": typeof AppTaskListsTaskListIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "" | "/"
+  fullPaths: "" | "/" | "/task-lists/$taskListId"
   fileRoutesByTo: FileRoutesByTo
-  to: "/"
-  id: "__root__" | "/_app" | "/_app/"
+  to: "/" | "/task-lists/$taskListId"
+  id: "__root__" | "/_app" | "/_app/" | "/_app/task-lists/$taskListId"
   fileRoutesById: FileRoutesById
 }
 
@@ -108,11 +127,16 @@ export const routeTree = rootRoute
     "/_app": {
       "filePath": "_app.tsx",
       "children": [
-        "/_app/"
+        "/_app/",
+        "/_app/task-lists/$taskListId"
       ]
     },
     "/_app/": {
       "filePath": "_app.index.tsx",
+      "parent": "/_app"
+    },
+    "/_app/task-lists/$taskListId": {
+      "filePath": "_app.task-lists/$taskListId.tsx",
       "parent": "/_app"
     }
   }

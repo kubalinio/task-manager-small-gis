@@ -4,6 +4,7 @@
   color-scheme: light dark;
 
   --color-background: hsl(0 0% 100%);
+  --color-background-secondary: hsl(0 0% 98%);
   --color-foreground: hsl(0 0% 0%);
 
   --color-primary: hsl(357, 79%, 49%);
@@ -53,6 +54,7 @@
   color-scheme: dark;
 
   --color-background: hsl(240 6% 10%);
+  --color-background-secondary: hsl(240, 4%, 13%);
   --color-foreground: hsl(0 0% 100%);
 
   --color-muted: hsl(240, 3.7%, 15.9%);
@@ -102,6 +104,7 @@
   --font-mono: "JetBrains Mono", monospace;
 
   --color-background: var(--color-background);
+  --color-background-secondary: var(--color-background-secondary);
   --color-foreground: var(--color-foreground);
 
   --color-primary: var(--color-primary);

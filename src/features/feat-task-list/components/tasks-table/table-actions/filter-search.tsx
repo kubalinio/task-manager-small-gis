@@ -2,9 +2,10 @@ import { useId } from "react"
 
 import { Search, X } from "lucide-react"
 
-import { useTasksTable } from "features/feat-dashboard/components/tasks-table/hooks"
 import { cn } from "libs/utils"
 import { Input } from "components/ui"
+
+import { useTasksTable } from "../hooks"
 
 const FilterSearch = () => {
   const id = useId()

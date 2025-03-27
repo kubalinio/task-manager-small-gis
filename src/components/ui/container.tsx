@@ -16,7 +16,8 @@ const containerVariants = cva("mx-auto", {
       "constrained-padded": "max-w-7xl px-4 sm:px-6 lg:px-8",
       "narrow-constrained-padded":
         "max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8",
-      "breakpoint-padded": "container mx-auto px-4 sm:px-6 lg:px-10 lg:pt-6"
+      "breakpoint-padded":
+        "container mx-auto px-4 py-6 sm:px-6 lg:px-10 lg:py-12 lg:pt-6"
     }
   },
   defaultVariants: {

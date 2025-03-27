@@ -21,7 +21,7 @@ const FilterStatus = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant='outline'>
+        <Button variant='outline' className='ml-auto lg:ml-0'>
           <Filter
             className='text-muted-foreground/60 -ms-1.5 size-5'
             size={20}
@@ -53,9 +53,9 @@ const FilterStatus = () => {
                 />
                 <label
                   htmlFor={`${value}-${i}`}
-                  className='flex grow justify-between gap-2 font-normal'
+                  className='flex grow justify-between gap-2 text-xs font-normal uppercase'
                 >
-                  {value}{" "}
+                  {value.replace(/-/g, " ")}{" "}
                   <span className='text-muted-foreground ms-2 text-xs'>
                     {statusCounts.get(value)}
                   </span>

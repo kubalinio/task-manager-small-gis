@@ -1,21 +1,21 @@
-import { TaskTableHead } from "features/feat-dashboard/components/tasks-table/task-table-head"
-import { TaskTableRow } from "features/feat-dashboard/components/tasks-table/task-table-row"
 import { Table, TableBody, TableHeader } from "components/ui"
 
 import { useTasksTable } from "./hooks"
 import { DeleteTasks, FilterSearch, FilterStatus } from "./table-actions"
+import { TaskTableHead } from "./task-table-head"
+import { TaskTableRow } from "./task-table-row"
 
 export default function TasksTable() {
   const { table, columns, isLoading } = useTasksTable()
 
   return (
     <div className='space-y-4'>
-      <div className='flex flex-wrap items-center justify-between gap-3'>
-        <div className='flex items-center gap-3'>
+      <div className='grid w-full grid-cols-2 items-center gap-3'>
+        <div className='col-span-2 w-full lg:col-span-1 lg:w-fit'>
           <FilterSearch />
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className='col-span-2 flex w-full items-center justify-between gap-3 lg:col-span-1 lg:justify-end'>
           <DeleteTasks table={table} />
 
           <FilterStatus />

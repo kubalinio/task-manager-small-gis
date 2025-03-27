@@ -1,3 +1,6 @@
+// @ts-expect-error Library is not correct typed
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
+
 import * as path from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -14,6 +17,7 @@ const __dirname = path.dirname(__filename)
 export default defineConfig({
   root: __dirname,
   plugins: [
+    TanStackRouterVite({ target: "react", autoCodeSplitting: true }),
     react({
       jsxImportSource: "@welldone-software/why-did-you-render"
     }),

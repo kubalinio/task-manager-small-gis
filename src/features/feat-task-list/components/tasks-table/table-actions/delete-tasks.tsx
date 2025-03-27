@@ -30,7 +30,7 @@ const DeleteTasks = ({ table }: DeleteTasksProps) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className='ml-auto' variant='outline'>
+        <Button className='lg:ml-auto' variant='outline'>
           <Trash className='-ms-1 opacity-60' size={16} aria-hidden='true' />
           Delete
           <span className='border-border bg-background text-muted-foreground/70 ms-1 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium'>

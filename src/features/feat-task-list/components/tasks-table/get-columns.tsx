@@ -45,7 +45,7 @@ const ColumnSelect: ColumnDef<Task> = {
       aria-label='Select row'
     />
   ),
-  size: 10,
+  size: 30,
   enableSorting: false,
   enableHiding: false
 }
@@ -56,14 +56,24 @@ const ColumnTitle: ColumnDef<Task> = {
   accessorKey: "title",
   cell: ({ row }) => (
     <div className='flex items-center gap-3'>
-      <div className='bg-primary size-3 rounded-full' />
-
+      <div
+        className={cn(
+          "ring-offset ring-offset-background mr-1 ml-2 size-3 rounded-full bg-transparent ring-1 ring-offset-3",
+          {
+            "bg-primary ring-primary": row.original.status === TaskStatus.TODO,
+            "bg-task-status-in-progress ring-task-status-in-progress":
+              row.original.status === TaskStatus.IN_PROGRESS,
+            "bg-task-status-done ring-task-status-done":
+              row.original.status === TaskStatus.DONE
+          }
+        )}
+      />
       <Typography as='h4' variant='subtitle-2'>
         {row.original.title}
       </Typography>
     </div>
   ),
-  size: 80,
+  size: 260,
   enableHiding: false
 }
 
@@ -74,7 +84,7 @@ const ColumnDescription: ColumnDef<Task> = {
   cell: ({ row }) => (
     <span className='text-muted-foreground'>{row.getValue("description")}</span>
   ),
-  size: 110
+  size: 260
 }
 
 const ColumnStatus: ColumnDef<Task> = {
@@ -98,7 +108,7 @@ const ColumnStatus: ColumnDef<Task> = {
       </Badge>
     </div>
   ),
-  size: 60,
+  size: 180,
   filterFn: statusFilterFn
 }
 
@@ -111,7 +121,7 @@ const getColumns = ({ data }: GetColumnsProps): ColumnDef<Task>[] => [
     id: "actions",
     header: () => <span className='sr-only'>Actions</span>,
     cell: ({ row }) => <RowActions data={data} item={row.original} />,
-    size: 20,
+    size: 30,
     enableHiding: false
   }
 ]
