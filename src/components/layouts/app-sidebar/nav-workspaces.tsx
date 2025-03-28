@@ -1,47 +1,62 @@
-import { Plus } from "lucide-react"
+import type { List } from "api/types"
 
+import {
+  TaskListCreate,
+  TaskListCreateContent,
+  TaskListCreateForm,
+  TaskListCreateHeader,
+  TaskListCreateTrigger
+} from "features/shared/components/task-list-create-dialog"
+import { useTaskListCreate } from "features/shared/hooks/use-task-list-create"
+import { Link } from "components/common/link"
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem
 } from "components/ui/sidebar"
 
-export function NavWorkspaces({
-  tasks
-}: {
-  tasks: {
-    name: string
-    emoji: React.ReactNode
-    url: string
-    pages: {
-      name: string
-      emoji: React.ReactNode
-      url: string
-    }[]
-  }[]
-}) {
+export function NavWorkspaces({ tasks }: { tasks: List[] }) {
+  const { openDialog, setOpenDialog, onSubmit, isLoading } = useTaskListCreate()
+
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Tasks</SidebarGroupLabel>
+      {/* btn to create new task list */}
+      <SidebarGroupLabel className='flex items-center justify-between text-sm'>
+        <span>Task Lists</span>
+
+        <TaskListCreate open={openDialog} onOpenChange={setOpenDialog}>
+          <TaskListCreateTrigger />
+
+          <TaskListCreateContent>
+            <TaskListCreateHeader>Create Task List</TaskListCreateHeader>
+
+            <TaskListCreateForm onSubmit={onSubmit} isLoading={isLoading} />
+          </TaskListCreateContent>
+        </TaskListCreate>
+      </SidebarGroupLabel>
+
       <SidebarGroupContent>
         <SidebarMenu>
-          {tasks.map((task) => (
-            <SidebarMenuItem key={task.name}>
+          {tasks.map((list) => (
+            <SidebarMenuItem key={list.id}>
               <SidebarMenuButton asChild>
-                <a href={task.url}>
-                  <span>{task.emoji}</span>
+                <Link
+                  to='/task-lists/$taskListId'
+                  params={{ taskListId: list.id }}
+                  variant='ghost'
+                  className='justify-start pl-2'
+                  activeProps={{
+                    className: "bg-accent"
+                  }}
+                >
+                  <span className='bg-primary size-2 shrink-0 rounded-full' />
 
-                  <span>{task.name}</span>
-                </a>
+                  <span>{list.title}</span>
+                </Link>
               </SidebarMenuButton>
-
-              <SidebarMenuAction showOnHover>
-                <Plus />
-              </SidebarMenuAction>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>

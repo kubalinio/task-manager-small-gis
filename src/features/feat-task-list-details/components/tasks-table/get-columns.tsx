@@ -3,6 +3,7 @@ import type { TaskListResponse } from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
 
 import { TaskStatus } from "api/actions/tasks/task.types"
+import { TaskStatusIndicator } from "features/shared/components/task-status"
 import { cn } from "libs/utils"
 import { Badge, Checkbox, Typography } from "components/ui"
 
@@ -56,18 +57,8 @@ const ColumnTitle: ColumnDef<Task> = {
   accessorKey: "title",
   cell: ({ row }) => (
     <div className='flex items-center gap-3'>
-      <div
-        className={cn(
-          "ring-offset ring-offset-background mr-1 ml-2 size-3 rounded-full bg-transparent ring-1 ring-offset-3",
-          {
-            "bg-primary ring-primary": row.original.status === TaskStatus.TODO,
-            "bg-task-status-in-progress ring-task-status-in-progress":
-              row.original.status === TaskStatus.IN_PROGRESS,
-            "bg-task-status-done ring-task-status-done":
-              row.original.status === TaskStatus.DONE
-          }
-        )}
-      />
+      <TaskStatusIndicator status={row.original.status} />
+
       <Typography as='h4' variant='subtitle-2'>
         {row.original.title}
       </Typography>

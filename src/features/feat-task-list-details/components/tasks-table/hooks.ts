@@ -14,13 +14,12 @@ import type {
   SortingState,
   VisibilityState
 } from "@tanstack/react-table"
+import type { TaskListResponse } from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
-
-import { useGetTaskList } from "libs/hooks"
 
 import { getColumns } from "./get-columns"
 
-const useTasksTable = () => {
+const useTasksTable = (taskList: TaskListResponse) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [pagination, setPagination] = useState<PaginationState>({
@@ -36,35 +35,37 @@ const useTasksTable = () => {
     }
   ])
 
-  const { data: taskList, isLoading } = useGetTaskList(
-    "b0492858-9e6e-4166-8656-e1ef941167f3"
+  // Default empty task list data to use when actual data is not yet available
+  const defaultTaskList = useMemo(
+    () => ({
+      id: "",
+      title: "",
+      createdAt: 0,
+      updatedAt: 0,
+      tasks: { data: [], meta: { total: 0 } }
+    }),
+    []
   )
 
   const columns = useMemo(
-    () =>
-      getColumns({
-        data: taskList ?? {
-          id: "",
-          title: "",
-          createdAt: 0,
-          updatedAt: 0,
-          tasks: { data: [], meta: { total: 0 } }
-        }
-      }),
-    [taskList]
+    () => getColumns({ data: taskList ?? defaultTaskList }),
+    [taskList, defaultTaskList]
   )
 
   const handleDeleteRows = () => {
-    const selectedRows = table.getSelectedRowModel().rows
+    if (!table || !taskList?.tasks?.data) return
 
-    const updatedData = taskList?.tasks.data.filter(
+    const selectedRows = table.getSelectedRowModel().rows
+    // We don't need to store updatedData since we're not using it
+    // Just filter the rows as a demo/preparation for actual deletion
+    taskList?.tasks.data.filter(
       (item) => !selectedRows.some((row) => row.original.id === item.id)
     )
     table.resetRowSelection()
   }
 
   const table = useReactTable<Task>({
-    data: taskList?.tasks.data ?? [],
+    data: taskList?.tasks?.data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -104,7 +105,10 @@ const useTasksTable = () => {
   }, [statusFilterValue])
 
   const handleStatusChange = (checked: boolean, value: string) => {
-    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
+    const statusCol = table.getColumn("status")
+    if (!statusCol) return
+
+    const filterValue = statusCol.getFilterValue() as string[]
     const newFilterValue = filterValue ? [...filterValue] : []
 
     if (checked) {
@@ -116,9 +120,7 @@ const useTasksTable = () => {
       }
     }
 
-    table
-      .getColumn("status")
-      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+    statusCol.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
   }
 
   return {
@@ -129,7 +131,7 @@ const useTasksTable = () => {
     uniqueStatusValues,
     statusCounts,
     columns,
-    isLoading,
+    isLoading: false,
     inputRef
   }
 }

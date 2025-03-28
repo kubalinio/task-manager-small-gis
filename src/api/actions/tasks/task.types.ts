@@ -1,7 +1,7 @@
 import type { List, Task } from "api/types"
 import type { z } from "zod"
 import type {
-  createListSchema,
+  CreateTaskListSchema,
   createTaskSchema,
   updateListSchema,
   updateTaskSchema
@@ -23,10 +23,25 @@ interface TaskManagerDB extends IDBDatabase {
 type ListDTO = List
 type TaskDTO = Task
 
+interface TaskListWithTasksMeta extends List {
+  tasksMeta: {
+    total: number
+    todo: number
+    in_progress: number
+    done: number
+  }
+}
+
 type TaskListsResponse = {
-  data: List[]
+  data: TaskListWithTasksMeta[]
   meta: {
     total: number
+    tasks: {
+      total: number
+      todo: number
+      in_progress: number
+      done: number
+    }
   }
 }
 
@@ -74,7 +89,7 @@ interface UpdateTaskParams {
   data: UpdateTaskInput
 }
 
-type CreateTaskListInput = z.infer<typeof createListSchema>
+type CreateTaskListInput = z.infer<typeof CreateTaskListSchema>
 type UpdateTaskListInput = z.infer<typeof updateListSchema>
 type CreateTaskInput = z.infer<typeof createTaskSchema>
 type UpdateTaskInput = z.infer<typeof updateTaskSchema>
