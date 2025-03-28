@@ -1,3 +1,5 @@
+import { useParams } from "@tanstack/react-router"
+
 import { LayoutDashboard } from "lucide-react"
 
 import { useGetTaskList } from "libs/hooks"
@@ -6,9 +8,12 @@ import { Box, Button, Container } from "components/ui"
 import TasksTable from "./components/tasks-table/tasks-table"
 
 const TaskList = () => {
-  const { data: taskList } = useGetTaskList(
-    "b0492858-9e6e-4166-8656-e1ef941167f3"
-  )
+  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
+  const { data: taskList } = useGetTaskList(taskListId)
+
+  if (!taskList) {
+    return <div>No task list found</div>
+  }
 
   return (
     <Container as='section'>
@@ -21,7 +26,7 @@ const TaskList = () => {
         </Button>
       </Box>
 
-      <TasksTable />
+      <TasksTable taskList={taskList} />
     </Container>
   )
 }

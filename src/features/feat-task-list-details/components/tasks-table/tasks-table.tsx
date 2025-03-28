@@ -1,3 +1,5 @@
+import type { TaskListResponse } from "api/actions/tasks/task.types"
+
 import { Table, TableBody, TableHeader } from "components/ui"
 
 import { useTasksTable } from "./hooks"
@@ -5,8 +7,12 @@ import { DeleteTasks, FilterSearch, FilterStatus } from "./table-actions"
 import { TaskTableHead } from "./task-table-head"
 import { TaskTableRow } from "./task-table-row"
 
-export default function TasksTable() {
-  const { table, columns, isLoading } = useTasksTable()
+export default function TasksTable({
+  taskList
+}: {
+  taskList: TaskListResponse
+}) {
+  const { table, columns, isLoading } = useTasksTable(taskList)
 
   return (
     <div className='space-y-4'>

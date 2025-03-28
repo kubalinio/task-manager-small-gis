@@ -62,10 +62,15 @@ const getAllTasks =
     // If listId is provided, get tasks by listId
     if (filters?.listId) {
       const index = db.transaction("tasks").store.index("by-list")
-      tasks = await index.getAll(filters.listId)
+
+      try {
+        tasks = await index.getAll(filters.listId)
+      } catch (error) {
+        console.error(error)
+        tasks = []
+      }
     } else {
-      // Otherwise get all tasks
-      tasks = await db.getAll("tasks")
+      tasks = []
     }
 
     // Apply status filter if provided
