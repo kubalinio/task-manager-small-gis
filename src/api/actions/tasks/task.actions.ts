@@ -18,7 +18,7 @@ import {
 } from "api/utils/error-handler"
 
 import {
-  createListSchema,
+  CreateTaskListSchema,
   createTaskSchema,
   updateListSchema,
   updateTaskSchema
@@ -30,7 +30,7 @@ const createTaskList =
     const db = client || (await getDB())
 
     // Validate input data
-    const validationResult = createListSchema.safeParse(data)
+    const validationResult = CreateTaskListSchema.safeParse(data)
 
     if (!validationResult.success) {
       throw createValidationError("Invalid list data", {

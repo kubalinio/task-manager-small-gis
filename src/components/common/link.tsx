@@ -19,13 +19,14 @@ const Link = ({
 }: LinkProps) => {
   return (
     <RouterLink
-      className={buttonVariants({
-        variant,
-        className: cn(
-          "h-fit py-0 pr-0 underline-offset-4 hover:underline",
-          className
-        )
-      })}
+      className={cn(
+        buttonVariants({
+          variant,
+          size: "link"
+        }),
+        "text-foreground h-fit justify-start",
+        className
+      )}
       {...props}
     >
       {children}

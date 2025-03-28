@@ -8,12 +8,12 @@ import { cva } from "class-variance-authority"
 import { cn } from "libs/utils"
 
 const buttonVariants = cva(
-  "focus-visible:ring-primary-50 focus-visible:ring-offset-primary-50 inline-flex items-center justify-center gap-2 rounded-md text-[0.9375rem] leading-6 font-semibold whitespace-nowrap transition-colors focus-visible:ring-offset-[-1px] focus-visible:outline-none focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "focus-visible:ring-primary-50 focus-visible:ring-offset-primary-50 inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-[0.9375rem] leading-6 font-semibold whitespace-nowrap transition-colors focus-visible:ring-offset-[-1px] focus-visible:outline-none focus-visible:ring-inset disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground focus-visible:bg-primary-50 disabled:bg-black-25 p-0 hover:bg-[#550788] focus-visible:ring",
+          "bg-primary text-primary-foreground focus-visible:bg-primary-50 disabled:bg-black-25 hover:bg-primary/90 p-0 focus-visible:ring",
         secondary:
           "bg-accent text-accent-foreground hover:bg-accent-50 focus-visible:ring-accent-50 focus-visible:ring-offset-accent-50",
         destructive:
@@ -28,7 +28,8 @@ const buttonVariants = cva(
         default: "px-8 py-2",
         sm: "rounded-md px-8 py-1",
         lg: "rounded-md px-8 py-2",
-        icon: "size-10"
+        icon: "size-10",
+        link: "px-2 py-1"
       }
     },
     defaultVariants: {
@@ -42,17 +43,47 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  loading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    {
+      className,
+      variant,
+      size,
+      asChild = false,
+      loading = false,
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ size, variant, className }))}
         ref={ref}
         {...props}
-      />
+      >
+        {loading && (
+          <span
+            className={cn("opacity-100", {
+              "opacity-0": loading
+            })}
+          >
+            {children}
+          </span>
+        )}
+
+        {loading && (
+          <span className='absolute inset-0 flex items-center justify-center'>
+            <span className='size-4 animate-spin rounded-full border-2 border-t-transparent border-r-transparent border-b-transparent border-l-transparent' />
+          </span>
+        )}
+
+        {!loading && children}
+      </Comp>
     )
   }
 )

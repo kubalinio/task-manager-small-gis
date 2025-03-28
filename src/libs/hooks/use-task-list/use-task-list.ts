@@ -23,7 +23,7 @@ const useGetTaskLists = (
     ...taskQueries.getAllTaskLists(filters),
     ...options
   })
-  const resetTaskLists = () =>
+  const resetTaskLists = (filters?: TasksFilterOptions) =>
     queryClient.invalidateQueries({ queryKey: ["task-list", filters] })
 
   return { ...query, resetTaskLists }
@@ -39,8 +39,11 @@ const useGetTaskList = (
   const queryClient = useQueryClient()
 
   const query = useQuery({ ...taskQueries.getTaskList(id), ...options })
+
   const resetTaskList = () =>
-    queryClient.invalidateQueries({ queryKey: ["task-list", id] })
+    queryClient.invalidateQueries({
+      queryKey: taskQueries.getTaskList(id).queryKey
+    })
 
   return { ...query, resetTaskList }
 }

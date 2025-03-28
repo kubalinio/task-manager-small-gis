@@ -18,7 +18,7 @@ const listSchema = z.object({
   updatedAt: z.number()
 })
 
-const createListSchema = z.object({
+const CreateTaskListSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
@@ -79,6 +79,6 @@ export {
   createTaskSchema,
   updateTaskSchema,
   listSchema,
-  createListSchema,
+  CreateTaskListSchema,
   updateListSchema
 }

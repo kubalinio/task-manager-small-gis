@@ -20,6 +20,7 @@ const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+  defaultPreloadStaleTime: 0,
   scrollRestoration: true
 })
 
