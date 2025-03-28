@@ -15,7 +15,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -41,7 +40,7 @@ const TaskListItem = ({ children }: TaskListItemMainProps) => {
 
 const TaskListItemHandle = () => {
   return (
-    <CardHeader className='text-muted-foreground/60 pr-6'>
+    <CardHeader className='text-muted-foreground/60 hidden pr-6 md:block'>
       <GripHorizontal className='mt-6 size-6' />
     </CardHeader>
   )
@@ -79,13 +78,13 @@ const TaskListItemContent = ({
   tasksMeta
 }: Pick<TaskListItemProps, "title" | "tasksMeta" | "id">) => {
   return (
-    <CardContent className='border-border flex flex-1 items-center justify-between border-b py-4'>
-      <Box className='flex flex-col gap-y-3'>
+    <CardContent className='border-border flex w-full flex-1 items-center justify-between border-b py-4'>
+      <Box className='flex w-full flex-col gap-y-3 pr-8'>
         <Link
           to='/task-lists/$taskListId'
           params={{ taskListId: id }}
           variant='link'
-          className='pl-0 text-xl'
+          className='w-fit pl-0 text-xl'
         >
           {title}
         </Link>
@@ -108,11 +107,10 @@ const TaskListItemActions = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className='flex justify-end'>
+        <div className='absolute top-4 right-4 flex justify-end'>
           <Button
-            size='icon'
             variant='ghost'
-            className='text-muted-foreground/60 shadow-none'
+            className='text-muted-foreground/60 p-1 shadow-none md:p-1.5'
             aria-label='Edit item'
           >
             <MoreHorizontal className='size-5' size={20} aria-hidden='true' />
@@ -127,7 +125,7 @@ const TaskListItemActions = ({
               to='/task-lists/$taskListId'
               params={{ taskListId: id }}
               variant='ghost'
-              className='w-full'
+              className='w-full cursor-pointer'
             >
               Details
             </Link>
