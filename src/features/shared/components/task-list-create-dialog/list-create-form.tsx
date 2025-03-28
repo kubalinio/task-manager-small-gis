@@ -1,21 +1,11 @@
+import type { CreateTaskListInput } from "api/actions/tasks/task.types"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
+import { CreateTaskListSchema } from "api/actions/tasks/task.validators"
 import { ControlledInputField } from "components/common/form-fields"
 import { Button, DialogFooter, Form } from "components/ui"
-
-const CreateTaskListSchema = z.object({
-  title: z
-    .string()
-    .min(2, { message: "Title is required" })
-    .refine(
-      (value) => {
-        return value.trim() !== ""
-      },
-      { message: "Title is required" }
-    )
-})
 
 const ListCreateForm = ({
   onSubmit,
@@ -26,7 +16,7 @@ const ListCreateForm = ({
   isLoading?: boolean
   isSubmitted?: boolean
 }) => {
-  const form = useForm({
+  const form = useForm<CreateTaskListInput>({
     resolver: zodResolver(CreateTaskListSchema),
     defaultValues: {
       title: ""

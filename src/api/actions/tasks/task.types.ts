@@ -1,7 +1,7 @@
 import type { List, Task } from "api/types"
 import type { z } from "zod"
 import type {
-  createListSchema,
+  CreateTaskListSchema,
   createTaskSchema,
   updateListSchema,
   updateTaskSchema
@@ -74,7 +74,7 @@ interface UpdateTaskParams {
   data: UpdateTaskInput
 }
 
-type CreateTaskListInput = z.infer<typeof createListSchema>
+type CreateTaskListInput = z.infer<typeof CreateTaskListSchema>
 type UpdateTaskListInput = z.infer<typeof updateListSchema>
 type CreateTaskInput = z.infer<typeof createTaskSchema>
 type UpdateTaskInput = z.infer<typeof updateTaskSchema>

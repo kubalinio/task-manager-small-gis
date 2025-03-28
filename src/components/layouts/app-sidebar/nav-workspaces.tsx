@@ -1,6 +1,13 @@
 import type { List } from "api/types"
 
-import { TaskListCreate } from "features/feat-task-list-create"
+import {
+  TaskListCreate,
+  TaskListCreateContent,
+  TaskListCreateForm,
+  TaskListCreateHeader,
+  TaskListCreateTrigger
+} from "features/shared/components/task-list-create-dialog"
+import { useTaskListCreate } from "features/shared/hooks/use-task-list-create"
 import { Link } from "components/common/link"
 import {
   SidebarGroup,
@@ -12,13 +19,28 @@ import {
 } from "components/ui/sidebar"
 
 export function NavWorkspaces({ tasks }: { tasks: List[] }) {
+  const { openDialog, setOpenDialog, onSubmit, isLoading, isSubmitted } =
+    useTaskListCreate()
+
   return (
     <SidebarGroup>
       {/* btn to create new task list */}
-      <SidebarGroupLabel className='flex items-center justify-between'>
+      <SidebarGroupLabel className='flex items-center justify-between text-sm'>
         <span>Task Lists</span>
 
-        <TaskListCreate />
+        <TaskListCreate open={openDialog} onOpenChange={setOpenDialog}>
+          <TaskListCreateTrigger />
+
+          <TaskListCreateContent>
+            <TaskListCreateHeader>Create Task List</TaskListCreateHeader>
+
+            <TaskListCreateForm
+              onSubmit={onSubmit}
+              isLoading={isLoading}
+              isSubmitted={isSubmitted}
+            />
+          </TaskListCreateContent>
+        </TaskListCreate>
       </SidebarGroupLabel>
 
       <SidebarGroupContent>

@@ -23,7 +23,7 @@ const useGetTaskLists = (
     ...taskQueries.getAllTaskLists(filters),
     ...options
   })
-  const resetTaskLists = () =>
+  const resetTaskLists = (filters?: TasksFilterOptions) =>
     queryClient.invalidateQueries({ queryKey: ["task-list", filters] })
 
   return { ...query, resetTaskLists }

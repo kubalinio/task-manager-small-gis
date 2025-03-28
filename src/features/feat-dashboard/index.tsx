@@ -1,12 +1,14 @@
-import TaskList from "features/feat-task-list-details"
 import { SidebarTrigger } from "components/layouts/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbSeparator,
   Separator
 } from "components/ui"
+
+import TaskListsFeed from "./components/task-lists-feed"
 
 const Dashboard = () => {
   return (
@@ -18,14 +20,25 @@ const Dashboard = () => {
 
         <Breadcrumb>
           <BreadcrumbList>
-            <BreadcrumbItem className='hidden md:block'>
+            <BreadcrumbItem>
               <BreadcrumbLink href='/'>Dashboard</BreadcrumbLink>
+            </BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href='/'
+                className='bg-accent rounded-md px-2 py-1'
+              >
+                Overview
+              </BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
-      <TaskList />
+      <TaskListsFeed />
     </>
   )
 }
