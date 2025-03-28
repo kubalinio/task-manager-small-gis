@@ -8,20 +8,17 @@ const useTaskListCreate = () => {
   const queryClient = useQueryClient()
   const [openDialog, setOpenDialog] = useState(false)
 
-  const {
-    mutate: createTaskList,
-    isPending: isLoading,
-    isSuccess: isSubmitted
-  } = useMutation("createTaskList", {
-    onSuccess: async () => {
-      // toast.success("Task list created successfully")
-
-      await queryClient.invalidateQueries({
-        queryKey: taskQueries.getAllTaskLists().queryKey
-      })
-      setOpenDialog(false)
+  const { mutate: createTaskList, isPending: isLoading } = useMutation(
+    "createTaskList",
+    {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: taskQueries.getAllTaskLists().queryKey
+        })
+        setOpenDialog(false)
+      }
     }
-  })
+  )
 
   const onSubmit = (data: any) => {
     createTaskList(data)
@@ -30,7 +27,6 @@ const useTaskListCreate = () => {
   return {
     onSubmit,
     isLoading,
-    isSubmitted,
     openDialog,
     setOpenDialog
   }

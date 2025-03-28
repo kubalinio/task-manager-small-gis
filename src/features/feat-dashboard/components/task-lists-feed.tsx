@@ -5,16 +5,26 @@ import {
   TaskListCreateHeader,
   TaskListCreateTrigger
 } from "features/shared/components/task-list-create-dialog"
-import { useTaskListCreate } from "features/shared/hooks/use-task-list-create"
 import { Box, Container } from "components/ui"
 
 import { useTaskListsFeed } from "../hooks/use-task-lists-feed"
+import {
+  TaskListItem,
+  TaskListItemActions,
+  TaskListItemContent,
+  TaskListItemFooter,
+  TaskListItemHandle
+} from "./task-list-item"
 
 const TaskListsFeed = () => {
-  const { openDialog, setOpenDialog, onSubmit, isLoading, isSubmitted } =
-    useTaskListCreate()
-
-  const { taskLists } = useTaskListsFeed()
+  const {
+    taskLists,
+    deleteTaskList,
+    openDialog,
+    setOpenDialog,
+    onSubmit,
+    isLoading
+  } = useTaskListsFeed()
 
   return (
     <Container as='section'>
@@ -27,18 +37,32 @@ const TaskListsFeed = () => {
           <TaskListCreateContent>
             <TaskListCreateHeader>Create Task List</TaskListCreateHeader>
 
-            <TaskListCreateForm
-              onSubmit={onSubmit}
-              isLoading={isLoading}
-              isSubmitted={isSubmitted}
-            />
+            <TaskListCreateForm onSubmit={onSubmit} isLoading={isLoading} />
           </TaskListCreateContent>
         </TaskListCreate>
       </Box>
 
-      <Box>
+      <Box className='grid grid-cols-1 gap-4'>
         {taskLists?.data?.map((taskList) => (
-          <p key={taskList.id}>{taskList.title}</p>
+          <TaskListItem key={taskList.id}>
+            <TaskListItemHandle />
+
+            <TaskListItemContent
+              id={taskList.id}
+              title={taskList.title}
+              tasksMeta={taskList.tasksMeta}
+            />
+
+            <TaskListItemActions
+              id={taskList.id}
+              deleteTaskList={deleteTaskList}
+            />
+
+            <TaskListItemFooter
+              createdAt={taskList.createdAt}
+              updatedAt={taskList.updatedAt}
+            />
+          </TaskListItem>
         ))}
       </Box>
     </Container>

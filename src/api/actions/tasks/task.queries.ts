@@ -1,22 +1,39 @@
 import type { IndexDBClient } from "api/indexdb"
 import type { List, Task } from "api/types"
-import type { TasksFilterOptions } from "./task.types"
+import type { TaskListsResponse, TasksFilterOptions } from "./task.types"
 
 import { getDB } from "api/indexdb"
 import { createNotFoundError } from "api/utils/error-handler"
 import { queryFactoryOptions } from "api/utils/query-factory-options"
 
 const getAllTaskLists =
-  (client: IndexDBClient) => async (_filters?: TasksFilterOptions) => {
+  (client: IndexDBClient) =>
+  async (_filters?: TasksFilterOptions): Promise<TaskListsResponse> => {
     const db = client || (await getDB())
     const lists = await db.getAll("task_lists")
 
     lists.sort((a: List, b: List) => b.createdAt - a.createdAt)
 
+    // const tasks = await getAllTasks(client)()
+
     return {
-      data: lists,
+      data: lists.map((list) => ({
+        ...list,
+        tasksMeta: {
+          todo: 0,
+          in_progress: 0,
+          done: 0,
+          total: 0
+        }
+      })),
       meta: {
-        total: lists.length
+        total: lists.length,
+        tasks: {
+          todo: 0,
+          in_progress: 0,
+          done: 0,
+          total: 0
+        }
       }
     }
   }

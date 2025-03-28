@@ -9,12 +9,10 @@ import { Button, DialogFooter, Form } from "components/ui"
 
 const ListCreateForm = ({
   onSubmit,
-  isLoading = false,
-  isSubmitted = false
+  isLoading = false
 }: {
   onSubmit: (data: any) => void
   isLoading?: boolean
-  isSubmitted?: boolean
 }) => {
   const form = useForm<CreateTaskListInput>({
     resolver: zodResolver(CreateTaskListSchema),
@@ -29,11 +27,7 @@ const ListCreateForm = ({
         <ControlledInputField name='title' label='Title' />
 
         <DialogFooter>
-          <Button
-            type='submit'
-            disabled={isLoading || isSubmitted}
-            loading={isLoading}
-          >
+          <Button type='submit' disabled={isLoading} loading={isLoading}>
             Create
           </Button>
         </DialogFooter>

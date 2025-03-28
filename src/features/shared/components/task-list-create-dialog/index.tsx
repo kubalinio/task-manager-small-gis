@@ -112,12 +112,7 @@ const TaskListCreateForm = ({
   isSubmitted = false,
   ...props
 }: TaskListCreateFormProps) => (
-  <ListCreateForm
-    onSubmit={onSubmit}
-    isLoading={isLoading}
-    isSubmitted={isSubmitted}
-    {...props}
-  />
+  <ListCreateForm onSubmit={onSubmit} isLoading={isLoading} {...props} />
 )
 
 export {

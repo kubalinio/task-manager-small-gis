@@ -19,8 +19,7 @@ import {
 } from "components/ui/sidebar"
 
 export function NavWorkspaces({ tasks }: { tasks: List[] }) {
-  const { openDialog, setOpenDialog, onSubmit, isLoading, isSubmitted } =
-    useTaskListCreate()
+  const { openDialog, setOpenDialog, onSubmit, isLoading } = useTaskListCreate()
 
   return (
     <SidebarGroup>
@@ -34,11 +33,7 @@ export function NavWorkspaces({ tasks }: { tasks: List[] }) {
           <TaskListCreateContent>
             <TaskListCreateHeader>Create Task List</TaskListCreateHeader>
 
-            <TaskListCreateForm
-              onSubmit={onSubmit}
-              isLoading={isLoading}
-              isSubmitted={isSubmitted}
-            />
+            <TaskListCreateForm onSubmit={onSubmit} isLoading={isLoading} />
           </TaskListCreateContent>
         </TaskListCreate>
       </SidebarGroupLabel>

@@ -23,10 +23,25 @@ interface TaskManagerDB extends IDBDatabase {
 type ListDTO = List
 type TaskDTO = Task
 
+interface TaskListWithTasksMeta extends List {
+  tasksMeta: {
+    total: number
+    todo: number
+    in_progress: number
+    done: number
+  }
+}
+
 type TaskListsResponse = {
-  data: List[]
+  data: TaskListWithTasksMeta[]
   meta: {
     total: number
+    tasks: {
+      total: number
+      todo: number
+      in_progress: number
+      done: number
+    }
   }
 }
 
