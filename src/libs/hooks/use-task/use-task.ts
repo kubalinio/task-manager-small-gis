@@ -8,7 +8,7 @@ import type {
 import type { GenericQueryOptions } from "libs/hooks/use-query/use-query.types"
 
 import { taskQueries } from "api/actions/tasks/task.queries"
-import { useQuery } from "libs/hooks"
+import { useSuspenseQuery } from "libs/hooks"
 
 /**
  * Hook to get all tasks
@@ -20,8 +20,14 @@ const useGetAllTasks = (
   const queryClient = useQueryClient()
 
   const resetTasks = () =>
-    queryClient.invalidateQueries({ queryKey: ["tasks"] })
-  const query = useQuery({ ...taskQueries.getAllTasks(filters), ...options })
+    queryClient.invalidateQueries({
+      queryKey: taskQueries.getAllTasks(filters).queryKey
+    })
+
+  const query = useSuspenseQuery({
+    ...taskQueries.getAllTasks(filters),
+    ...options
+  })
 
   return { ...query, resetTasks }
 }
@@ -36,8 +42,10 @@ const useGetTask = (
   const queryClient = useQueryClient()
 
   const resetTask = () =>
-    queryClient.invalidateQueries({ queryKey: ["task", id] })
-  const query = useQuery({ ...taskQueries.getTask(id), ...options })
+    queryClient.invalidateQueries({
+      queryKey: taskQueries.getTask(id).queryKey
+    })
+  const query = useSuspenseQuery({ ...taskQueries.getTask(id), ...options })
 
   return { ...query, resetTask }
 }

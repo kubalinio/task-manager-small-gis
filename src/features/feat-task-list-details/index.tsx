@@ -11,10 +11,6 @@ const TaskList = () => {
   const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
   const { data: taskList } = useGetTaskList(taskListId)
 
-  if (!taskList) {
-    return <div>No task list found</div>
-  }
-
   return (
     <Container as='section'>
       <Box className='mb-4 flex items-center gap-4'>
@@ -26,7 +22,7 @@ const TaskList = () => {
         </Button>
       </Box>
 
-      <TasksTable taskList={taskList} />
+      <TasksTable />
     </Container>
   )
 }

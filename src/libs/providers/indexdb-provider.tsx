@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import type { IndexDBClient } from "api/indexdb"
 import type { IndexDBContextType } from "libs/context/indexdb-client/indexdb-context"
+import type React from "react"
 
 import { getDB } from "api/indexdb"
 import { seedDatabaseIfEmpty } from "api/utils/seed-data"
@@ -11,9 +12,7 @@ interface IndexDBProviderProps {
   children: React.ReactNode
 }
 
-export const IndexDBProvider: React.FC<IndexDBProviderProps> = ({
-  children
-}) => {
+export const IndexDBProvider = ({ children }: IndexDBProviderProps) => {
   const [client, setClient] = useState<IndexDBClient | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)

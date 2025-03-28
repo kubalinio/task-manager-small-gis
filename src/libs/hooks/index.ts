@@ -9,6 +9,8 @@ export * from "./use-indexdb/use-indexdb"
 export * from "./use-query/use-query"
 export * from "./use-query/use-query.types"
 
+export * from "./use-suspense-query/use-suspense-query"
+
 export * from "./use-mutation/use-mutation"
 export * from "./use-mutation/use-mutation.types"
 

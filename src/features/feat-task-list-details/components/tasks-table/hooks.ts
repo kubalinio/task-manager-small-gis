@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from "react"
+import { useParams } from "@tanstack/react-router"
 import {
   getCoreRowModel,
   getFacetedUniqueValues,
@@ -14,12 +15,17 @@ import type {
   SortingState,
   VisibilityState
 } from "@tanstack/react-table"
-import type { TaskListResponse } from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
+
+import { useGetTaskList } from "libs/hooks"
 
 import { getColumns } from "./get-columns"
 
-const useTasksTable = (taskList: TaskListResponse) => {
+const useTasksTable = () => {
+  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
+
+  const { data: taskList } = useGetTaskList(taskListId)
+
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [pagination, setPagination] = useState<PaginationState>({
