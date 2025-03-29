@@ -14,7 +14,9 @@ const useListDetails = () => {
     throw new Error("TaskListDetailsContext not found")
   }
 
-  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
+  const { taskListId } = useParams({
+    from: "/_app/task-lists/_details-layout/$taskListId"
+  })
 
   const { data: taskList } = useGetTaskList(taskListId)
 
