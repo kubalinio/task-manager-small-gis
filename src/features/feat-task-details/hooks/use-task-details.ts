@@ -18,7 +18,10 @@ const useTaskDetails = () => {
   }
 
   const handleStartEdit = () => {
-    navigate({ to: "/task-lists/$taskListId/new", params: { taskListId } })
+    navigate({
+      to: "/task-lists/$taskListId/t/$taskId/edit",
+      params: { taskListId, taskId }
+    })
   }
 
   return { task: task.data, handleOpenChange, handleStartEdit }

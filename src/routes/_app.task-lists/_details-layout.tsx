@@ -2,6 +2,7 @@ import { createFileRoute, Outlet, useMatch } from "@tanstack/react-router"
 
 import { FeatureTaskCreate } from "features/feat-task-create"
 import { FeatureTaskDetails } from "features/feat-task-details"
+import { FeatureTaskEdit } from "features/feat-task-edit"
 
 export const Route = createFileRoute("/_app/task-lists/_details-layout")({
   component: RouteComponent
@@ -18,6 +19,11 @@ function RouteComponent() {
     shouldThrow: false
   })
 
+  const isTaskEditRoute = !!useMatch({
+    from: "/_app/task-lists/_details-layout/$taskListId/t/$taskId/edit",
+    shouldThrow: false
+  })
+
   return (
     <>
       <Outlet />
@@ -25,6 +31,8 @@ function RouteComponent() {
       {isNewTaskRoute && <FeatureTaskCreate />}
 
       {isTaskDetailsRoute && <FeatureTaskDetails />}
+
+      {isTaskEditRoute && <FeatureTaskEdit />}
     </>
   )
 }
