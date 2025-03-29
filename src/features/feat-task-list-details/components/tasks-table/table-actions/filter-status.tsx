@@ -8,7 +8,7 @@ import {
   PopoverTrigger
 } from "components/ui"
 
-import { useTasksTable } from "../hooks"
+import { useTasksTable } from "../../../hooks"
 
 const FilterStatus = () => {
   const {

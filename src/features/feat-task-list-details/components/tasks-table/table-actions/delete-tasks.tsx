@@ -16,7 +16,7 @@ import {
   Button
 } from "components/ui"
 
-import { useTasksTable } from "../hooks"
+import { useTasksTable } from "../../../hooks"
 
 interface DeleteTasksProps {
   table: Table<Task>
