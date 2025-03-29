@@ -17,14 +17,12 @@ import type {
 } from "@tanstack/react-table"
 import type { Task } from "api/types"
 
-import { useGetTaskList } from "libs/hooks"
+import { useListDetails } from "features/feat-task-list-details/hooks/use-list-details"
 
-import { getColumns } from "./get-columns"
+import { getColumns } from "../components/tasks-table/get-columns"
 
 const useTasksTable = () => {
-  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
-
-  const { data: taskList } = useGetTaskList(taskListId)
+  const { taskList } = useListDetails()
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

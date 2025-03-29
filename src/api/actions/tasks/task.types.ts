@@ -2,7 +2,8 @@ import type { List, Task } from "api/types"
 import type { z } from "zod"
 import type {
   CreateTaskListSchema,
-  createTaskSchema,
+  CreateTaskSchema,
+  CreateTaskSchemaForm,
   updateListSchema,
   updateTaskSchema
 } from "./task.validators"
@@ -91,7 +92,8 @@ interface UpdateTaskParams {
 
 type CreateTaskListInput = z.infer<typeof CreateTaskListSchema>
 type UpdateTaskListInput = z.infer<typeof updateListSchema>
-type CreateTaskInput = z.infer<typeof createTaskSchema>
+type CreateTaskInput = z.infer<typeof CreateTaskSchema>
+type CreateTaskInputForm = z.infer<typeof CreateTaskSchemaForm>
 type UpdateTaskInput = z.infer<typeof updateTaskSchema>
 
 export { TaskStatus }
@@ -109,6 +111,7 @@ export type {
   UpdateListParams,
   UpdateTaskParams,
   CreateTaskListInput,
+  CreateTaskInputForm,
   UpdateTaskListInput,
   CreateTaskInput,
   UpdateTaskInput
