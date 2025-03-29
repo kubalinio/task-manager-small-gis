@@ -20,7 +20,7 @@ const TaskTableHead = ({ headerGroup }: TaskTableHeadProps) => {
           <TableHead
             key={header.id}
             style={{ width: `${header.getSize()}px` }}
-            className='bg-sidebar border-border relative h-9 border-y select-none first:rounded-l-lg first:border-l last:rounded-r-lg last:border-r'
+            className='bg-background-secondary border-border relative h-9 border-y select-none first:rounded-l-lg first:border-l last:rounded-r-lg last:border-r'
           >
             {header.isPlaceholder ? null : header.column.getCanSort() ? (
               <button

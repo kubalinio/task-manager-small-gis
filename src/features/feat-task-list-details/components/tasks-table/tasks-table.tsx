@@ -1,11 +1,11 @@
 import { Table, TableBody, TableHeader } from "components/ui"
 
-import { useTasksTable } from "./hooks"
+import { useTasksTable } from "../../hooks"
 import { DeleteTasks, FilterSearch, FilterStatus } from "./table-actions"
 import { TaskTableHead } from "./task-table-head"
 import { TaskTableRow } from "./task-table-row"
 
-export default function TasksTable() {
+const TasksTable = () => {
   const { table, columns, isLoading } = useTasksTable()
 
   return (
@@ -44,3 +44,5 @@ export default function TasksTable() {
     </div>
   )
 }
+
+export { TasksTable }

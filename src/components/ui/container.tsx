@@ -9,15 +9,11 @@ import { cn } from "libs/utils"
 const containerVariants = cva("mx-auto", {
   variants: {
     variant: {
-      default: "shadow-zCard rounded-md bg-white px-6 py-20",
+      default: "container mx-auto sm:px-6 lg:px-8",
       "without-style": "px-0 sm:px-0 lg:px-0",
-      "full-mobile-constrained-padded": "max-w-7xl sm:px-6 lg:px-8",
-      "full-mobile-breakpoint-padded": "container mx-auto sm:px-6 lg:px-8",
-      "constrained-padded": "max-w-7xl px-4 sm:px-6 lg:px-8",
-      "narrow-constrained-padded":
-        "max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8",
       "breakpoint-padded":
-        "container mx-auto px-4 py-6 sm:px-6 lg:px-10 lg:py-12 lg:pt-6"
+        "container mx-auto px-4 py-6 sm:px-6 lg:px-10 lg:py-12 lg:pt-6",
+      "narrow-constrained-padded": "max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8"
     }
   },
   defaultVariants: {

@@ -17,11 +17,12 @@ import {
   createValidationError
 } from "api/utils/error-handler"
 
+import { TaskStatus } from "./task.types"
 import {
   CreateTaskListSchema,
-  createTaskSchema,
+  CreateTaskSchema,
   updateListSchema,
-  updateTaskSchema
+  UpdateTaskSchema
 } from "./task.validators"
 
 const createTaskList =
@@ -123,8 +124,7 @@ const createTask =
   async (data: CreateTaskInput): Promise<TaskResponse> => {
     const db = client || (await getDB())
 
-    // Validate input data
-    const validationResult = createTaskSchema.safeParse(data)
+    const validationResult = CreateTaskSchema.safeParse(data)
 
     if (!validationResult.success) {
       throw createValidationError("Invalid task data", {
@@ -132,7 +132,6 @@ const createTask =
       })
     }
 
-    // Verify that list exists
     const list = await db.get("task_lists", data.listId)
 
     if (!list) {
@@ -144,8 +143,8 @@ const createTask =
       id: uuidv4(),
       listId: data.listId,
       title: data.title,
-      description: data.description,
-      status: data.status || "todo",
+      description: data.description ?? "",
+      status: data.status || TaskStatus.TODO,
       createdAt: timestamp,
       updatedAt: timestamp
     }
@@ -162,15 +161,13 @@ const updateTask =
   async (id: string, data: UpdateTaskInput): Promise<TaskResponse> => {
     const db = client || (await getDB())
 
-    // Check if task exists
     const existingTask = await db.get("tasks", id)
 
     if (!existingTask) {
       throw createNotFoundError("Task", id)
     }
 
-    // Validate input data
-    const validationResult = updateTaskSchema.safeParse(data)
+    const validationResult = UpdateTaskSchema.safeParse(data)
 
     if (!validationResult.success) {
       throw createValidationError("Invalid task data", {
@@ -196,7 +193,6 @@ const deleteTask =
   async (id: string): Promise<void> => {
     const db = client || (await getDB())
 
-    // Check if task exists
     const existingTask = await db.get("tasks", id)
 
     if (!existingTask) {
@@ -206,11 +202,45 @@ const deleteTask =
     await db.delete("tasks", id)
   }
 
+const deleteSelectedTasks =
+  (client: IndexDBClient) =>
+  async ({
+    listId,
+    taskIds
+  }: {
+    listId: string
+    taskIds: string[]
+  }): Promise<{ details: { message: string } }> => {
+    const db = client || (await getDB())
+
+    const tx = db.transaction(["tasks"], "readwrite")
+
+    const taskStore = tx.objectStore("tasks")
+    const taskIndex = taskStore.index("by-list")
+    let cursor = await taskIndex.openCursor(listId)
+
+    while (cursor) {
+      if (taskIds.includes(cursor.value.id)) {
+        await cursor.delete()
+      }
+      cursor = await cursor.continue()
+    }
+
+    await tx.done
+
+    return {
+      details: {
+        message: "Tasks deleted successfully"
+      }
+    }
+  }
+
 export const taskActions = {
   createTaskList,
   updateTaskList,
   deleteTaskList,
   createTask,
   updateTask,
-  deleteTask
+  deleteTask,
+  deleteSelectedTasks
 }
