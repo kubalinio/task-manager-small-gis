@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from "react"
-import { useParams } from "@tanstack/react-router"
 import {
   getCoreRowModel,
   getFacetedUniqueValues,
@@ -11,11 +10,11 @@ import {
 
 import type {
   ColumnFiltersState,
-  PaginationState,
   Row,
   SortingState,
   VisibilityState
 } from "@tanstack/react-table"
+import type { TaskStatusType } from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
 
 import { useListDetails } from "features/feat-task-list-details/hooks/use-list-details"
@@ -23,7 +22,7 @@ import { useListDetails } from "features/feat-task-list-details/hooks/use-list-d
 import { getColumns } from "../components/tasks-table/get-columns"
 
 const useTasksTable = () => {
-  const { taskList, deleteSelectedTasks } = useListDetails()
+  const { taskList, deleteSelectedTasks, handleFilterStatus } = useListDetails()
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -79,6 +78,7 @@ const useTasksTable = () => {
   const uniqueStatusValues = useMemo(() => {
     if (!statusColumn) return []
     const values = Array.from(statusFacetedValues?.keys() ?? [])
+
     return values.sort()
   }, [statusColumn, statusFacetedValues])
 
@@ -92,10 +92,7 @@ const useTasksTable = () => {
   }, [statusFilterValue])
 
   const handleStatusChange = (checked: boolean, value: string) => {
-    const statusCol = table.getColumn("status")
-    if (!statusCol) return
-
-    const filterValue = statusCol.getFilterValue() as string[]
+    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
     const newFilterValue = filterValue ? [...filterValue] : []
 
     if (checked) {
@@ -107,7 +104,11 @@ const useTasksTable = () => {
       }
     }
 
-    statusCol.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+    handleFilterStatus(newFilterValue as TaskStatusType[])
+
+    table
+      .getColumn("status")
+      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
   }
 
   const handleDeleteRows = (selectedRows: Row<Task>[]) => {

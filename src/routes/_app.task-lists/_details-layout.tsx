@@ -16,12 +16,14 @@ function RouteComponent() {
 
   const isTaskDetailsRoute = !!useMatch({
     from: "/_app/task-lists/_details-layout/$taskListId/t/$taskId",
-    shouldThrow: false
+    shouldThrow: false,
+    strict: true
   })
 
   const isTaskEditRoute = !!useMatch({
     from: "/_app/task-lists/_details-layout/$taskListId/t/$taskId/edit",
-    shouldThrow: false
+    shouldThrow: false,
+    strict: true
   })
 
   return (
@@ -30,7 +32,7 @@ function RouteComponent() {
 
       {isNewTaskRoute && <FeatureTaskCreate />}
 
-      {isTaskDetailsRoute && <FeatureTaskDetails />}
+      {isTaskDetailsRoute && !isTaskEditRoute && <FeatureTaskDetails />}
 
       {isTaskEditRoute && <FeatureTaskEdit />}
     </>

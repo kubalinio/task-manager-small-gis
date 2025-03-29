@@ -14,8 +14,6 @@ const getAllTaskLists =
 
     lists.sort((a: List, b: List) => b.createdAt - a.createdAt)
 
-    // const tasks = await getAllTasks(client)()
-
     return {
       data: lists.map((list) => ({
         ...list,
@@ -116,8 +114,13 @@ const getTask = (client: IndexDBClient) => async (id: string) => {
     throw createNotFoundError("Task", id)
   }
 
+  const taskList = await db.get("task_lists", task.listId)
+
   return {
-    data: task
+    data: {
+      ...task,
+      listTitle: taskList?.title
+    }
   }
 }
 

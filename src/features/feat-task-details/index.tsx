@@ -28,7 +28,13 @@ const FeatureTaskDetails = () => {
         }}
       >
         <SheetHeader>
-          <SheetTitle>Task Details</SheetTitle>
+          <SheetTitle>
+            <span className='text-muted text-xs'>{task.listTitle}</span>
+
+            <br />
+
+            {task.title}
+          </SheetTitle>
 
           <SheetDescription className='[&>p]:text-accent-foreground flex flex-col gap-2 [&>p]:text-xs'>
             <Typography as='p' variant='body-2'>
