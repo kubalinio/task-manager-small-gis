@@ -36,7 +36,7 @@ const TaskTableRow = ({ isLoading, columns, rows = [] }: TaskTableRowProps) => {
     <>
       {rows.map((row) => (
         <TableRow
-          key={row.id}
+          key={row.original.id}
           data-state={row.getIsSelected() && "selected"}
           className='hover:bg-accent/50 h-px border-0 [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'
         >

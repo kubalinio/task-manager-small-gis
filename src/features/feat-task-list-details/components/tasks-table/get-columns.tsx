@@ -5,7 +5,8 @@ import type { Task } from "api/types"
 import { TaskStatus } from "api/actions/tasks/task.types"
 import { TaskStatusIndicator } from "features/shared/components/task-status"
 import { cn } from "libs/utils"
-import { Badge, Checkbox, Typography } from "components/ui"
+import { Link } from "components/common/link"
+import { Badge, Checkbox, Typography, typographyVariants } from "components/ui"
 
 import { RowActions } from "./table-actions"
 
@@ -59,9 +60,18 @@ const ColumnTitle: ColumnDef<Task> = {
     <div className='flex items-center gap-3'>
       <TaskStatusIndicator status={row.original.status} />
 
-      <Typography as='h4' variant='subtitle-2'>
+      <Link
+        to='/task-lists/$taskListId/t/$taskId'
+        params={{
+          taskListId: row.original.listId,
+          taskId: row.original.id
+        }}
+        className={typographyVariants({
+          variant: "subtitle-2"
+        })}
+      >
         {row.original.title}
-      </Typography>
+      </Link>
     </div>
   ),
   size: 260,
@@ -73,7 +83,12 @@ const ColumnDescription: ColumnDef<Task> = {
   header: "Description",
   accessorKey: "description",
   cell: ({ row }) => (
-    <span className='text-muted-foreground'>{row.getValue("description")}</span>
+    <span
+      title={row.getValue("description")}
+      className='text-muted-foreground line-clamp-1'
+    >
+      {row.getValue("description")}
+    </span>
   ),
   size: 260
 }

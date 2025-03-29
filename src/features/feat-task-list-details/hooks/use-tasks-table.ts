@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from "react"
-import { useParams } from "@tanstack/react-router"
 import {
   getCoreRowModel,
   getFacetedUniqueValues,
@@ -11,33 +10,28 @@ import {
 
 import type {
   ColumnFiltersState,
-  PaginationState,
+  Row,
   SortingState,
   VisibilityState
 } from "@tanstack/react-table"
+import type { TaskStatusType } from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
 
-import { useGetTaskList } from "libs/hooks"
+import { useListDetails } from "features/feat-task-list-details/hooks/use-list-details"
 
-import { getColumns } from "./get-columns"
+import { getColumns } from "../components/tasks-table/get-columns"
 
 const useTasksTable = () => {
-  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
-
-  const { data: taskList } = useGetTaskList(taskListId)
+  const { taskList, deleteSelectedTasks, handleFilterStatus } = useListDetails()
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10
-  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "title",
-      desc: false
+      id: "status",
+      desc: true
     }
   ])
 
@@ -58,18 +52,6 @@ const useTasksTable = () => {
     [taskList, defaultTaskList]
   )
 
-  const handleDeleteRows = () => {
-    if (!table || !taskList?.tasks?.data) return
-
-    const selectedRows = table.getSelectedRowModel().rows
-    // We don't need to store updatedData since we're not using it
-    // Just filter the rows as a demo/preparation for actual deletion
-    taskList?.tasks.data.filter(
-      (item) => !selectedRows.some((row) => row.original.id === item.id)
-    )
-    table.resetRowSelection()
-  }
-
   const table = useReactTable<Task>({
     data: taskList?.tasks?.data ?? [],
     columns,
@@ -78,14 +60,12 @@ const useTasksTable = () => {
     onSortingChange: setSorting,
     enableSortingRemoval: false,
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     state: {
       sorting,
-      pagination,
       columnFilters,
       columnVisibility
     }
@@ -98,6 +78,7 @@ const useTasksTable = () => {
   const uniqueStatusValues = useMemo(() => {
     if (!statusColumn) return []
     const values = Array.from(statusFacetedValues?.keys() ?? [])
+
     return values.sort()
   }, [statusColumn, statusFacetedValues])
 
@@ -111,10 +92,7 @@ const useTasksTable = () => {
   }, [statusFilterValue])
 
   const handleStatusChange = (checked: boolean, value: string) => {
-    const statusCol = table.getColumn("status")
-    if (!statusCol) return
-
-    const filterValue = statusCol.getFilterValue() as string[]
+    const filterValue = table.getColumn("status")?.getFilterValue() as string[]
     const newFilterValue = filterValue ? [...filterValue] : []
 
     if (checked) {
@@ -126,7 +104,26 @@ const useTasksTable = () => {
       }
     }
 
-    statusCol.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+    handleFilterStatus(newFilterValue as TaskStatusType[])
+
+    table
+      .getColumn("status")
+      ?.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+  }
+
+  const handleDeleteRows = (selectedRows: Row<Task>[]) => {
+    if (!table || !taskList?.tasks?.data) return
+
+    taskList?.tasks.data.filter(
+      (item) => !selectedRows.some((row) => row.original.id === item.id)
+    )
+
+    deleteSelectedTasks({
+      listId: taskList.id,
+      taskIds: selectedRows.map((row) => row.original.id)
+    })
+
+    table.resetRowSelection()
   }
 
   return {

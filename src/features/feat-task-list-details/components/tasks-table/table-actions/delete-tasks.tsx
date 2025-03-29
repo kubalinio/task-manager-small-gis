@@ -16,7 +16,7 @@ import {
   Button
 } from "components/ui"
 
-import { useTasksTable } from "../hooks"
+import { useTasksTable } from "../../../hooks"
 
 interface DeleteTasksProps {
   table: Table<Task>
@@ -62,7 +62,11 @@ const DeleteTasks = ({ table }: DeleteTasksProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={handleDeleteRows}>
+          <AlertDialogAction
+            onClick={() => {
+              handleDeleteRows(table.getSelectedRowModel().rows)
+            }}
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

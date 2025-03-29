@@ -1,29 +1,55 @@
-import { useParams } from "@tanstack/react-router"
+import { useListDetails } from "features/feat-task-list-details/hooks"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+  Container,
+  Separator,
+  SidebarTrigger
+} from "components/ui"
 
-import { LayoutDashboard } from "lucide-react"
-
-import { useGetTaskList } from "libs/hooks"
-import { Box, Button, Container } from "components/ui"
-
-import TasksTable from "./components/tasks-table/tasks-table"
+import { TaskListHeader, TasksTable } from "./components"
 
 const TaskList = () => {
-  const { taskListId } = useParams({ from: "/_app/task-lists/$taskListId" })
-  const { data: taskList } = useGetTaskList(taskListId)
+  const { taskList, viewMode } = useListDetails()
 
   return (
-    <Container as='section'>
-      <Box className='mb-4 flex items-center gap-4'>
-        <h1 className='text-2xl font-bold'>{taskList?.title}</h1>
+    <>
+      <header className='bg-background sticky top-0 z-10 flex shrink-0 items-center gap-2 border-b p-4'>
+        <SidebarTrigger className='-ml-1' />
 
-        <Button variant='secondary' className='px-4'>
-          <LayoutDashboard className='h-4 w-4' />
-          View
-        </Button>
-      </Box>
+        <Separator orientation='vertical' className='mr-2 h-4' />
 
-      <TasksTable />
-    </Container>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>Task Lists</BreadcrumbItem>
+
+            <BreadcrumbSeparator />
+
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                href={`/task-lists/${taskList?.id}`}
+                className='bg-accent rounded-md px-2 py-1'
+              >
+                {taskList?.title}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
+
+      <Container as='section'>
+        <TaskListHeader />
+
+        {viewMode === "table" && taskList.tasks.data.length > 0 && (
+          <TasksTable />
+        )}
+
+        {/* {viewMode === "cards" && } */}
+      </Container>
+    </>
   )
 }
 
