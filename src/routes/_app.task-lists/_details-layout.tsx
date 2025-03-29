@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, useMatch } from "@tanstack/react-router"
 
 import { FeatureTaskCreate } from "features/feat-task-create"
+import { FeatureTaskDetails } from "features/feat-task-details"
 
 export const Route = createFileRoute("/_app/task-lists/_details-layout")({
   component: RouteComponent
@@ -23,7 +24,7 @@ function RouteComponent() {
 
       {isNewTaskRoute && <FeatureTaskCreate />}
 
-      {isTaskDetailsRoute && <div>Task Details</div>}
+      {isTaskDetailsRoute && <FeatureTaskDetails />}
     </>
   )
 }

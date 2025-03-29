@@ -45,7 +45,8 @@ const RowActions = ({ data, item }: RowActionsProps) => {
   const handleShowDetails = () => {
     navigate({
       to: "/task-lists/$taskListId/t/$taskId",
-      params: { taskListId: data.id, taskId: item.id }
+      params: { taskListId: data.id, taskId: item.id },
+      replace: true
     })
   }
 

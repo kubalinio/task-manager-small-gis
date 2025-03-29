@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+
 import type { CreateTaskInputForm } from "api/actions/tasks/task.types"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -35,6 +37,12 @@ const CreateTaskForm = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault()
+            form.handleSubmit(onSubmit)()
+          }
+        }}
         className='flex flex-1 flex-col gap-y-4'
       >
         <ControlledInputField name='title' label='Title' />

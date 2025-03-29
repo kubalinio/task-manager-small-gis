@@ -16,11 +16,11 @@ const FeatureTaskCreate = () => {
     <Sheet defaultOpen onOpenChange={handleOpenChange}>
       <SheetContent
         className='flex w-[calc(100%-4rem)] flex-col gap-8'
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault()
-          }
-        }}
+        // onKeyDown={(e) => {
+        //   if (e.key === "Enter") {
+        //     e.preventDefault()
+        //   }
+        // }}
       >
         <SheetHeader>
           <SheetTitle>Create Task</SheetTitle>
