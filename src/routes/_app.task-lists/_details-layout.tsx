@@ -12,11 +12,18 @@ function RouteComponent() {
     shouldThrow: false
   })
 
+  const isTaskDetailsRoute = !!useMatch({
+    from: "/_app/task-lists/_details-layout/$taskListId/t/$taskId",
+    shouldThrow: false
+  })
+
   return (
     <>
       <Outlet />
 
       {isNewTaskRoute && <FeatureTaskCreate />}
+
+      {isTaskDetailsRoute && <div>Task Details</div>}
     </>
   )
 }

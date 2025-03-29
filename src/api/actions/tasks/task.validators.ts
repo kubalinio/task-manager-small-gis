@@ -70,7 +70,7 @@ const CreateTaskSchemaForm = z.object({
   status: taskStatusSchema.optional().default(TaskStatus.TODO)
 })
 
-const updateTaskSchema = z.object({
+const UpdateTaskSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
@@ -87,7 +87,7 @@ export type { TaskStatus }
 export {
   taskSchema,
   taskStatusSchema,
-  updateTaskSchema,
+  UpdateTaskSchema,
   listSchema,
   CreateTaskListSchema,
   CreateTaskSchema,

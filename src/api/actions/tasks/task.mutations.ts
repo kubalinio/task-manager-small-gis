@@ -38,8 +38,9 @@ export const taskMutations = {
   },
 
   deleteSelectedTasks:
-    (client: IndexDBClient) => (listId: string, taskIds: string[]) => {
-      return taskActions.deleteSelectedTasks(client)(listId, taskIds)
+    (client: IndexDBClient) =>
+    ({ listId, taskIds }: { listId: string; taskIds: string[] }) => {
+      return taskActions.deleteSelectedTasks(client)({ listId, taskIds })
     }
 }
 

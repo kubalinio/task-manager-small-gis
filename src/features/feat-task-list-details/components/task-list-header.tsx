@@ -14,12 +14,7 @@ const TaskListHeader = () => {
   const handleOpenModal = () => {
     navigate({
       to: "/task-lists/$taskListId/new",
-      params: { taskListId: taskList?.id },
-      replace: true,
-      mask: {
-        to: "/task-lists/$taskListId/new",
-        params: { taskListId: taskList?.id }
-      }
+      params: { taskListId: taskList?.id }
     })
   }
 

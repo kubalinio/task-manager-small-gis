@@ -13,7 +13,7 @@ import {
 import { TaskListHeader, TasksTable } from "./components"
 
 const TaskList = () => {
-  const { taskList } = useListDetails()
+  const { taskList, viewMode } = useListDetails()
 
   return (
     <>
@@ -43,7 +43,11 @@ const TaskList = () => {
       <Container as='section'>
         <TaskListHeader />
 
-        <TasksTable />
+        {viewMode === "table" && taskList.tasks.data.length > 0 && (
+          <TasksTable />
+        )}
+
+        {/* {viewMode === "cards" && } */}
       </Container>
     </>
   )

@@ -62,7 +62,11 @@ const DeleteTasks = ({ table }: DeleteTasksProps) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={handleDeleteRows}>
+          <AlertDialogAction
+            onClick={() => {
+              handleDeleteRows(table.getSelectedRowModel().rows)
+            }}
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -1,10 +1,17 @@
 import { useState, useTransition } from "react"
+import { useNavigate } from "@tanstack/react-router"
 
-import type { TaskListResponse } from "api/actions/tasks/task.types"
+import type {
+  TaskListResponse,
+  TaskStatusType
+} from "api/actions/tasks/task.types"
 import type { Task } from "api/types"
 
 import { MoreHorizontal } from "lucide-react"
 
+import { TaskStatus } from "api/actions/tasks/task.types"
+import { useListDetails } from "features/feat-task-list-details/hooks/use-list-details"
+import { Link } from "components/common/link"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,20 +36,34 @@ interface RowActionsProps {
 }
 
 const RowActions = ({ data, item }: RowActionsProps) => {
+  const { deleteTask, updateTask } = useListDetails()
+  const navigate = useNavigate()
+
   const [isUpdatePending, startUpdateTransition] = useTransition()
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
-  const handleStatusChange = (newStatus: Task["status"]) => {
+  const handleShowDetails = () => {
+    navigate({
+      to: "/task-lists/$taskListId/t/$taskId",
+      params: { taskListId: data.id, taskId: item.id }
+    })
+  }
+
+  const handleStatusChange = (newStatus: TaskStatusType) => {
     startUpdateTransition(() => {
-      // Update task status logic here
-      console.log("Update status to:", newStatus)
+      updateTask({
+        id: item.id,
+        data: {
+          status: newStatus
+        }
+      })
     })
   }
 
   const handleDelete = () => {
     startUpdateTransition(() => {
-      // Delete task logic here
-      console.log("Delete task:", item.id)
+      deleteTask(item.id)
+
       setShowDeleteDialog(false)
     })
   }
@@ -65,32 +86,42 @@ const RowActions = ({ data, item }: RowActionsProps) => {
 
         <DropdownMenuContent align='end' className='w-auto'>
           <DropdownMenuGroup>
+            <DropdownMenuItem onClick={handleShowDetails}>
+              Details
+            </DropdownMenuItem>
+
             <DropdownMenuItem
               onClick={() => {
-                handleStatusChange("in-progress")
+                handleStatusChange(TaskStatus.IN_PROGRESS)
               }}
-              disabled={isUpdatePending || item.status === "in-progress"}
+              disabled={
+                isUpdatePending || item.status === TaskStatus.IN_PROGRESS
+              }
             >
               Mark as in progress
             </DropdownMenuItem>
+
             <DropdownMenuItem
               onClick={() => {
-                handleStatusChange("done")
+                handleStatusChange(TaskStatus.DONE)
               }}
-              disabled={isUpdatePending || item.status === "done"}
+              disabled={isUpdatePending || item.status === TaskStatus.DONE}
             >
               Mark as done
             </DropdownMenuItem>
+
             <DropdownMenuItem
               onClick={() => {
-                handleStatusChange("todo")
+                handleStatusChange(TaskStatus.TODO)
               }}
-              disabled={isUpdatePending || item.status === "todo"}
+              disabled={isUpdatePending || item.status === TaskStatus.TODO}
             >
               Mark as todo
             </DropdownMenuItem>
           </DropdownMenuGroup>
+
           <DropdownMenuSeparator />
+
           <DropdownMenuItem
             onClick={() => {
               setShowDeleteDialog(true)
@@ -105,16 +136,21 @@ const RowActions = ({ data, item }: RowActionsProps) => {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle className='text-center'>
+              Are you sure?
+            </AlertDialogTitle>
+
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
               task.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+
+          <AlertDialogFooter className='mt-2'>
             <AlertDialogCancel disabled={isUpdatePending}>
               Cancel
             </AlertDialogCancel>
+
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isUpdatePending}

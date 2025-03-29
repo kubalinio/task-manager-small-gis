@@ -23,7 +23,31 @@ const useListDetails = () => {
   const { mutate: createTask } = useMutation("createTask", {
     onSuccess: async () => {
       await queryClient.invalidateQueries({
-        queryKey: taskQueries.getAllTasks({ listId: taskListId }).queryKey
+        queryKey: taskQueries.getTaskList(taskListId).queryKey
+      })
+    }
+  })
+
+  const { mutate: updateTask } = useMutation("updateTask", {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: taskQueries.getTaskList(taskListId).queryKey
+      })
+    }
+  })
+
+  const { mutate: deleteTask } = useMutation("deleteTask", {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: taskQueries.getTaskList(taskListId).queryKey
+      })
+    }
+  })
+
+  const { mutate: deleteSelectedTasks } = useMutation("deleteSelectedTasks", {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: taskQueries.getTaskList(taskListId).queryKey
       })
     }
   })
@@ -31,8 +55,11 @@ const useListDetails = () => {
   return {
     viewMode: store((state) => state.viewMode),
     setViewMode: store((state) => state.setViewMode),
-    taskList: taskList,
-    createTask: createTask
+    taskList,
+    createTask,
+    updateTask,
+    deleteTask,
+    deleteSelectedTasks
   }
 }
 

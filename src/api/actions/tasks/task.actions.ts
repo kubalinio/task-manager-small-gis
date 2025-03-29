@@ -22,7 +22,7 @@ import {
   CreateTaskListSchema,
   CreateTaskSchema,
   updateListSchema,
-  updateTaskSchema
+  UpdateTaskSchema
 } from "./task.validators"
 
 const createTaskList =
@@ -167,7 +167,7 @@ const updateTask =
       throw createNotFoundError("Task", id)
     }
 
-    const validationResult = updateTaskSchema.safeParse(data)
+    const validationResult = UpdateTaskSchema.safeParse(data)
 
     if (!validationResult.success) {
       throw createValidationError("Invalid task data", {
@@ -204,10 +204,13 @@ const deleteTask =
 
 const deleteSelectedTasks =
   (client: IndexDBClient) =>
-  async (
-    listId: string,
+  async ({
+    listId,
+    taskIds
+  }: {
+    listId: string
     taskIds: string[]
-  ): Promise<{ details: { message: string } }> => {
+  }): Promise<{ details: { message: string } }> => {
     const db = client || (await getDB())
 
     const tx = db.transaction(["tasks"], "readwrite")

@@ -5,7 +5,7 @@ import type {
   CreateTaskSchema,
   CreateTaskSchemaForm,
   updateListSchema,
-  updateTaskSchema
+  UpdateTaskSchema
 } from "./task.validators"
 
 const TaskStatus = {
@@ -94,7 +94,7 @@ type CreateTaskListInput = z.infer<typeof CreateTaskListSchema>
 type UpdateTaskListInput = z.infer<typeof updateListSchema>
 type CreateTaskInput = z.infer<typeof CreateTaskSchema>
 type CreateTaskInputForm = z.infer<typeof CreateTaskSchemaForm>
-type UpdateTaskInput = z.infer<typeof updateTaskSchema>
+type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>
 
 export { TaskStatus }
 export type {

@@ -12,6 +12,7 @@ import {
 import type {
   ColumnFiltersState,
   PaginationState,
+  Row,
   SortingState,
   VisibilityState
 } from "@tanstack/react-table"
@@ -22,20 +23,16 @@ import { useListDetails } from "features/feat-task-list-details/hooks/use-list-d
 import { getColumns } from "../components/tasks-table/get-columns"
 
 const useTasksTable = () => {
-  const { taskList } = useListDetails()
+  const { taskList, deleteSelectedTasks } = useListDetails()
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10
-  })
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "title",
-      desc: false
+      id: "status",
+      desc: true
     }
   ])
 
@@ -56,18 +53,6 @@ const useTasksTable = () => {
     [taskList, defaultTaskList]
   )
 
-  const handleDeleteRows = () => {
-    if (!table || !taskList?.tasks?.data) return
-
-    const selectedRows = table.getSelectedRowModel().rows
-    // We don't need to store updatedData since we're not using it
-    // Just filter the rows as a demo/preparation for actual deletion
-    taskList?.tasks.data.filter(
-      (item) => !selectedRows.some((row) => row.original.id === item.id)
-    )
-    table.resetRowSelection()
-  }
-
   const table = useReactTable<Task>({
     data: taskList?.tasks?.data ?? [],
     columns,
@@ -76,14 +61,12 @@ const useTasksTable = () => {
     onSortingChange: setSorting,
     enableSortingRemoval: false,
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     state: {
       sorting,
-      pagination,
       columnFilters,
       columnVisibility
     }
@@ -125,6 +108,21 @@ const useTasksTable = () => {
     }
 
     statusCol.setFilterValue(newFilterValue.length ? newFilterValue : undefined)
+  }
+
+  const handleDeleteRows = (selectedRows: Row<Task>[]) => {
+    if (!table || !taskList?.tasks?.data) return
+
+    taskList?.tasks.data.filter(
+      (item) => !selectedRows.some((row) => row.original.id === item.id)
+    )
+
+    deleteSelectedTasks({
+      listId: taskList.id,
+      taskIds: selectedRows.map((row) => row.original.id)
+    })
+
+    table.resetRowSelection()
   }
 
   return {
