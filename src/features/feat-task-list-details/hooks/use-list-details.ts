@@ -55,7 +55,7 @@ const useListDetails = () => {
     }
   })
 
-  const handleFilter = async (filters: TasksFilterOptions) => {
+  const handleQueryFilter = async (filters: TasksFilterOptions) => {
     if (!filters || Object.keys(filters).length === 0) {
       queryClient.invalidateQueries({
         queryKey: taskQueries.getTaskList(taskListId).queryKey
@@ -74,7 +74,7 @@ const useListDetails = () => {
     updateTask,
     deleteTask,
     deleteSelectedTasks,
-    handleFilter
+    handleQueryFilter
   }
 }
 
