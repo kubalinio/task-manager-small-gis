@@ -44,8 +44,6 @@ const TaskList = () => {
         <TaskListHeader />
 
         {viewMode === "table" && <TasksTable />}
-
-        {/* {viewMode === "cards" && } */}
       </Container>
     </>
   )

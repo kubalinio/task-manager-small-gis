@@ -9,12 +9,12 @@ import { cn } from "libs/utils"
 const typographyVariants = cva("text-foreground", {
   variants: {
     variant: {
-      h1: "text-[4rem] leading-[5rem] font-bold",
-      h2: "text-[3rem] leading-[4rem] font-bold",
-      h3: "text-[2rem] leading-[3rem] font-bold",
-      h4: "text-[1.5rem] leading-9 font-bold",
-      h5: "text-[1.25rem] leading-[1.875rem] font-bold",
-      h6: "text-[1.125rem] leading-7 font-bold",
+      h1: "text-[3.2rem] leading-[4rem] font-bold",
+      h2: "text-[2.8rem] leading-[3.5rem] font-bold",
+      h3: "text-[2.4rem] leading-[3rem] font-bold",
+      h4: "text-[2rem] leading-9 font-bold",
+      h5: "text-[1.6rem] leading-[2.25rem] font-bold",
+      h6: "text-[1.2rem] leading-7 font-bold",
       "subtitle-1": "text-base leading-6 font-semibold",
       "subtitle-2": "text-sm leading-[1.375rem] font-semibold",
       "body-1": "text-base leading-6 font-normal",
