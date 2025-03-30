@@ -18,16 +18,19 @@ const getAllTaskLists =
 
     lists.sort((a: List, b: List) => b.createdAt - a.createdAt)
 
-    return {
-      data: lists.map((list) => ({
-        ...list,
-        tasksMeta: {
-          todo: 0,
-          "in-progress": 0,
-          done: 0,
-          total: 0
+    const listsWithTasksMeta = await Promise.all(
+      lists.map(async (list) => {
+        const tasks = await getAllTasks(client)({ listId: list.id })
+
+        return {
+          ...list,
+          tasksMeta: tasks.meta
         }
-      })),
+      })
+    )
+
+    return {
+      data: listsWithTasksMeta,
       meta: {
         total: lists.length,
         tasks: {
@@ -64,7 +67,6 @@ const getAllTasks =
     const db = client || (await getDB())
     let tasks: Task[] = []
 
-    // If listId is provided, get tasks by listId
     if (filters?.listId) {
       const index = db.transaction("tasks").store.index("by-list")
 
@@ -81,6 +83,7 @@ const getAllTasks =
     const tasksMeta = tasks.reduce(
       (acc, task) => {
         acc[task.status] += 1
+        acc.total += 1
         return acc
       },
       {
@@ -91,13 +94,10 @@ const getAllTasks =
       }
     )
 
-    // Apply status filter if provided
-    // If no status filter is provided, show all tasks for the listId
     if (filters?.status && filters.status.length > 0) {
       tasks = tasks.filter((task) => filters.status?.includes(task.status))
     }
 
-    // Apply text search if provided
     if (filters?.search) {
       const searchLower = filters.search.toLowerCase()
       tasks = tasks.filter(
@@ -107,7 +107,6 @@ const getAllTasks =
       )
     }
 
-    // Apply sorting
     const sortBy = filters?.sortBy || "createdAt"
     const sortDirection = filters?.sortDirection || "desc"
 

@@ -19,30 +19,25 @@ const FeatureTaskDetails = () => {
 
   return (
     <Sheet defaultOpen onOpenChange={handleOpenChange}>
-      <SheetContent
-        className='flex w-[calc(100%-4rem)] flex-col gap-8'
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault()
-          }
-        }}
-      >
+      <SheetContent className='flex w-[calc(100%-3rem)] flex-col gap-8'>
         <SheetHeader>
           <SheetTitle>
-            <span className='text-muted text-xs'>{task.listTitle}</span>
+            <span className='text-muted-foreground text-xs'>
+              {task.listTitle}
+            </span>
 
             <br />
 
             {task.title}
           </SheetTitle>
 
-          <SheetDescription className='[&>p]:text-accent-foreground flex flex-col gap-2 [&>p]:text-xs'>
+          <SheetDescription className='[&>p]:text-muted-foreground flex items-center justify-between gap-2 [&>p]:text-xs [&>p]:tracking-tighter'>
             <Typography as='p' variant='body-2'>
-              Created at: {formatTaskListItemDate(task.createdAt)}
+              Created: {formatTaskListItemDate(task.createdAt)}
             </Typography>
 
             <Typography as='p' variant='body-2'>
-              Updated at: {formatTaskListItemDate(task.updatedAt)}
+              Updated: {formatTaskListItemDate(task.updatedAt)}
             </Typography>
           </SheetDescription>
 

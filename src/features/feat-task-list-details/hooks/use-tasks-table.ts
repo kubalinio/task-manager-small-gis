@@ -32,7 +32,7 @@ const useTasksTable = () => {
 
   const [sorting, setSorting] = useState<SortingState>([
     {
-      id: "status",
+      id: "updatedAt",
       desc: true
     }
   ])
