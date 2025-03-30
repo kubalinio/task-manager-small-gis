@@ -16,8 +16,6 @@ import { ProjectSwitcher } from "./project-switcher"
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: taskLists } = useGetTaskLists()
 
-  // console.log(taskLists)
-
   return (
     <Sidebar className='border-r-0' {...props}>
       <SidebarHeader>
