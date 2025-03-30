@@ -75,7 +75,7 @@ interface TasksResponse {
 }
 
 interface TaskResponse {
-  data: Task
+  data: Task & { listTitle: string | undefined }
 }
 
 interface TasksFilterOptions {
