@@ -7,6 +7,10 @@ const DB_NAME = "task-manager-db"
 const DB_VERSION = 1
 
 const initDB = async (): Promise<IDBPDatabase<TaskManagerDB>> => {
+  if (typeof window === "undefined" || typeof indexedDB === "undefined") {
+    return null as unknown as IDBPDatabase<TaskManagerDB>
+  }
+
   return openDB<TaskManagerDB>(DB_NAME, DB_VERSION, {
     upgrade(db: IDBPDatabase<TaskManagerDB>) {
       const listStore = db.createObjectStore("task_lists", { keyPath: "id" })

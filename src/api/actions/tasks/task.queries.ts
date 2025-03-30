@@ -1,10 +1,6 @@
 import type { IndexDBClient } from "api/indexdb"
 import type { List, Task } from "api/types"
-import type {
-  TaskListsResponse,
-  TasksFilterOptions,
-  TaskStatusType
-} from "./task.types"
+import type { TaskListsResponse, TasksFilterOptions } from "./task.types"
 
 import { getDB } from "api/indexdb"
 import { createNotFoundError } from "api/utils/error-handler"
