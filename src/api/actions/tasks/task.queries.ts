@@ -1,6 +1,12 @@
 import type { IndexDBClient } from "api/indexdb"
 import type { List, Task } from "api/types"
-import type { TaskListsResponse, TasksFilterOptions } from "./task.types"
+import type {
+  TaskListResponse,
+  TaskListsResponse,
+  TaskResponse,
+  TasksFilterOptions,
+  TasksResponse
+} from "./task.types"
 
 import { getDB } from "api/indexdb"
 import { createNotFoundError } from "api/utils/error-handler"
@@ -16,32 +22,63 @@ const getAllTaskLists =
 
     const listsWithTasksMeta = await Promise.all(
       lists.map(async (list) => {
-        const tasks = await getAllTasks(client)({ listId: list.id })
+        const allTasks = await db
+          .transaction("tasks")
+          .store.index("by-list")
+          .getAll(list.id)
+
+        const listTasksMeta = allTasks.reduce(
+          (acc, task) => {
+            acc[task.status] += 1
+            acc.total += 1
+            return acc
+          },
+          {
+            total: 0,
+            todo: 0,
+            "in-progress": 0,
+            done: 0
+          }
+        )
 
         return {
           ...list,
-          tasksMeta: tasks.meta
+          tasksMeta: listTasksMeta
         }
       })
+    )
+
+    const totalTasksMeta = listsWithTasksMeta.reduce(
+      (acc, list) => {
+        acc.todo += list.tasksMeta.todo
+        acc["in-progress"] += list.tasksMeta["in-progress"]
+        acc.done += list.tasksMeta.done
+        acc.total += list.tasksMeta.total
+        return acc
+      },
+      {
+        todo: 0,
+        "in-progress": 0,
+        done: 0,
+        total: 0
+      }
     )
 
     return {
       data: listsWithTasksMeta,
       meta: {
         total: lists.length,
-        tasks: {
-          todo: 0,
-          "in-progress": 0,
-          done: 0,
-          total: 0
-        }
+        tasks: totalTasksMeta
       }
     }
   }
 
 const getTaskList =
   (client: IndexDBClient) =>
-  async (id: string, filters?: TasksFilterOptions) => {
+  async (
+    id: string,
+    filters?: TasksFilterOptions
+  ): Promise<TaskListResponse> => {
     const db = client || (await getDB())
     const list = await db.get("task_lists", id)
 
@@ -51,15 +88,35 @@ const getTaskList =
 
     const tasks = await getAllTasks(client)({ listId: id, ...filters })
 
+    const allTasks = await db
+      .transaction("tasks")
+      .store.index("by-list")
+      .getAll(id)
+
+    const tasksMeta = allTasks.reduce(
+      (acc, task) => {
+        acc[task.status] += 1
+        acc.total += 1
+        return acc
+      },
+      {
+        total: 0,
+        todo: 0,
+        "in-progress": 0,
+        done: 0
+      }
+    )
+
     return {
       ...list,
-      tasksMeta: tasks.meta,
+      tasksMeta,
       tasks
     }
   }
 
 const getAllTasks =
-  (client: IndexDBClient) => async (filters?: TasksFilterOptions) => {
+  (client: IndexDBClient) =>
+  async (filters?: TasksFilterOptions): Promise<TasksResponse> => {
     const db = client || (await getDB())
     let tasks: Task[] = []
 
@@ -116,29 +173,29 @@ const getAllTasks =
 
     return {
       data: tasks,
-      meta: {
-        ...tasksMeta
+      meta: tasksMeta
+    }
+  }
+
+const getTask =
+  (client: IndexDBClient) =>
+  async (id: string): Promise<TaskResponse> => {
+    const db = client || (await getDB())
+    const task = await db.get("tasks", id)
+
+    if (!task) {
+      throw createNotFoundError("Task", id)
+    }
+
+    const taskList = await db.get("task_lists", task.listId)
+
+    return {
+      data: {
+        ...task,
+        listTitle: taskList?.title
       }
     }
   }
-
-const getTask = (client: IndexDBClient) => async (id: string) => {
-  const db = client || (await getDB())
-  const task = await db.get("tasks", id)
-
-  if (!task) {
-    throw createNotFoundError("Task", id)
-  }
-
-  const taskList = await db.get("task_lists", task.listId)
-
-  return {
-    data: {
-      ...task,
-      listTitle: taskList?.title
-    }
-  }
-}
 
 export const taskQueries = {
   all: () => ["tasks"],

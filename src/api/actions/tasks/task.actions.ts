@@ -152,7 +152,10 @@ const createTask =
     await db.add("tasks", newTask)
 
     return {
-      data: newTask
+      data: {
+        ...newTask,
+        listTitle: list.title
+      }
     }
   }
 
@@ -175,6 +178,8 @@ const updateTask =
       })
     }
 
+    const list = await db.get("task_lists", existingTask.listId)
+
     const updatedTask: Task = {
       ...existingTask,
       ...data,
@@ -184,7 +189,10 @@ const updateTask =
     await db.put("tasks", updatedTask)
 
     return {
-      data: updatedTask
+      data: {
+        ...updatedTask,
+        listTitle: list?.title
+      }
     }
   }
 
