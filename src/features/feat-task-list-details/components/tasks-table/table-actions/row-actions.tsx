@@ -110,7 +110,7 @@ const RowActions = ({ data, item }: RowActionsProps) => {
                 isUpdatePending || item.status === TaskStatus.IN_PROGRESS
               }
             >
-              Mark as in progress
+              Mark as In Progress
             </DropdownMenuItem>
 
             <DropdownMenuItem
@@ -119,7 +119,7 @@ const RowActions = ({ data, item }: RowActionsProps) => {
               }}
               disabled={isUpdatePending || item.status === TaskStatus.DONE}
             >
-              Mark as done
+              Mark as Done
             </DropdownMenuItem>
 
             <DropdownMenuItem
@@ -128,7 +128,7 @@ const RowActions = ({ data, item }: RowActionsProps) => {
               }}
               disabled={isUpdatePending || item.status === TaskStatus.TODO}
             >
-              Mark as todo
+              Mark as To Do
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
