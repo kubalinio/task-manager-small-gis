@@ -1,16 +1,7 @@
 import { useListDetails } from "features/feat-task-list-details/hooks"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  Container,
-  Separator,
-  SidebarTrigger
-} from "components/ui"
+import { Container, Separator, SidebarTrigger } from "components/ui"
 
-import { TaskListHeader, TasksTable } from "./components"
+import { TaskListBreadcrumb, TaskListHeader, TasksTable } from "./components"
 
 const TaskList = () => {
   const { taskList, viewMode } = useListDetails()
@@ -22,22 +13,7 @@ const TaskList = () => {
 
         <Separator orientation='vertical' className='mr-2 h-4' />
 
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>Task Lists</BreadcrumbItem>
-
-            <BreadcrumbSeparator />
-
-            <BreadcrumbItem>
-              <BreadcrumbLink
-                href={`/task-lists/${taskList?.id}`}
-                className='bg-accent rounded-md px-2 py-1'
-              >
-                {taskList?.title}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <TaskListBreadcrumb />
       </header>
 
       <Container as='section'>

@@ -41,6 +41,14 @@ To run the production server:
 pnpm start
 ```
 
+### Testing
+
+To run the tests:
+
+```sh
+pnpm test
+```
+
 ## Project Architecture
 
 ### Tech Stack
