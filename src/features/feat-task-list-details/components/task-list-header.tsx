@@ -13,7 +13,7 @@ const TaskListHeader = () => {
 
   const handleOpenModal = () => {
     navigate({
-      to: "/task-lists/$taskListId/new",
+      to: "/task-lists/$taskListId/new-task",
       params: { taskListId: taskList?.id }
     })
   }

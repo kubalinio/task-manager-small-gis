@@ -17,7 +17,8 @@ import { Route as AppImport } from "./routes/_app"
 import { Route as AppIndexImport } from "./routes/_app.index"
 import { Route as AppTaskListsDetailsLayoutImport } from "./routes/_app.task-lists/_details-layout"
 import { Route as AppTaskListsDetailsLayoutTaskListIdImport } from "./routes/_app.task-lists/_details-layout.$taskListId"
-import { Route as AppTaskListsDetailsLayoutTaskListIdNewImport } from "./routes/_app.task-lists/_details-layout.$taskListId.new"
+import { Route as AppTaskListsDetailsLayoutTaskListIdEditImport } from "./routes/_app.task-lists/_details-layout.$taskListId.edit"
+import { Route as AppTaskListsDetailsLayoutTaskListIdNewTaskImport } from "./routes/_app.task-lists/_details-layout.$taskListId.new-task"
 import { Route as AppTaskListsDetailsLayoutTaskListIdTTaskIdImport } from "./routes/_app.task-lists/_details-layout.$taskListId.t.$taskId"
 import { Route as AppTaskListsDetailsLayoutTaskListIdTTaskIdEditImport } from "./routes/_app.task-lists/_details-layout.$taskListId.t.$taskId.edit"
 
@@ -56,10 +57,17 @@ const AppTaskListsDetailsLayoutTaskListIdRoute =
     getParentRoute: () => AppTaskListsDetailsLayoutRoute
   } as any)
 
-const AppTaskListsDetailsLayoutTaskListIdNewRoute =
-  AppTaskListsDetailsLayoutTaskListIdNewImport.update({
-    id: "/new",
-    path: "/new",
+const AppTaskListsDetailsLayoutTaskListIdNewTaskRoute =
+  AppTaskListsDetailsLayoutTaskListIdNewTaskImport.update({
+    id: "/new-task",
+    path: "/new-task",
+    getParentRoute: () => AppTaskListsDetailsLayoutTaskListIdRoute
+  } as any)
+
+const AppTaskListsDetailsLayoutTaskListIdEditRoute =
+  AppTaskListsDetailsLayoutTaskListIdEditImport.update({
+    id: "/edit",
+    path: "/edit",
     getParentRoute: () => AppTaskListsDetailsLayoutTaskListIdRoute
   } as any)
 
@@ -116,11 +124,18 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AppTaskListsDetailsLayoutTaskListIdImport
       parentRoute: typeof AppTaskListsDetailsLayoutImport
     }
-    "/_app/task-lists/_details-layout/$taskListId/new": {
-      id: "/_app/task-lists/_details-layout/$taskListId/new"
-      path: "/new"
-      fullPath: "/task-lists/$taskListId/new"
-      preLoaderRoute: typeof AppTaskListsDetailsLayoutTaskListIdNewImport
+    "/_app/task-lists/_details-layout/$taskListId/edit": {
+      id: "/_app/task-lists/_details-layout/$taskListId/edit"
+      path: "/edit"
+      fullPath: "/task-lists/$taskListId/edit"
+      preLoaderRoute: typeof AppTaskListsDetailsLayoutTaskListIdEditImport
+      parentRoute: typeof AppTaskListsDetailsLayoutTaskListIdImport
+    }
+    "/_app/task-lists/_details-layout/$taskListId/new-task": {
+      id: "/_app/task-lists/_details-layout/$taskListId/new-task"
+      path: "/new-task"
+      fullPath: "/task-lists/$taskListId/new-task"
+      preLoaderRoute: typeof AppTaskListsDetailsLayoutTaskListIdNewTaskImport
       parentRoute: typeof AppTaskListsDetailsLayoutTaskListIdImport
     }
     "/_app/task-lists/_details-layout/$taskListId/t/$taskId": {
@@ -158,14 +173,17 @@ const AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren =
   )
 
 interface AppTaskListsDetailsLayoutTaskListIdRouteChildren {
-  AppTaskListsDetailsLayoutTaskListIdNewRoute: typeof AppTaskListsDetailsLayoutTaskListIdNewRoute
+  AppTaskListsDetailsLayoutTaskListIdEditRoute: typeof AppTaskListsDetailsLayoutTaskListIdEditRoute
+  AppTaskListsDetailsLayoutTaskListIdNewTaskRoute: typeof AppTaskListsDetailsLayoutTaskListIdNewTaskRoute
   AppTaskListsDetailsLayoutTaskListIdTTaskIdRoute: typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren
 }
 
 const AppTaskListsDetailsLayoutTaskListIdRouteChildren: AppTaskListsDetailsLayoutTaskListIdRouteChildren =
   {
-    AppTaskListsDetailsLayoutTaskListIdNewRoute:
-      AppTaskListsDetailsLayoutTaskListIdNewRoute,
+    AppTaskListsDetailsLayoutTaskListIdEditRoute:
+      AppTaskListsDetailsLayoutTaskListIdEditRoute,
+    AppTaskListsDetailsLayoutTaskListIdNewTaskRoute:
+      AppTaskListsDetailsLayoutTaskListIdNewTaskRoute,
     AppTaskListsDetailsLayoutTaskListIdTTaskIdRoute:
       AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren
   }
@@ -219,7 +237,8 @@ export interface FileRoutesByFullPath {
   "/": typeof AppIndexRoute
   "/task-lists": typeof AppTaskListsDetailsLayoutRouteWithChildren
   "/task-lists/$taskListId": typeof AppTaskListsDetailsLayoutTaskListIdRouteWithChildren
-  "/task-lists/$taskListId/new": typeof AppTaskListsDetailsLayoutTaskListIdNewRoute
+  "/task-lists/$taskListId/edit": typeof AppTaskListsDetailsLayoutTaskListIdEditRoute
+  "/task-lists/$taskListId/new-task": typeof AppTaskListsDetailsLayoutTaskListIdNewTaskRoute
   "/task-lists/$taskListId/t/$taskId": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren
   "/task-lists/$taskListId/t/$taskId/edit": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdEditRoute
 }
@@ -228,7 +247,8 @@ export interface FileRoutesByTo {
   "/": typeof AppIndexRoute
   "/task-lists": typeof AppTaskListsDetailsLayoutRouteWithChildren
   "/task-lists/$taskListId": typeof AppTaskListsDetailsLayoutTaskListIdRouteWithChildren
-  "/task-lists/$taskListId/new": typeof AppTaskListsDetailsLayoutTaskListIdNewRoute
+  "/task-lists/$taskListId/edit": typeof AppTaskListsDetailsLayoutTaskListIdEditRoute
+  "/task-lists/$taskListId/new-task": typeof AppTaskListsDetailsLayoutTaskListIdNewTaskRoute
   "/task-lists/$taskListId/t/$taskId": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren
   "/task-lists/$taskListId/t/$taskId/edit": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdEditRoute
 }
@@ -240,7 +260,8 @@ export interface FileRoutesById {
   "/_app/task-lists": typeof AppTaskListsRouteWithChildren
   "/_app/task-lists/_details-layout": typeof AppTaskListsDetailsLayoutRouteWithChildren
   "/_app/task-lists/_details-layout/$taskListId": typeof AppTaskListsDetailsLayoutTaskListIdRouteWithChildren
-  "/_app/task-lists/_details-layout/$taskListId/new": typeof AppTaskListsDetailsLayoutTaskListIdNewRoute
+  "/_app/task-lists/_details-layout/$taskListId/edit": typeof AppTaskListsDetailsLayoutTaskListIdEditRoute
+  "/_app/task-lists/_details-layout/$taskListId/new-task": typeof AppTaskListsDetailsLayoutTaskListIdNewTaskRoute
   "/_app/task-lists/_details-layout/$taskListId/t/$taskId": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdRouteWithChildren
   "/_app/task-lists/_details-layout/$taskListId/t/$taskId/edit": typeof AppTaskListsDetailsLayoutTaskListIdTTaskIdEditRoute
 }
@@ -252,7 +273,8 @@ export interface FileRouteTypes {
     | "/"
     | "/task-lists"
     | "/task-lists/$taskListId"
-    | "/task-lists/$taskListId/new"
+    | "/task-lists/$taskListId/edit"
+    | "/task-lists/$taskListId/new-task"
     | "/task-lists/$taskListId/t/$taskId"
     | "/task-lists/$taskListId/t/$taskId/edit"
   fileRoutesByTo: FileRoutesByTo
@@ -260,7 +282,8 @@ export interface FileRouteTypes {
     | "/"
     | "/task-lists"
     | "/task-lists/$taskListId"
-    | "/task-lists/$taskListId/new"
+    | "/task-lists/$taskListId/edit"
+    | "/task-lists/$taskListId/new-task"
     | "/task-lists/$taskListId/t/$taskId"
     | "/task-lists/$taskListId/t/$taskId/edit"
   id:
@@ -270,7 +293,8 @@ export interface FileRouteTypes {
     | "/_app/task-lists"
     | "/_app/task-lists/_details-layout"
     | "/_app/task-lists/_details-layout/$taskListId"
-    | "/_app/task-lists/_details-layout/$taskListId/new"
+    | "/_app/task-lists/_details-layout/$taskListId/edit"
+    | "/_app/task-lists/_details-layout/$taskListId/new-task"
     | "/_app/task-lists/_details-layout/$taskListId/t/$taskId"
     | "/_app/task-lists/_details-layout/$taskListId/t/$taskId/edit"
   fileRoutesById: FileRoutesById
@@ -326,12 +350,17 @@ export const routeTree = rootRoute
       "filePath": "_app.task-lists/_details-layout.$taskListId.tsx",
       "parent": "/_app/task-lists/_details-layout",
       "children": [
-        "/_app/task-lists/_details-layout/$taskListId/new",
+        "/_app/task-lists/_details-layout/$taskListId/edit",
+        "/_app/task-lists/_details-layout/$taskListId/new-task",
         "/_app/task-lists/_details-layout/$taskListId/t/$taskId"
       ]
     },
-    "/_app/task-lists/_details-layout/$taskListId/new": {
-      "filePath": "_app.task-lists/_details-layout.$taskListId.new.tsx",
+    "/_app/task-lists/_details-layout/$taskListId/edit": {
+      "filePath": "_app.task-lists/_details-layout.$taskListId.edit.tsx",
+      "parent": "/_app/task-lists/_details-layout/$taskListId"
+    },
+    "/_app/task-lists/_details-layout/$taskListId/new-task": {
+      "filePath": "_app.task-lists/_details-layout.$taskListId.new-task.tsx",
       "parent": "/_app/task-lists/_details-layout/$taskListId"
     },
     "/_app/task-lists/_details-layout/$taskListId/t/$taskId": {
