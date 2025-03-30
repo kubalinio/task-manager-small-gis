@@ -49,7 +49,9 @@ const DeleteTasks = ({ table }: DeleteTasksProps) => {
           </div>
 
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle className='text-center'>
+              Are you absolutely sure?
+            </AlertDialogTitle>
 
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete{" "}
@@ -63,6 +65,7 @@ const DeleteTasks = ({ table }: DeleteTasksProps) => {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
           <AlertDialogAction
+            className='bg-destructive hover:bg-destructive/90'
             onClick={() => {
               handleDeleteRows(table.getSelectedRowModel().rows)
             }}

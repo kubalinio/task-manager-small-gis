@@ -26,7 +26,7 @@ const TaskTableRow = ({ isLoading, columns, rows = [] }: TaskTableRowProps) => {
     return (
       <TableRow className='hover:bg-transparent [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg'>
         <TableCell colSpan={columns.length} className='h-24 text-center'>
-          No results.
+          No results
         </TableCell>
       </TableRow>
     )

@@ -10,8 +10,10 @@ import { useForm } from "react-hook-form"
 
 import { TaskStatus } from "api/actions/tasks/task.types"
 import { CreateTaskSchemaForm } from "api/actions/tasks/task.validators"
+import { STATUS_OPTIONS } from "libs/constants/task"
 import {
   ControlledInputField,
+  ControlledSelectField,
   ControlledTextareaField
 } from "components/common/form-fields"
 import { Button, Form, SheetFooter } from "components/ui"
@@ -66,6 +68,13 @@ const CreateTaskForm = ({
         onKeyDown={handleKeyDown}
         className='flex flex-1 flex-col gap-y-8'
       >
+        <ControlledSelectField
+          name='status'
+          label='Status'
+          options={STATUS_OPTIONS}
+          className='w-full'
+        />
+
         <ControlledInputField name='title' label='Title' ref={titleInputRef} />
 
         <ControlledTextareaField name='description' label='Description' />

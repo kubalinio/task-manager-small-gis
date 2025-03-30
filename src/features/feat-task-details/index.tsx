@@ -1,3 +1,4 @@
+import { TaskStatusButton } from "features/shared/components/task-status/task-status-button"
 import { formatTaskListItemDate } from "libs/utils"
 import {
   Box,
@@ -31,31 +32,57 @@ const FeatureTaskDetails = () => {
             {task.title}
           </SheetTitle>
 
-          <SheetDescription className='[&>p]:text-muted-foreground flex items-center justify-between gap-2 [&>p]:text-xs [&>p]:tracking-tighter'>
-            <Typography as='p' variant='body-2'>
-              Created: {formatTaskListItemDate(task.createdAt)}
-            </Typography>
-
-            <Typography as='p' variant='body-2'>
-              Updated: {formatTaskListItemDate(task.updatedAt)}
-            </Typography>
+          <SheetDescription className='sr-only'>
+            {task.listTitle} Details
           </SheetDescription>
+
+          <div className='flex flex-col gap-2'>
+            <div className='[&>span]:text-muted-foreground flex items-center justify-between gap-2 [&>span]:text-xs [&>span]:tracking-tighter'>
+              <Typography as='span' variant='subtitle-2'>
+                Status:
+              </Typography>
+
+              <TaskStatusButton status={task.status} />
+            </div>
+
+            <div className='[&>span]:text-muted-foreground flex h-8 items-center justify-between gap-2 [&>span]:text-xs [&>span]:tracking-tighter'>
+              <Typography as='span' variant='subtitle-2'>
+                Created At:
+              </Typography>
+
+              <Typography as='span' variant='body-2'>
+                {formatTaskListItemDate(task.createdAt)}
+              </Typography>
+            </div>
+
+            <div className='[&>span]:text-muted-foreground flex h-8 items-center justify-between gap-2 [&>span]:text-xs [&>span]:tracking-tighter'>
+              <Typography as='span' variant='subtitle-2'>
+                Updated At:
+              </Typography>
+
+              <Typography as='span' variant='body-2'>
+                {formatTaskListItemDate(task.updatedAt)}
+              </Typography>
+            </div>
+          </div>
 
           <Separator />
         </SheetHeader>
 
-        <Box className='flex flex-col gap-4'>
-          <Typography as='h3' variant='h3'>
-            {task.title}
+        <Box className='flex flex-col gap-2'>
+          <Typography
+            as='h5'
+            variant='subtitle-2'
+            className='text-muted-foreground'
+          >
+            Description
           </Typography>
 
-          <Typography as='p' variant='body-2'>
-            {task.description}
-          </Typography>
-
-          <Typography as='p' variant='body-2'>
-            Status: {task.status}
-          </Typography>
+          <Box className='border-border overflow-hidden rounded-lg border p-4 text-pretty'>
+            <Typography as='p' variant='body-2'>
+              {task.description}
+            </Typography>
+          </Box>
         </Box>
 
         <SheetFooter className='mt-auto'>
