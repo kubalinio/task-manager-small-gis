@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 
 import type { IndexDBClient } from "api/indexdb"
-import type { IndexDBContextType } from "libs/context/indexdb-client/indexdb-context"
-import type React from "react"
 
 import { getDB } from "api/indexdb"
 import { seedDatabaseIfEmpty } from "api/utils/seed-data"
-import { IndexDBContext } from "libs/context/indexdb-client/indexdb-context"
 
-interface IndexDBProviderProps {
+type IndexDBContextType = {
+  client: IndexDBClient | null
+  isLoading: boolean
+  error: Error | null
+}
+
+export const IndexDBContext = createContext<IndexDBContextType | null>(null)
+
+type IndexDBProviderProps = {
   children: React.ReactNode
 }
 
@@ -21,9 +26,23 @@ export const IndexDBProvider = ({ children }: IndexDBProviderProps) => {
     const initializeDB = async () => {
       try {
         setIsLoading(true)
+
+        // Skip initialization in test environment
+        if (
+          process.env.NODE_ENV === "test" ||
+          typeof indexedDB === "undefined"
+        ) {
+          setClient(null)
+          setError(null)
+          setIsLoading(false)
+          return
+        }
+
         const db = await getDB()
 
-        await seedDatabaseIfEmpty()
+        if (db) {
+          await seedDatabaseIfEmpty()
+        }
 
         setClient(db)
         setError(null)
