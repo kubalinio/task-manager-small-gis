@@ -16,7 +16,7 @@
 
   --color-muted: hsl(210 40% 96.1%);
   --color-muted-foreground: hsl(0 0% 64%);
-  --color-accent: hsl(216 12.2% 83.92%);
+  --color-accent: hsl(210, 6%, 87%);
   --color-accent-foreground: hsl(211 24% 17%);
 
   --color-success: hsl(169 100% 30%);
