@@ -4,7 +4,7 @@ import type {
   CreateTaskListSchema,
   CreateTaskSchema,
   CreateTaskSchemaForm,
-  updateListSchema,
+  UpdateTaskListSchema,
   UpdateTaskSchema
 } from "./task.validators"
 
@@ -97,7 +97,7 @@ interface UpdateTaskParams {
 }
 
 type CreateTaskListInput = z.infer<typeof CreateTaskListSchema>
-type UpdateTaskListInput = z.infer<typeof updateListSchema>
+type UpdateTaskListInput = z.infer<typeof UpdateTaskListSchema>
 type CreateTaskInput = z.infer<typeof CreateTaskSchema>
 type CreateTaskInputForm = z.infer<typeof CreateTaskSchemaForm>
 type UpdateTaskInput = z.infer<typeof UpdateTaskSchema>
