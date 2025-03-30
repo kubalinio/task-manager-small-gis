@@ -11,12 +11,20 @@ import {
 import { useTasksTable } from "../../../hooks"
 
 const FilterStatus = () => {
-  const {
-    handleStatusChange,
-    selectedStatuses,
-    uniqueStatusValues,
-    statusCounts
-  } = useTasksTable()
+  const { handleStatusChange, selectedStatuses, statusMeta } = useTasksTable()
+
+  const statusValues = Object.keys(statusMeta ?? {})
+  const MapedStatusValues = statusValues
+    .map((value) => ({
+      label: value.replace(/-/g, " "),
+      value: value,
+      numbers: statusMeta?.[value as keyof typeof statusMeta]
+    }))
+    .slice(1, 4)
+
+  const selectedItems = selectedStatuses.reduce((acc, status) => {
+    return acc + (statusMeta?.[status as keyof typeof statusMeta] ?? 0)
+  }, 0)
 
   return (
     <Popover>
@@ -29,8 +37,8 @@ const FilterStatus = () => {
           />
           Filter
           {selectedStatuses.length > 0 && (
-            <span className='border-border bg-background text-muted-foreground/70 ms-3 -me-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium'>
-              {selectedStatuses.length}
+            <span className='border-border bg-background text-muted-foreground/70 -mr-1 ml-1 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-sm font-medium'>
+              {selectedItems}
             </span>
           )}
         </Button>
@@ -42,22 +50,22 @@ const FilterStatus = () => {
             Status
           </div>
           <div className='space-y-3'>
-            {uniqueStatusValues.map((value, i) => (
-              <div key={value} className='flex items-center gap-2'>
+            {MapedStatusValues.map((value, i) => (
+              <div key={value.value} className='flex items-center gap-2'>
                 <Checkbox
-                  id={`${value}-${i}`}
-                  checked={selectedStatuses.includes(value)}
+                  id={`${value.value}-${i}`}
+                  checked={selectedStatuses.includes(value.value)}
                   onCheckedChange={(checked: boolean) => {
-                    handleStatusChange(checked, value)
+                    handleStatusChange(checked, value.value)
                   }}
                 />
                 <label
-                  htmlFor={`${value}-${i}`}
+                  htmlFor={`${value.value}-${i}`}
                   className='flex grow justify-between gap-2 text-xs font-normal uppercase'
                 >
-                  {value.replace(/-/g, " ")}{" "}
+                  {value.label}{" "}
                   <span className='text-muted-foreground ms-2 text-xs'>
-                    {statusCounts.get(value)}
+                    {value.numbers}
                   </span>
                 </label>
               </div>

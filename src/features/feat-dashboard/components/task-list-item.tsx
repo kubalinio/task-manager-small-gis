@@ -54,7 +54,7 @@ const TaskListItemMetadata = ({
       {Object.keys(tasksMeta)
         .slice(0, 3)
         .map((key) => {
-          const status = key.replace("_", "-") as TaskStatusType
+          const status = key as TaskStatusType
 
           return (
             <Box as='li' key={key} className='flex items-center gap-2'>

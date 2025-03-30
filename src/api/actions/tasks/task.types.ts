@@ -28,7 +28,7 @@ interface TaskListWithTasksMeta extends List {
   tasksMeta: {
     total: number
     todo: number
-    in_progress: number
+    "in-progress": number
     done: number
   }
 }
@@ -40,7 +40,7 @@ type TaskListsResponse = {
     tasks: {
       total: number
       todo: number
-      in_progress: number
+      "in-progress": number
       done: number
     }
   }
@@ -52,6 +52,12 @@ interface TaskListResponse {
   createdAt: number
   updatedAt: number
   tasks: TasksResponse
+  tasksMeta: {
+    total: number
+    todo: number
+    "in-progress": number
+    done: number
+  }
 }
 
 interface MutationTaskListResponse {
@@ -74,7 +80,7 @@ interface TaskResponse {
 
 interface TasksFilterOptions {
   listId?: string
-  status?: TaskStatusType
+  status?: TaskStatusType[]
   search?: string
   sortBy?: "createdAt" | "updatedAt"
   sortDirection?: "asc" | "desc"

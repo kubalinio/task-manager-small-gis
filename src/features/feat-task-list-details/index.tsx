@@ -43,9 +43,7 @@ const TaskList = () => {
       <Container as='section'>
         <TaskListHeader />
 
-        {viewMode === "table" && taskList.tasks.data.length > 0 && (
-          <TasksTable />
-        )}
+        {viewMode === "table" && <TasksTable />}
 
         {/* {viewMode === "cards" && } */}
       </Container>

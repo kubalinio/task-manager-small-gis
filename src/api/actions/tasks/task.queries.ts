@@ -1,6 +1,10 @@
 import type { IndexDBClient } from "api/indexdb"
 import type { List, Task } from "api/types"
-import type { TaskListsResponse, TasksFilterOptions } from "./task.types"
+import type {
+  TaskListsResponse,
+  TasksFilterOptions,
+  TaskStatusType
+} from "./task.types"
 
 import { getDB } from "api/indexdb"
 import { createNotFoundError } from "api/utils/error-handler"
@@ -19,7 +23,7 @@ const getAllTaskLists =
         ...list,
         tasksMeta: {
           todo: 0,
-          in_progress: 0,
+          "in-progress": 0,
           done: 0,
           total: 0
         }
@@ -28,7 +32,7 @@ const getAllTaskLists =
         total: lists.length,
         tasks: {
           todo: 0,
-          in_progress: 0,
+          "in-progress": 0,
           done: 0,
           total: 0
         }
@@ -36,21 +40,24 @@ const getAllTaskLists =
     }
   }
 
-const getTaskList = (client: IndexDBClient) => async (id: string) => {
-  const db = client || (await getDB())
-  const list = await db.get("task_lists", id)
+const getTaskList =
+  (client: IndexDBClient) =>
+  async (id: string, filters?: TasksFilterOptions) => {
+    const db = client || (await getDB())
+    const list = await db.get("task_lists", id)
 
-  if (!list) {
-    throw createNotFoundError("Task List", id)
+    if (!list) {
+      throw createNotFoundError("Task List", id)
+    }
+
+    const tasks = await getAllTasks(client)({ listId: id, ...filters })
+
+    return {
+      ...list,
+      tasksMeta: tasks.meta,
+      tasks
+    }
   }
-
-  const tasks = await getAllTasks(client)({ listId: id })
-
-  return {
-    ...list,
-    tasks
-  }
-}
 
 const getAllTasks =
   (client: IndexDBClient) => async (filters?: TasksFilterOptions) => {
@@ -71,9 +78,23 @@ const getAllTasks =
       tasks = []
     }
 
+    const tasksMeta = tasks.reduce(
+      (acc, task) => {
+        acc[task.status] += 1
+        return acc
+      },
+      {
+        total: 0,
+        todo: 0,
+        "in-progress": 0,
+        done: 0
+      }
+    )
+
     // Apply status filter if provided
-    if (filters?.status) {
-      tasks = tasks.filter((task) => task.status === filters.status)
+    // If no status filter is provided, show all tasks for the listId
+    if (filters?.status && filters.status.length > 0) {
+      tasks = tasks.filter((task) => filters.status?.includes(task.status))
     }
 
     // Apply text search if provided
@@ -101,7 +122,7 @@ const getAllTasks =
     return {
       data: tasks,
       meta: {
-        total: tasks.length
+        ...tasksMeta
       }
     }
   }
@@ -131,10 +152,10 @@ export const taskQueries = {
       queryKey: [...taskQueries.all(), "lists", filters],
       queryFn: (client) => async () => getAllTaskLists(client)(filters)
     }),
-  getTaskList: (id: string) =>
+  getTaskList: (id: string, filters?: TasksFilterOptions) =>
     queryFactoryOptions({
       queryKey: [...taskQueries.all(), "lists", id],
-      queryFn: (client) => async () => getTaskList(client)(id)
+      queryFn: (client) => async () => getTaskList(client)(id, filters)
     }),
   getAllTasks: (filters?: TasksFilterOptions) =>
     queryFactoryOptions({

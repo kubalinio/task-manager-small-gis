@@ -8,7 +8,7 @@ import type {
 import type { GenericQueryOptions } from "libs/hooks/use-query/use-query.types"
 
 import { taskQueries } from "api/actions/tasks/task.queries"
-import { useSuspenseQuery } from "libs/hooks"
+import { useIndexDB, useSuspenseQuery } from "libs/hooks"
 
 /**
  * Hook to get all task lists
@@ -38,6 +38,7 @@ const useGetTaskList = (
   options?: GenericQueryOptions<TaskListResponse>
 ) => {
   const queryClient = useQueryClient()
+  const { client } = useIndexDB()
 
   const query = useSuspenseQuery({ ...taskQueries.getTaskList(id), ...options })
 
@@ -46,7 +47,19 @@ const useGetTaskList = (
       queryKey: taskQueries.getTaskList(id).queryKey
     })
 
-  return { ...query, resetTaskList }
+  const refetchTaskList = (filters?: TasksFilterOptions) =>
+    queryClient
+      .fetchQuery({
+        queryKey: [...taskQueries.getTaskList(id).queryKey, filters],
+        queryFn: taskQueries.getTaskList(id, filters).queryFn(client!)
+      })
+      .then((res) => {
+        queryClient.setQueryData(taskQueries.getTaskList(id).queryKey, res)
+
+        return res
+      })
+
+  return { ...query, resetTaskList, refetchTaskList }
 }
 
 export { useGetTaskLists, useGetTaskList }
