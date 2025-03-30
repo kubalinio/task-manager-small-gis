@@ -50,6 +50,13 @@ const RowActions = ({ data, item }: RowActionsProps) => {
     })
   }
 
+  const handleEditTask = () => {
+    navigate({
+      to: "/task-lists/$taskListId/t/$taskId/edit",
+      params: { taskListId: data.id, taskId: item.id }
+    })
+  }
+
   const handleStatusChange = (newStatus: TaskStatusType) => {
     startUpdateTransition(() => {
       updateTask({
@@ -73,11 +80,11 @@ const RowActions = ({ data, item }: RowActionsProps) => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className='flex justify-end'>
+          <div className='group flex justify-end'>
             <Button
               size='icon'
               variant='ghost'
-              className='text-muted-foreground/60 size-8 px-1.5 py-1 shadow-none'
+              className='text-muted-foreground/60 group-data-[state=open]:bg-accent/50 size-8 px-1.5 py-1 shadow-none'
               aria-label='Edit item'
             >
               <MoreHorizontal className='size-5' size={20} aria-hidden='true' />
@@ -90,6 +97,8 @@ const RowActions = ({ data, item }: RowActionsProps) => {
             <DropdownMenuItem onClick={handleShowDetails}>
               Details
             </DropdownMenuItem>
+
+            <DropdownMenuItem onClick={handleEditTask}>Edit</DropdownMenuItem>
 
             <DropdownMenuItem
               onClick={() => {

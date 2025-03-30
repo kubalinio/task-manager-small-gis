@@ -1,5 +1,6 @@
 import { formatTaskListItemDate } from "libs/utils"
 import {
+  Separator,
   Sheet,
   SheetContent,
   SheetDescription,
@@ -16,19 +17,21 @@ const FeatureTaskEdit = () => {
 
   return (
     <Sheet defaultOpen onOpenChange={handleOpenChange}>
-      <SheetContent className='flex w-[calc(100%-4rem)] flex-col gap-8'>
+      <SheetContent className='flex w-[calc(100%-3rem)] flex-col gap-8'>
         <SheetHeader>
           <SheetTitle>Edit Task</SheetTitle>
 
-          <SheetDescription>
+          <SheetDescription className='[&>p]:text-muted-foreground flex items-center justify-between gap-2 [&>p]:text-xs [&>p]:tracking-tighter'>
             <Typography as='p' variant='body-2'>
-              Created at: {formatTaskListItemDate(task.createdAt)}
+              Created: {formatTaskListItemDate(task.createdAt)}
             </Typography>
 
             <Typography as='p' variant='body-2'>
-              Updated at: {formatTaskListItemDate(task.updatedAt)}
+              Updated: {formatTaskListItemDate(task.updatedAt)}
             </Typography>
           </SheetDescription>
+
+          <Separator />
         </SheetHeader>
 
         <UpdateTaskForm

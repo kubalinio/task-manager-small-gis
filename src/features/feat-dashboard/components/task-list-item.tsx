@@ -52,7 +52,7 @@ const TaskListItemMetadata = ({
   return (
     <Box as='ul' className='text-muted-foreground/60 flex flex-wrap gap-4'>
       {Object.keys(tasksMeta)
-        .slice(0, 3)
+        .slice(1, 4)
         .map((key) => {
           const status = key as TaskStatusType
 

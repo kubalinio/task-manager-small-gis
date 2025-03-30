@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router"
 
 import { LayoutDashboard, Plus } from "lucide-react"
 
-import { Box, Button, Container } from "components/ui"
+import { Box, Button, Container, Typography } from "components/ui"
 
 import { useListDetails } from "../hooks"
 
@@ -21,21 +21,23 @@ const TaskListHeader = () => {
   return (
     <Container
       variant='without-style'
-      className='mb-8 flex items-center justify-between gap-4'
+      className='mb-8 flex flex-col items-start justify-between gap-4 md:flex-row'
     >
-      <Box className='flex items-center gap-4'>
-        <h1 className='text-2xl font-bold'>{taskList?.title}</h1>
+      <Typography as='h1' variant='h5' className='shrink-0 text-left'>
+        {taskList?.title}
+      </Typography>
 
+      <Box className='flex w-full flex-row items-center justify-between gap-4'>
         <Button variant='secondary' className='px-4'>
           <LayoutDashboard className='h-4 w-4' />
           View
         </Button>
-      </Box>
 
-      <Button variant='secondary' className='px-4' onClick={handleOpenModal}>
-        <Plus className='h-4 w-4' />
-        Add Task
-      </Button>
+        <Button variant='default' className='px-4' onClick={handleOpenModal}>
+          <Plus className='h-4 w-4' />
+          Add Task
+        </Button>
+      </Box>
     </Container>
   )
 }
