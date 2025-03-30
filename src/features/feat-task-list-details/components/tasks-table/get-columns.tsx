@@ -68,7 +68,7 @@ const ColumnTitle: ColumnDef<Task> = {
         }}
         className={typographyVariants({
           variant: "subtitle-2",
-          className: "line-clamp-1 w-fit flex-1 whitespace-normal"
+          className: "line-clamp-1 w-fit flex-1 text-sm/7 whitespace-normal"
         })}
         title={row.original.title}
       >

@@ -17,7 +17,7 @@ const FeatureTaskEdit = () => {
 
   return (
     <Sheet defaultOpen onOpenChange={handleOpenChange}>
-      <SheetContent className='flex w-[calc(100%-3rem)] flex-col gap-8'>
+      <SheetContent className='flex w-[calc(100%-3rem)] flex-col gap-8 overflow-y-auto'>
         <SheetHeader>
           <SheetTitle>Edit Task</SheetTitle>
 
