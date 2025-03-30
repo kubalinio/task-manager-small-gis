@@ -27,7 +27,6 @@ export const IndexDBProvider = ({ children }: IndexDBProviderProps) => {
       try {
         setIsLoading(true)
 
-        // Skip initialization in test environment
         if (
           process.env.NODE_ENV === "test" ||
           typeof indexedDB === "undefined"
@@ -39,10 +38,6 @@ export const IndexDBProvider = ({ children }: IndexDBProviderProps) => {
         }
 
         const db = await getDB()
-
-        if (db) {
-          await seedDatabaseIfEmpty()
-        }
 
         setClient(db)
         setError(null)

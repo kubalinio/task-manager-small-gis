@@ -11,6 +11,8 @@ import {
 
 import { useIndexDB } from "libs/hooks"
 
+import { getDB } from "./api/indexdb"
+import { seedDatabaseIfEmpty } from "./api/utils/seed-data"
 import { IndexDBProvider } from "./libs/providers/indexdb-provider"
 import { queryClient } from "./libs/providers/query-client"
 import { routeTree } from "./routeTree.gen"
@@ -65,6 +67,18 @@ let root: ReactDOM.Root | null = null
 const initApp = async () => {
   const rootElement = document.getElementById("root")
   if (!rootElement) throw new Error("Root element not found")
+
+  if (!(process.env.NODE_ENV === "test" || typeof indexedDB === "undefined")) {
+    try {
+      console.log("Initializing and seeding database before app render...")
+      const db = await getDB()
+      if (db) {
+        await seedDatabaseIfEmpty()
+      }
+    } catch (err) {
+      console.error("Failed to pre-initialize IndexDB:", err)
+    }
+  }
 
   if (!root) {
     root = ReactDOM.createRoot(rootElement)
