@@ -62,6 +62,8 @@ const RowActions = ({ data, item }: RowActionsProps) => {
       updateTask({
         id: item.id,
         data: {
+          title: item.title,
+          description: item.description,
           status: newStatus
         }
       })
