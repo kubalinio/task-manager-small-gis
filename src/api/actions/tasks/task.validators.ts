@@ -66,6 +66,7 @@ const CreateTaskSchemaForm = z.object({
     .max(100, "Title must be less than 100 characters"),
   description: z
     .string()
+    .min(1, "Description is required")
     .max(500, "Description must be less than 500 characters"),
   status: taskStatusSchema.optional().default(TaskStatus.TODO)
 })
@@ -74,13 +75,12 @@ const UpdateTaskSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
-    .max(100, "Title must be less than 100 characters")
-    .optional(),
+    .max(100, "Title must be less than 100 characters"),
   description: z
     .string()
-    .max(500, "Description must be less than 500 characters")
-    .optional(),
-  status: taskStatusSchema.optional()
+    .min(1, "Description is required")
+    .max(500, "Description must be less than 500 characters"),
+  status: taskStatusSchema
 })
 
 export type { TaskStatus }

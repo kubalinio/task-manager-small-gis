@@ -31,12 +31,12 @@ const FeatureTaskDetails = () => {
             {task.title}
           </SheetTitle>
 
-          <SheetDescription className='[&>p]:text-muted-foreground flex items-center justify-between gap-2 [&>p]:text-xs [&>p]:tracking-tighter'>
-            <Typography as='p' variant='body-2'>
+          <SheetDescription className='[&>span]:text-muted-foreground flex items-center justify-between gap-2 [&>span]:text-xs [&>span]:tracking-tighter'>
+            <Typography as='span' variant='body-2'>
               Created: {formatTaskListItemDate(task.createdAt)}
             </Typography>
 
-            <Typography as='p' variant='body-2'>
+            <Typography as='span' variant='body-2'>
               Updated: {formatTaskListItemDate(task.updatedAt)}
             </Typography>
           </SheetDescription>
