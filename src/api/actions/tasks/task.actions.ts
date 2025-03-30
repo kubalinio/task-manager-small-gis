@@ -21,7 +21,7 @@ import { TaskStatus } from "./task.types"
 import {
   CreateTaskListSchema,
   CreateTaskSchema,
-  updateListSchema,
+  UpdateTaskListSchema,
   UpdateTaskSchema
 } from "./task.validators"
 
@@ -68,7 +68,7 @@ const updateTaskList =
     }
 
     // Validate input data
-    const validationResult = updateListSchema.safeParse(data)
+    const validationResult = UpdateTaskListSchema.safeParse(data)
 
     if (!validationResult.success) {
       throw createValidationError("Invalid list data", {

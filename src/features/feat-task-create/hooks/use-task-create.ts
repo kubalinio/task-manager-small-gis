@@ -11,7 +11,7 @@ import { useMutation } from "libs/hooks"
 const useTaskCreate = () => {
   const queryClient = useQueryClient()
   const { taskListId } = useParams({
-    from: "/_app/task-lists/_details-layout/$taskListId/new"
+    from: "/_app/task-lists/_details-layout/$taskListId/new-task"
   })
   const navigate = useNavigate()
 

@@ -25,7 +25,7 @@ const CreateTaskListSchema = z.object({
     .max(100, "Title must be less than 100 characters")
 })
 
-const updateListSchema = z.object({
+const UpdateTaskListSchema = z.object({
   title: z
     .string()
     .min(1, "Title is required")
@@ -91,6 +91,6 @@ export {
   listSchema,
   CreateTaskListSchema,
   CreateTaskSchema,
-  updateListSchema,
+  UpdateTaskListSchema,
   CreateTaskSchemaForm
 }

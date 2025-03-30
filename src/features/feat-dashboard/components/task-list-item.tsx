@@ -1,3 +1,5 @@
+import { useNavigate } from "@tanstack/react-router"
+
 import type {
   TaskListsResponse,
   TaskStatusType
@@ -104,6 +106,22 @@ const TaskListItemActions = ({
   id,
   deleteTaskList
 }: TaskListItemActionsProps) => {
+  const navigate = useNavigate()
+
+  const handleRedirectToDetails = () => {
+    navigate({
+      to: "/task-lists/$taskListId",
+      params: { taskListId: id }
+    })
+  }
+
+  const handleRedirectToEdit = () => {
+    navigate({
+      to: "/task-lists/$taskListId/edit",
+      params: { taskListId: id }
+    })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -120,15 +138,12 @@ const TaskListItemActions = ({
 
       <DropdownMenuContent align='end' className='w-auto'>
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <Link
-              to='/task-lists/$taskListId'
-              params={{ taskListId: id }}
-              variant='ghost'
-              className='w-full cursor-pointer'
-            >
-              Details
-            </Link>
+          <DropdownMenuItem onClick={handleRedirectToDetails}>
+            Details
+          </DropdownMenuItem>
+
+          <DropdownMenuItem onClick={handleRedirectToEdit}>
+            Edit
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
