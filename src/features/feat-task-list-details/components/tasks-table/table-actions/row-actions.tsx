@@ -77,7 +77,7 @@ const RowActions = ({ data, item }: RowActionsProps) => {
             <Button
               size='icon'
               variant='ghost'
-              className='text-muted-foreground/60 shadow-none'
+              className='text-muted-foreground/60 size-8 px-1.5 py-1 shadow-none'
               aria-label='Edit item'
             >
               <MoreHorizontal className='size-5' size={20} aria-hidden='true' />

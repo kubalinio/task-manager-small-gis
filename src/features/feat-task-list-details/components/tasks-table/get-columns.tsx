@@ -4,9 +4,9 @@ import type { Task } from "api/types"
 
 import { TaskStatus } from "api/actions/tasks/task.types"
 import { TaskStatusIndicator } from "features/shared/components/task-status"
-import { cn } from "libs/utils"
+import { cn, formatTaskListItemDate } from "libs/utils"
 import { Link } from "components/common/link"
-import { Badge, Checkbox, Typography, typographyVariants } from "components/ui"
+import { Badge, Checkbox, typographyVariants } from "components/ui"
 
 import { RowActions } from "./table-actions"
 
@@ -67,8 +67,10 @@ const ColumnTitle: ColumnDef<Task> = {
           taskId: row.original.id
         }}
         className={typographyVariants({
-          variant: "subtitle-2"
+          variant: "subtitle-2",
+          className: "line-clamp-1 w-fit flex-1 whitespace-normal"
         })}
+        title={row.original.title}
       >
         {row.original.title}
       </Link>
@@ -90,7 +92,7 @@ const ColumnDescription: ColumnDef<Task> = {
       {row.getValue("description")}
     </span>
   ),
-  size: 260
+  size: 180
 }
 
 const ColumnStatus: ColumnDef<Task> = {
@@ -98,10 +100,10 @@ const ColumnStatus: ColumnDef<Task> = {
   header: "Status",
   accessorKey: "status",
   cell: ({ row }) => (
-    <div className='flex h-full items-center px-2'>
+    <div className='flex h-full items-center pr-2 xl:pr-4'>
       <Badge
         variant='filled'
-        className={cn("w-full gap-1 py-1 text-base uppercase", {
+        className={cn("w-full gap-1 py-1 text-sm uppercase", {
           "bg-task-status-todo hover:bg-task-status-todo/80":
             row.original.status === TaskStatus.TODO,
           "bg-task-status-in-progress hover:bg-task-status-in-progress/80":
@@ -114,8 +116,32 @@ const ColumnStatus: ColumnDef<Task> = {
       </Badge>
     </div>
   ),
-  size: 180,
+  size: 140,
   filterFn: statusFilterFn
+}
+
+const ColumnCreatedAt: ColumnDef<Task> = {
+  id: "createdAt",
+  header: "Created At",
+  accessorKey: "createdAt",
+  cell: ({ row }) => (
+    <span className='text-muted-foreground text-xs'>
+      {formatTaskListItemDate(row.original.createdAt)}
+    </span>
+  ),
+  size: 130
+}
+
+const ColumnUpdatedAt: ColumnDef<Task> = {
+  id: "updatedAt",
+  header: "Updated At",
+  accessorKey: "updatedAt",
+  cell: ({ row }) => (
+    <span className='text-muted-foreground text-xs'>
+      {formatTaskListItemDate(row.original.updatedAt)}
+    </span>
+  ),
+  size: 130
 }
 
 const getColumns = ({ data }: GetColumnsProps): ColumnDef<Task>[] => [
@@ -123,6 +149,8 @@ const getColumns = ({ data }: GetColumnsProps): ColumnDef<Task>[] => [
   ColumnTitle,
   ColumnDescription,
   ColumnStatus,
+  ColumnCreatedAt,
+  ColumnUpdatedAt,
   {
     id: "actions",
     header: () => <span className='sr-only'>Actions</span>,

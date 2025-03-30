@@ -9,12 +9,14 @@ import { buttonVariants } from "components/ui"
 type LinkProps = {
   className?: string
   variant?: ButtonProps["variant"]
+  title?: string
 } & RouterLinkProps
 
 const Link = ({
   children,
   className,
   variant = "link",
+  title,
   ...props
 }: LinkProps) => {
   return (
@@ -27,6 +29,7 @@ const Link = ({
         "text-foreground h-fit justify-start",
         className
       )}
+      title={title}
       {...props}
     >
       {children}
