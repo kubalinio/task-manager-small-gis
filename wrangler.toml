@@ -1,4 +1,0 @@
-#:schema node_modules/wrangler/config-schema.json
-name = "task-management-smallgis"
-compatibility_date = "2025-03-10"
-pages_build_output_dir = "./dist"
