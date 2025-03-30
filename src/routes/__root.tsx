@@ -29,7 +29,7 @@ function RootComponent() {
       <Outlet />
 
       {enableTanstackRouterDevtools && (
-        <TanStackRouterDevtools position='bottom-left' />
+        <TanStackRouterDevtools position='top-right' />
       )}
     </>
   )

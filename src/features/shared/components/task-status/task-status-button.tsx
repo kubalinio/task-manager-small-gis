@@ -14,9 +14,12 @@ const TaskStatusButton = ({ status }: TaskStatusButtonProps) => {
     <Button
       size='sm'
       className={cn({
-        "bg-task-status-todo": status === TaskStatus.TODO,
-        "bg-task-status-in-progress": status === TaskStatus.IN_PROGRESS,
-        "bg-task-status-done": status === TaskStatus.DONE
+        "bg-task-status-todo hover:bg-task-status-todo/80":
+          status === TaskStatus.TODO,
+        "bg-task-status-in-progress hover:bg-task-status-in-progress/80":
+          status === TaskStatus.IN_PROGRESS,
+        "bg-task-status-done hover:bg-task-status-done/80":
+          status === TaskStatus.DONE
       })}
     >
       {statusToLabel[status]}

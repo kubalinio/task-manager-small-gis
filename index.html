@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Task Manager - SmallGis" />
@@ -15,6 +15,35 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;&display=swap"
       rel="stylesheet"
     />
+
+    <script>
+      ;(function () {
+        const storedTheme = localStorage.getItem("theme")
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches
+
+        if (storedTheme === "light") {
+          document.documentElement.classList.add("light")
+          document.documentElement.classList.remove("dark")
+        } else if (storedTheme === "dark" || !storedTheme) {
+          document.documentElement.classList.add("dark")
+          document.documentElement.classList.remove("light")
+        } else if (storedTheme === "system") {
+          if (prefersDark) {
+            document.documentElement.classList.add("dark")
+            document.documentElement.classList.remove("light")
+          } else {
+            document.documentElement.classList.add("light")
+            document.documentElement.classList.remove("dark")
+          }
+        }
+
+        if (!storedTheme) {
+          localStorage.setItem("theme", "dark")
+        }
+      })()
+    </script>
 
     <style></style>
   </head>

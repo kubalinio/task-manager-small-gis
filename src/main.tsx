@@ -91,4 +91,4 @@ const initApp = async () => {
   )
 }
 
-await initApp()
+initApp()
