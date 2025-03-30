@@ -3,7 +3,6 @@ import { createContext, useEffect, useState } from "react"
 import type { IndexDBClient } from "api/indexdb"
 
 import { getDB } from "api/indexdb"
-import { seedDatabaseIfEmpty } from "api/utils/seed-data"
 
 type IndexDBContextType = {
   client: IndexDBClient | null

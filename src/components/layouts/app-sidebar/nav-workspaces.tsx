@@ -1,3 +1,5 @@
+import { useNavigate } from "@tanstack/react-router"
+
 import type { List } from "api/types"
 
 import {
@@ -15,16 +17,24 @@ import {
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
+  useSidebar
 } from "components/ui/sidebar"
 
 export function NavWorkspaces({ tasks }: { tasks: List[] }) {
   const { openDialog, setOpenDialog, onSubmit, isLoading } = useTaskListCreate()
+  const { isMobile, toggleSidebar } = useSidebar()
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      toggleSidebar()
+    }
+  }
 
   return (
     <SidebarGroup>
       {/* btn to create new task list */}
-      <SidebarGroupLabel className='flex items-center justify-between text-sm'>
+      <SidebarGroupLabel className='mb-2 flex items-center justify-between text-sm'>
         <span>Task Lists</span>
 
         <TaskListCreate open={openDialog} onOpenChange={setOpenDialog}>
@@ -41,7 +51,12 @@ export function NavWorkspaces({ tasks }: { tasks: List[] }) {
       <SidebarGroupContent>
         <SidebarMenu>
           {tasks.map((list) => (
-            <SidebarMenuItem key={list.id}>
+            <SidebarMenuItem
+              key={list.id}
+              onClick={() => {
+                handleLinkClick()
+              }}
+            >
               <SidebarMenuButton asChild>
                 <Link
                   to='/task-lists/$taskListId'

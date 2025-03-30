@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="/favicon.png" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Task Manager - SmallGis" />
@@ -17,15 +17,12 @@
     />
 
     <script>
-      // Theme initialization script
       ;(function () {
-        // Get stored theme or use dark mode as default
         const storedTheme = localStorage.getItem("theme")
         const prefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches
 
-        // Set initial theme
         if (storedTheme === "light") {
           document.documentElement.classList.add("light")
           document.documentElement.classList.remove("dark")
@@ -42,7 +39,6 @@
           }
         }
 
-        // If no theme is set, save dark as default
         if (!storedTheme) {
           localStorage.setItem("theme", "dark")
         }

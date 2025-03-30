@@ -70,7 +70,7 @@ const ThemeToggle = () => {
           id={id}
           checked={isDarkMode}
           onCheckedChange={handleCheckedChange}
-          className='peer data-[state=checked]:bg-accent data-[state=unchecked]:bg-accent/50 dark:data-[state=checked]:bg-accent/50 dark:data-[state=unchecked]:bg-accent/50 absolute inset-0 h-[inherit] w-auto [&_span]:h-full [&_span]:w-1/2 [&_span]:transition-transform [&_span]:duration-300 [&_span]:[transition-timing-function:cubic-bezier(0.16,1,0.3,1)] [&_span]:data-[state=checked]:translate-x-full [&_span]:data-[state=checked]:rtl:-translate-x-full'
+          className='peer data-[state=checked]:bg-accent data-[state=unchecked]:bg-accent/50 dark:data-[state=checked]:bg-accent/50 dark:data-[state=unchecked]:bg-accent/50 absolute inset-0 h-[inherit] w-auto cursor-pointer [&_span]:h-full [&_span]:w-1/2 [&_span]:transition-transform [&_span]:duration-300 [&_span]:[transition-timing-function:cubic-bezier(0.16,1,0.3,1)] [&_span]:data-[state=checked]:translate-x-full [&_span]:data-[state=checked]:rtl:-translate-x-full'
         />
         <span className='peer-data-[state=checked]:text-muted-foreground/70 pointer-events-none relative ms-0.5 flex min-w-8 items-center justify-center text-center text-white'>
           <SunIcon size={16} aria-hidden='true' />

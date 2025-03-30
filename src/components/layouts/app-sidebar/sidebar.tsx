@@ -12,7 +12,7 @@ import {
 import { data } from "./data"
 import { NavMain } from "./nav-main"
 import { NavWorkspaces } from "./nav-workspaces"
-import { ProjectSwitcher } from "./project-switcher"
+import { ProjectLogo } from "./project-logo"
 import { ThemeToggle } from "./theme-toggle"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -21,7 +21,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className='border-r-0' {...props}>
       <SidebarHeader>
-        <ProjectSwitcher projects={data.projects} />
+        <ProjectLogo />
 
         <NavMain items={data.navMain} />
       </SidebarHeader>

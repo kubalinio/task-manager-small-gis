@@ -27,12 +27,7 @@ const TaskListHeader = () => {
         {taskList?.title}
       </Typography>
 
-      <Box className='flex w-full flex-row items-center justify-between gap-4'>
-        <Button variant='secondary' className='px-4'>
-          <LayoutDashboard className='h-4 w-4' />
-          View
-        </Button>
-
+      <Box className='flex w-full flex-row items-center justify-end gap-4'>
         <Button variant='default' className='px-4' onClick={handleOpenModal}>
           <Plus className='h-4 w-4' />
           Add Task
